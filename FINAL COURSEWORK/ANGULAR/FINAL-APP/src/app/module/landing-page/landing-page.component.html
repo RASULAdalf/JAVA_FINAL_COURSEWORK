@@ -1,0 +1,74 @@
+<div class="row">
+
+  <div class="outer">
+    <div class="inner-header">
+      <div class="icon-text">
+        <div class="logo"></div>
+        <h2 class="text"><strong>CMJD FINAL APP</strong></h2>
+      </div>
+      <div class="menus">
+        <a class="menu-item" routerLink="home">Home</a>
+        <a class="menu-item" routerLink="learn">Learn</a>
+        <a class="menu-item" routerLink="about">About</a>
+        <a class="menu-item" routerLink="faq">Faq</a>
+        <a class="menu-item" routerLink="contact">Contact</a>
+      </div>
+    </div>
+    <div class="inner-middle-outer">
+      <div class="inner-middle">
+        <div class="login-form">
+          <div class="header-content">
+            <h2><b>ADMIN</b></h2>
+          </div>
+          <div class="button-content">
+            <div class="button-1">
+              <button (click)="logoutAdmin()" class="btn btn-danger" type="button">CHOOSE DIFFERENT ACCOUNT</button>
+            </div>
+            <div class="button-2">
+              <button class="btn btn-danger" type="button" (click)="AdminLogin()">LOGIN</button>
+            </div>
+          </div>
+        </div>
+        <div class="login-form">
+
+          <div class="header-content">
+            <h2><b>CUSTOMER</b></h2>
+          </div>
+          <div class="button-content">
+            <div class="button-1">
+              <button (click)="logoutCustomer()" class="btn btn-danger" type="button">CHOOSE DIFFERENT ACCOUNT</button>
+            </div>
+            <div class="button-2">
+              <button (click)="Customerlogin()" class="btn btn-danger Customer" type="button">LOGIN</button>
+            </div>
+          </div>
+        </div>
+        <div class="login-form">
+          <div class="header-content">
+            <h2><b>VENDOR</b></h2>
+          </div>
+          <div class="button-content">
+            <div class="button-1">
+              <button (click)="logoutVendor()" class="btn btn-danger" type="button">CHOOSE DIFFERENT ACCOUNT</button>
+            </div>
+            <div class="button-2">
+              <button (click)="VendorLogin()" class="btn btn-danger" type="button">LOGIN</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <small class="copyright">&copy;{{year}} all rights reserved</small>
+    </div>
+  </div>
+
+<div class="beautifying-elements">
+  <div class="first-cloud"></div>
+  <div class="second-cloud"></div>
+
+</div>
+</div>
+
+
+

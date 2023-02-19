@@ -1,0 +1,47 @@
+.book-element{
+  border: 1px solid red;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  height: 200px;
+  width: 200px;
+  margin-left: 20px;
+  margin-top: 30px;
+}
+.header{
+  width: 100%;
+  height: 50px;
+  border: 1px solid black;
+  text-align: center;
+}
+.image{
+  width: 80%;
+  margin-right: 10px;
+  margin-left: 15px;
+  height: 120px;
+  border: 1px solid red;
+  background-size: cover;
+  right: 30px;
+}
+.price{
+  width: 100%;
+  height: 40px;
+  border: 1px solid black;
+  text-align: center;
+  font-size: large;
+  padding-top: 10px;
+}
+.view-details{
+  width: 100%;
+  flex: 1;
+  border: 1px solid orange;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid {
+  display: inline-grid;
+  grid-auto-rows: 2fr 2fr 1fr;
+  grid-auto-columns: 1fr;
+}

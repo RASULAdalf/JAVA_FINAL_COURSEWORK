@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "iim-drive",
+  "private_key_id": "5e71656210687da65694d87daef6fd3f66946a5e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCj+D2TZLcLPu/g\nv9S9HMFxXLNi9CAExuRBIegVE2YMQ69kCkL90OXc8sr5eCPaWLbw59WzIzz6R3c7\n9T67VW55X1bHI7Phdndpq9mQCsyVoAteM4BypbHsV7uZCnFFhgp0srZyQIkDsbj3\nAmPbtrG0NmfT0BFs7CEvqTIGQZyTYGnr+uaiGZ5USXsv+M9YzaeiqRHbnJDsX9Pu\nu+EQlRZ1UVfdbqaC849nDtjRCeMeWQziYg19R3gSXNAWRc1qGf9I0pKD0C25tj6T\n32I3XR6V7jdOp1kAHbo69kOs3NEEEDoXNVVux/q6ducL43jXJuWhNfUpeKMRgWV6\nCFPbFIKZAgMBAAECggEABKwguRAAJUpkVH+y5LaqjnvpQrMZLHmsbGy2a89TM5tE\nJrIiKZBn1G14ujYhs2mewOuiS8n/xVP/Ak7hPD5ZeQzt8JvEVvLkwTab6v5byRG3\n8TW/fcTZ9pWja1+ATc5dgujKySOso9XPIv7G8K5ajvuT5tXBgVyTL4P/QG1jNFHZ\n1LanoKMZh7RaW1cHXn1cCamwxfvQMzO/X6Zs3lYrliPHjQM8Yy3Qe+rwuAlYtwT3\nOqqhZPQHCCw7nyScaVhjs78C37cOv0CcbDqZhODEEuqK1LYWA2q0EvJVaISYZ8gb\nSvC5yOkQTk/UhqRkjoarJOvweF5LNLBL2ZO8+y7EgQKBgQDSGLYcHNhNRsjXpTD2\nebjb3Uv9PDHmPUseZ3CZT1y664CozO6P1fLCb5uEUE4fapMf+kFqE8USmelYwdYj\nSGDsl9jBHy7u0/SB3TQjIFHDF3efJ27gkE2e3Nk7J50Ab/GYvMFCytM9YyqOcD+Z\nsUbWlRG4kBff1zyqzz/eKmG5eQKBgQDHy4aLJhbd7lUbZMGUzs5DgjsX0fzoXljU\nCw6efdbVora/0SEazMdFxbNCjGBddSusqnXB+Epmiiq0NgpsG7f4SNVE7AHkuUsR\nqFc/++6CIEWw3JdM2Cu/S/Z29cr2kSu2HWGJMoqtY1e/AwLGASzNGUo5IUIdXHhV\nytkbbsvqIQKBgQCKf7XVdIJ29tnBpulPIlDlx82nQ75VXESf52rH9hRYOJWZMXd2\npICjArYPlGzbswMICo6C4kOBDqtQUn/axIT4kuVV8jubP2ipD2ymV1Du/hJifblP\nGnHA7y/ZGjUaq7ElkhEI+fIlPrE4MvEKXV4oaR7Ef2Dts9MPew5MY74GaQKBgGSX\nT/IXB0RNjoPwQpaNWMQceWwQyWikt8xqlL2vVc7R0XjZ7fT0TRAP7aT/0DS9nXOd\njxRN0ge2YLHC05SCkCltYhMFUB68O9N0Ehmg2gCiBvR426RQ4hW6RSi3r6xcgsl6\nGXVeAPwzHCaLeYX/aXMJ3JjO6d6mg9+N9akeK4SBAoGAc9DvEccUa8ISiVtuRFje\nFNV2AiDIjakj0/kMYXVf9rF788NlI8AnM34zngfp4qETJ0lcYBN0mzHxG72kY7wz\nIkIijCBfkP8gp+UU4UtH6YHSdAul94DkXcsjOI1x7Q/WxFVVhs8FTrA+N2jv1kWz\nqk5kCKV17k2KjUKbKTjafQ0=\n-----END PRIVATE KEY-----\n",
+  "client_email": "iim-drive-service@iim-drive.iam.gserviceaccount.com",
+  "client_id": "115190504289334654832",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/iim-drive-service%40iim-drive.iam.gserviceaccount.com"
+}

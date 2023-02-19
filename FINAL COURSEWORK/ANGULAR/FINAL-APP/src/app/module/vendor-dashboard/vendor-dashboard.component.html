@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="logout-button">
+<button class="logout-btn" color="warn" mat-raised-button (click)="logOut()">Logout</button>
+  </div>
+<div class="content-inner">
+
+  <div class="form-inner">
+    <app-loading *ngIf="loadingService.progrssBarLoadingState | async" [data]="type"></app-loading>
+<form [formGroup]="addNewItemsForm" (ngSubmit)="submit()" enctype="multipart/form-data">
+
+  <mat-form-field appearance="outline" [style.margin-top.px]=5 [style.width.px]=500 [style.margin-left.px]=140>
+    <mat-label>Vendor Email</mat-label>
+    <input matInput formControlName="vEmail" type="email">
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="outline" [style.width.px]=500 [style.margin-left.px]=140>
+    <mat-label>Item Name</mat-label>
+    <input matInput formControlName="description" type="text">
+    <mat-error>Maximum of 10 characters are allowed</mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="outline" [style.width.px]=500 [style.margin-left.px]=140>
+    <mat-label>Item category</mat-label>
+    <mat-select [(value)]="category" required formControlName="category">
+      <mat-option *ngFor="let category of categories" [value]="category.value">
+        {{category.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="outline" [style.margin-left.px]=140>
+    <mat-label>Quantity</mat-label>
+    <input matInput formControlName="qty" type="text">
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="outline" [style.margin-left.px]=140>
+    <mat-label>Item price</mat-label>
+    <input matInput formControlName="price" type="text">
+  </mat-form-field>
+  <br>
+  <label for="img" [style.margin-left.px]=140>Item Image : &nbsp;</label>
+  <input formControlName="img" type="file" id="img"  (change)="onImgChange($event)" accept="image/*" required>
+
+  <br><br>
+  <label for="slide" [style.margin-left.px]=140>Item SlideShow Images : &nbsp;</label>
+  <input formControlName="slideShowImgs" id="slide" type="file"  multiple (change)="onSlideImgsChange($event)" accept="image/*" required>
+
+  <br><br>
+  <label for="specs" [style.margin-left.px]=140>Item Specifications Document : &nbsp;</label>
+  <input formControlName="specsDoc" id="specs" type="file"  (change)="onSpecsDocChange($event)" accept="application/pdf" required>
+
+  <br><br>
+  <button type="submit" mat-raised-button color="primary"  [style.margin-left.px]=360  [disabled]="addNewItemsForm.invalid && (onImg||onSlide||onSpec)">Submit</button>
+</form>
+  </div>
+</div>
+</div>

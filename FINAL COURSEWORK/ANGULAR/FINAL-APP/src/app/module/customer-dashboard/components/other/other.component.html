@@ -1,0 +1,9 @@
+<div class="other-element" *ngFor="let data of data; index as num" #viewButton [attr.data-index]="num">
+  <div class="header"><h2>{{data?.itemDescription}}</h2></div>
+  <div class="image" [ngStyle]="{ background: data?.itemLogoUrl | customerDashboardBackgroundImages,'background-size':'cover'}"></div>
+  <div class="price">Rs.{{data?.unitPrice}}.00</div>
+  <div class="view-details">
+    <button color="primary" mat-raised-button (click)="openModal(viewButton)">VIEW</button>
+  </div>
+</div>
+

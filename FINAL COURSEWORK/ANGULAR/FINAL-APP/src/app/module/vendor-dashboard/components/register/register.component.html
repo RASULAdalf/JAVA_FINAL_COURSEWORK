@@ -1,0 +1,38 @@
+<div class="row col-sm-12">
+  <div class="main-agileinfo">
+    <div class="agileits-top">
+      <form (ngSubmit)="register()" [formGroup]="registerForm">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Vendor Name</mat-label>
+          <input formControlName="name" matInput type="text">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input formControlName="email" matInput type="email">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input formControlName="password" matInput type="password">
+        </mat-form-field>
+        <div class="wthree-text">
+          <label class="anim">
+            <input class="checkbox" required="" type="checkbox">
+            <span>&nbsp;I Agree To The Terms & Conditions</span>
+          </label>
+          <div class="clear"></div>
+        </div>
+        <button class="registerBtn" [disabled]="registerForm?.invalid" color="primary" mat-raised-button type="submit">Sign up</button>
+      </form>
+      <button class="btn btn-primary btn-floating mx-1" type="button">
+        <i class="fab fa-facebook-f"></i>
+      </button>
+
+      <button (click)="registerWithGoogle()" class="btn btn-primary btn-floating mx-1" type="button">
+        <i class="fa-brands fa-google"></i>
+      </button>
+
+      <p class="have-acc">Have an Account? <a (click)="login()"> Login Now!</a></p>
+    </div>
+  </div>
+
+</div>

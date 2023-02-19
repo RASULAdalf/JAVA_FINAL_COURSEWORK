@@ -1,0 +1,215 @@
+.row {
+  height: 643px;
+  width: 100%;
+  background-color: #007bff;
+  margin: 0 0;
+  overflow: hidden;
+}
+
+.outer {
+  height: inherit;
+  width: inherit;
+  margin: 0 0;
+}
+
+.inner-header {
+  top: 0;
+  position: sticky;
+  height: 50px;
+  width: 95vw;
+  display: flex;
+  margin: 0;
+}
+
+.icon-text {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 100%;
+  width: 60px;
+  border: 1px solid gray;
+}
+
+.text {
+  flex: 1;
+  text-align: center;
+  color: white;
+  padding: 10px 50px 10px 60px;
+}
+
+.menus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 700px;
+}
+
+.menu-item {
+  text-align: center;
+  padding: 10px 50px;
+  color: white;
+  font-style: initial;
+  text-decoration: none;
+}
+
+.menu-item:hover {
+  transform: scale(120%);
+}
+
+.inner-middle-outer {
+  height: 575px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.inner-middle {
+  height: 450px;
+  width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 100px;
+}
+
+.login-form {
+  height: 100%;
+  width: 350px;
+  background-color: white;
+  opacity: 1;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.beautifying-elements {
+  height: 100%;
+  width: auto;
+
+}
+
+.first-cloud {
+  height: 200px;
+  width: 200px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #07cfde;
+  border-bottom-right-radius: 100%;
+  //animation-name: upToDown,rotateCloud;
+  //animation-delay: 2s;
+  //animation-duration: 8s;
+  //animation-direction: alternate;
+  //animation-iteration-count: infinite;
+  //animation-timing-function: ease-in-out;
+
+  animation: upToDown 8s ease-in-out 2s infinite alternate,rotateCloud 8s ease-in-out 2s infinite alternate;
+}
+
+.second-cloud {
+  height: 200px;
+  width: 200px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #07cfde;
+  border-top-left-radius: 100%;
+  //animation-name: downToUp,rotateCloud;
+  //animation-delay: 2s;
+  //animation-duration: 8s;
+  //animation-direction: alternate;
+  //animation-iteration-count: infinite;
+  //animation-timing-function: ease-in-out;
+  animation: downToUp 8s ease-in-out 2s infinite alternate,rotateCloud 8s ease-in-out 2s infinite alternate;
+}
+
+.header-content {
+  width: 100%;
+  flex: 1;
+
+}
+
+.button-content {
+  height: 300px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.button-1 {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-2 {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h2 {
+  text-align: center;
+  color: #d409e5;
+
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.copyright {
+  margin-top: 20px;
+  color: #ffffff;
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+
+@keyframes downToUp {
+  from {
+    transform: translate(0%, 0%);
+
+  }
+  to {
+    transform: translate(-600%, -250%);
+  }
+}
+
+@keyframes upToDown {
+  from {
+    transform: translate(0%, 0%);
+  }
+  to {
+    transform: translate(600%, 250%);
+  }
+}
+@keyframes rotateCloud {
+  50%{transform:rotate(90deg);}
+}

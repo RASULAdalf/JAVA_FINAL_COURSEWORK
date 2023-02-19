@@ -1,0 +1,32 @@
+.row {
+  height: 643px;
+  width: 100%;
+  background-color: #007bff;
+  margin: 0 0;
+  overflow: hidden;
+}
+.logout-button{
+  height: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logout-btn{
+  margin-top: 30px;
+}
+.content-inner{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3px;
+}
+.form-inner{
+  height: 580px;
+  width: 800px;
+  //border: 1px solid red;
+  z-index: 3;
+  background-color: white;
+}

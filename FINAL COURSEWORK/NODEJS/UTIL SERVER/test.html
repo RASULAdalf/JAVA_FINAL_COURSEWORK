@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form accept-charset="utf-8" action="/api/v1/Item/saveItem" autocomplete="on" enctype="multipart/form-data"
+      id="230232068667052" method="post" name="form_230232068667052"><input name="formID" type="hidden"
+                                                                           value="230232068667052"/><input id="JWTContainer"
+                                                                                                           type="hidden"
+                                                                                                           value=""/><input
+        id="cardinalOrderNumber" type="hidden" value=""/>
+
+    <li class="form-line jf-required" data-type="control_textbox" id="id_5"><label
+            class="form-label form-label-top form-label-auto" for="input_5" id="label_5"> Item Name<span
+            class="form-required">*</span> </label>
+        <div class="form-input-wide jf-required" data-layout="half" id="cid_5"><input aria-labelledby="label_5" class="form-textbox validate[required]"
+                                                                                      data-component="textbox"
+                                                                                      data-defaultvalue=""
+                                                                                      data-type="input-textbox"
+                                                                                      id="input_5"
+                                                                                      name="itemDescription" required=""
+                                                                                      size="310" style="width:310px"
+                                                                                      type="text"
+                                                                                      value=""/></div>
+    </li>
+    <li class="form-line jf-required" data-type="control_dropdown" id="id_9"><label
+            class="form-label form-label-top form-label-auto" for="input_9" id="label_9"> Item Category <span
+            class="form-required">*</span> </label>
+        <div class="form-input-wide jf-required" data-layout="half" id="cid_9"><select
+                aria-label="Item Category " class="form-dropdown validate[required]" data-component="dropdown" id="input_9"
+                name="itemCategory" required="" style="width:310px">
+            <option value="">Please Select</option>
+            <option value="BOOKS ">BOOKS</option>
+            <option value="CLOTHES ">CLOTHES</option>
+            <option value="ELECTRONICS ">ELECTRONICS</option>
+            <option value="ELECTRICAL">ELECTRICAL</option>
+            <option value="COSMETICS ">COSMETICS</option>
+            <option value="OTHER ">OTHER</option>
+        </select></div>
+    </li>
+    <li class="form-line jf-required" data-type="control_number" id="id_10"><label
+            class="form-label form-label-top form-label-auto" for="input_10" id="label_10"> Item Quantity <span
+            class="form-required">*</span> </label>
+        <div class="form-input-wide jf-required" data-layout="half" id="cid_10"><input aria-labelledby="label_10" class=" form-number-input form-textbox validate[required]"
+                                                                                       data-component="number"
+                                                                                       data-defaultvalue=""
+                                                                                       data-type="input-number"
+                                                                                       id="input_10"
+                                                                                       name="qty" placeholder="e.g., 23"
+                                                                                       required="" size="310"
+                                                                                       step="any"
+                                                                                       style="width:310px"
+                                                                                       type="number" value=""/></div>
+    </li>
+    <li class="form-line jf-required" data-type="control_textbox" id="id_6"><label
+            class="form-label form-label-top form-label-auto" for="input_6" id="label_6"> Item Price<span
+            class="form-required">*</span> </label>
+        <div class="form-input-wide jf-required" data-layout="half" id="cid_6"><input aria-labelledby="label_6" class="form-textbox validate[required]"
+                                                                                      data-component="textbox"
+                                                                                      data-defaultvalue=""
+                                                                                      data-type="input-textbox"
+                                                                                      id="input_6"
+                                                                                      name="unitPrice" required=""
+                                                                                      size="310" style="width:310px"
+                                                                                      type="text"
+                                                                                      value=""/></div>
+    </li>
+    <li class="form-line jf-required" data-type="control_fileupload" id="id_4"><label
+            class="form-label form-label-top form-label-auto" for="input_4" id="label_4"> Item Image <span
+            class="form-required">*</span> </label>
+        <div class="form-input-wide jf-required" data-layout="full" id="cid_4">
+            <div class="jfQuestion-fields" data-wrapper-react="true">
+                <div class="jfField isFilled">
+                    <div class="jfUpload-wrapper">
+                        <div class="jfUpload-container">
+                            <div class="jfUpload-text-container">
+                                <div class="jfUpload-icon forDesktop"><span class="iconSvg  dhtupload ">function SvgDhtupload2(props) {
+                        return /* @__PURE__ */ react.createElement("svg", dhtupload_svg_extends({
+                        width: 54,
+                        height: 47,
+                        xmlns: "http://www.w3.org/2000/svg"
+                        }, props), dhtupload_svg_path || (dhtupload_svg_path = /* @__PURE__ */ react.createElement("path", {
+                        d: "M40.213 10.172c1.897.21 3.68.738 5.35 1.58a15.748 15.748 0 0 1 4.374 3.242 15.065 15.065 0 0 1 2.951 4.533c.72 1.704 1.08 3.522 1.08 5.455 0 1.827-.28 3.654-.843 5.48-.562 1.828-1.379 3.47-2.45 4.929A13.39 13.39 0 0 1 46.669 39c-1.599.948-3.452 1.458-5.56 1.528H37.26a1.62 1.62 0 0 1-1.185-.5 1.62 1.62 0 0 1-.501-1.186c0-.457.167-.852.5-1.186.334-.334.73-.5 1.186-.5h3.848c1.44 0 2.75-.37 3.926-1.108a10.851 10.851 0 0 0 3.03-2.846 13.53 13.53 0 0 0 1.95-3.9 14.23 14.23 0 0 0 .686-4.321c0-1.582-.316-3.066-.949-4.454a11.623 11.623 0 0 0-2.582-3.636 12.857 12.857 0 0 0-3.742-2.478 11.054 11.054 0 0 0-4.48-.922l-1.212-.053-.37-1.159c-.878-2.81-2.292-4.998-4.242-6.562-1.95-1.563-4.594-2.345-7.932-2.345-2.108 0-4.005.36-5.692 1.08-1.686.72-3.136 1.722-4.348 3.005-1.212 1.282-2.143 2.81-2.793 4.585-.65 1.774-.975 3.68-.975 5.718h.053l.105 1.581-1.528.264c-1.863.316-3.444 1.317-4.744 3.004-1.3 1.686-1.95 3.584-1.95 5.692 0 2.39.8 4.462 2.398 6.219 1.599 1.757 3.488 2.635 5.666 2.635h4.849c.492 0 .896.167 1.212.5.316.335.474.73.474 1.187 0 .456-.158.852-.474 1.185-.316.334-.72.501-1.212.501h-4.849a10.08 10.08 0 0 1-4.374-.975 11.673 11.673 0 0 1-3.61-2.661 13.173 13.173 0 0 1-2.478-3.9A12.073 12.073 0 0 1 0 28.301c0-2.706.755-5.148 2.266-7.326 1.511-2.178 3.444-3.636 5.798-4.374.14-2.354.658-4.542 1.554-6.562.896-2.02 2.091-3.777 3.584-5.27 1.494-1.494 3.25-2.662 5.27-3.505C20.493.422 22.733 0 25.193 0c1.898 0 3.637.237 5.218.711 1.581.475 3.004 1.151 4.269 2.03a13.518 13.518 0 0 1 3.268 3.215 18.628 18.628 0 0 1 2.266 4.216Zm-11.964 13.44 6.22 6.85c.245.247.368.537.368.87 0 .334-.123.642-.369.923l-.421.263c-.211.246-.484.343-.817.29a1.544 1.544 0 0 1-.87-.448l-3.69-4.11v16.97c0 .492-.166.896-.5 1.212-.334.316-.729.474-1.186.474-.492 0-.896-.158-1.212-.474-.316-.316-.474-.72-.474-1.212V28.25l-3.584 4.005a1.544 1.544 0 0 1-.87.448.959.959 0 0 1-.87-.29l-.42-.264c-.247-.28-.37-.588-.37-.922 0-.334.123-.624.37-.87l6.113-6.746v-.052l.421-.422a.804.804 0 0 1 .396-.29c.158-.053.307-.079.448-.079.175 0 .333.026.474.079.14.053.281.15.422.29l.421.422v.052Z",
+                        fill: "none"
+                        })));
+                        }</span></div>
+                            </div>
+                            <div class="jfUpload-button-container">
+                                <div aria-hidden="true" class="jfUpload-button" data-version="v2" style="display:none"
+                                     tabindex="0">Browse Files
+                                    <div class="jfUpload-heading forDesktop">Drag and drop files here</div>
+                                    <div class="jfUpload-heading forMobile">Choose a file</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jfUpload-files-container">
+                            <div class="validate[multipleUpload]"><input aria-label="Browse Files" class="form-upload-multiple validate[required]" data-component="fileupload"
+                                                                         data-file-accept="pdf, doc, docx, xls, xlsx, csv, txt, rtf, html, zip, mp3, wma, mpg, flv, avi, jpg, jpeg, png, gif"
+                                                                         data-file-limit="1"
+                                                                         data-file-maxsize="10854"
+                                                                         data-file-minsize="0"
+                                                                         data-imagevalidate="yes" id="input_4"
+                                                                         multiple="" name="showImg"
+                                                                         required="" type="file"/></div>
+                        </div>
+                    </div>
+                    <div data-wrapper-react="true"></div>
+                </div>
+                <span class="cancelText" style="display:none">Cancel</span><span class="ofText"
+                                                                                 style="display:none">of</span>
+            </div>
+        </div>
+    </li>
+    <li class="form-line jf-required" data-type="control_fileupload" id="id_7"><label
+            class="form-label form-label-top form-label-auto" for="input_7" id="label_7"> Item Slide Show Images<span
+            class="form-required">*</span> </label>
+        <div class="form-input-wide jf-required" data-layout="full" id="cid_7">
+            <div class="jfQuestion-fields" data-wrapper-react="true">
+                <div class="jfField isFilled">
+                    <div class="jfUpload-wrapper">
+                        <div class="jfUpload-container">
+                            <div class="jfUpload-text-container">
+                                <div class="jfUpload-icon forDesktop"><span class="iconSvg  dhtupload ">function SvgDhtupload2(props) {
+                        return /* @__PURE__ */ react.createElement("svg", dhtupload_svg_extends({
+                        width: 54,
+                        height: 47,
+                        xmlns: "http://www.w3.org/2000/svg"
+                        }, props), dhtupload_svg_path || (dhtupload_svg_path = /* @__PURE__ */ react.createElement("path", {
+                        d: "M40.213 10.172c1.897.21 3.68.738 5.35 1.58a15.748 15.748 0 0 1 4.374 3.242 15.065 15.065 0 0 1 2.951 4.533c.72 1.704 1.08 3.522 1.08 5.455 0 1.827-.28 3.654-.843 5.48-.562 1.828-1.379 3.47-2.45 4.929A13.39 13.39 0 0 1 46.669 39c-1.599.948-3.452 1.458-5.56 1.528H37.26a1.62 1.62 0 0 1-1.185-.5 1.62 1.62 0 0 1-.501-1.186c0-.457.167-.852.5-1.186.334-.334.73-.5 1.186-.5h3.848c1.44 0 2.75-.37 3.926-1.108a10.851 10.851 0 0 0 3.03-2.846 13.53 13.53 0 0 0 1.95-3.9 14.23 14.23 0 0 0 .686-4.321c0-1.582-.316-3.066-.949-4.454a11.623 11.623 0 0 0-2.582-3.636 12.857 12.857 0 0 0-3.742-2.478 11.054 11.054 0 0 0-4.48-.922l-1.212-.053-.37-1.159c-.878-2.81-2.292-4.998-4.242-6.562-1.95-1.563-4.594-2.345-7.932-2.345-2.108 0-4.005.36-5.692 1.08-1.686.72-3.136 1.722-4.348 3.005-1.212 1.282-2.143 2.81-2.793 4.585-.65 1.774-.975 3.68-.975 5.718h.053l.105 1.581-1.528.264c-1.863.316-3.444 1.317-4.744 3.004-1.3 1.686-1.95 3.584-1.95 5.692 0 2.39.8 4.462 2.398 6.219 1.599 1.757 3.488 2.635 5.666 2.635h4.849c.492 0 .896.167 1.212.5.316.335.474.73.474 1.187 0 .456-.158.852-.474 1.185-.316.334-.72.501-1.212.501h-4.849a10.08 10.08 0 0 1-4.374-.975 11.673 11.673 0 0 1-3.61-2.661 13.173 13.173 0 0 1-2.478-3.9A12.073 12.073 0 0 1 0 28.301c0-2.706.755-5.148 2.266-7.326 1.511-2.178 3.444-3.636 5.798-4.374.14-2.354.658-4.542 1.554-6.562.896-2.02 2.091-3.777 3.584-5.27 1.494-1.494 3.25-2.662 5.27-3.505C20.493.422 22.733 0 25.193 0c1.898 0 3.637.237 5.218.711 1.581.475 3.004 1.151 4.269 2.03a13.518 13.518 0 0 1 3.268 3.215 18.628 18.628 0 0 1 2.266 4.216Zm-11.964 13.44 6.22 6.85c.245.247.368.537.368.87 0 .334-.123.642-.369.923l-.421.263c-.211.246-.484.343-.817.29a1.544 1.544 0 0 1-.87-.448l-3.69-4.11v16.97c0 .492-.166.896-.5 1.212-.334.316-.729.474-1.186.474-.492 0-.896-.158-1.212-.474-.316-.316-.474-.72-.474-1.212V28.25l-3.584 4.005a1.544 1.544 0 0 1-.87.448.959.959 0 0 1-.87-.29l-.42-.264c-.247-.28-.37-.588-.37-.922 0-.334.123-.624.37-.87l6.113-6.746v-.052l.421-.422a.804.804 0 0 1 .396-.29c.158-.053.307-.079.448-.079.175 0 .333.026.474.079.14.053.281.15.422.29l.421.422v.052Z",
+                        fill: "none"
+                        })));
+                        }</span></div>
+                            </div>
+                            <div class="jfUpload-button-container">
+                                <div aria-hidden="true" class="jfUpload-button" data-version="v2" style="display:none"
+                                     tabindex="0">Browse Files
+                                    <div class="jfUpload-heading forDesktop">Drag and drop files here</div>
+                                    <div class="jfUpload-heading forMobile">Choose a file</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jfUpload-files-container">
+                            <div class="validate[multipleUpload]"><input aria-label="Browse Files" class="form-upload-multiple validate[required]" data-component="fileupload"
+                                                                         data-file-accept="pdf, doc, docx, xls, xlsx, csv, txt, rtf, html, zip, mp3, wma, mpg, flv, avi, jpg, jpeg, png, gif"
+                                                                         data-file-limit=""
+                                                                         data-file-maxsize="10854"
+                                                                         data-file-minsize="0"
+                                                                         data-imagevalidate="yes" id="input_7"
+                                                                         multiple="" name="slideShowImgs"
+                                                                         required="" type="file"/></div>
+                        </div>
+                    </div>
+                    <div data-wrapper-react="true"></div>
+                </div>
+                <span class="cancelText" style="display:none">Cancel</span><span class="ofText"
+                                                                                 style="display:none">of</span>
+            </div>
+        </div>
+    </li>
+    <li class="form-line jf-required" data-type="control_fileupload" id="id_8"><label
+            class="form-label form-label-top form-label-auto" for="input_8" id="label_8"> Item Specifications Document
+        <span class="form-required">*</span> </label>
+        <div class="form-input-wide jf-required" data-layout="full" id="cid_8">
+            <div class="jfQuestion-fields" data-wrapper-react="true">
+                <div class="jfField isFilled">
+                    <div class="jfUpload-wrapper">
+                        <div class="jfUpload-container">
+                            <div class="jfUpload-text-container">
+                                <div class="jfUpload-icon forDesktop"><span class="iconSvg  dhtupload ">function SvgDhtupload2(props) {
+                        return /* @__PURE__ */ react.createElement("svg", dhtupload_svg_extends({
+                        width: 54,
+                        height: 47,
+                        xmlns: "http://www.w3.org/2000/svg"
+                        }, props), dhtupload_svg_path || (dhtupload_svg_path = /* @__PURE__ */ react.createElement("path", {
+                        d: "M40.213 10.172c1.897.21 3.68.738 5.35 1.58a15.748 15.748 0 0 1 4.374 3.242 15.065 15.065 0 0 1 2.951 4.533c.72 1.704 1.08 3.522 1.08 5.455 0 1.827-.28 3.654-.843 5.48-.562 1.828-1.379 3.47-2.45 4.929A13.39 13.39 0 0 1 46.669 39c-1.599.948-3.452 1.458-5.56 1.528H37.26a1.62 1.62 0 0 1-1.185-.5 1.62 1.62 0 0 1-.501-1.186c0-.457.167-.852.5-1.186.334-.334.73-.5 1.186-.5h3.848c1.44 0 2.75-.37 3.926-1.108a10.851 10.851 0 0 0 3.03-2.846 13.53 13.53 0 0 0 1.95-3.9 14.23 14.23 0 0 0 .686-4.321c0-1.582-.316-3.066-.949-4.454a11.623 11.623 0 0 0-2.582-3.636 12.857 12.857 0 0 0-3.742-2.478 11.054 11.054 0 0 0-4.48-.922l-1.212-.053-.37-1.159c-.878-2.81-2.292-4.998-4.242-6.562-1.95-1.563-4.594-2.345-7.932-2.345-2.108 0-4.005.36-5.692 1.08-1.686.72-3.136 1.722-4.348 3.005-1.212 1.282-2.143 2.81-2.793 4.585-.65 1.774-.975 3.68-.975 5.718h.053l.105 1.581-1.528.264c-1.863.316-3.444 1.317-4.744 3.004-1.3 1.686-1.95 3.584-1.95 5.692 0 2.39.8 4.462 2.398 6.219 1.599 1.757 3.488 2.635 5.666 2.635h4.849c.492 0 .896.167 1.212.5.316.335.474.73.474 1.187 0 .456-.158.852-.474 1.185-.316.334-.72.501-1.212.501h-4.849a10.08 10.08 0 0 1-4.374-.975 11.673 11.673 0 0 1-3.61-2.661 13.173 13.173 0 0 1-2.478-3.9A12.073 12.073 0 0 1 0 28.301c0-2.706.755-5.148 2.266-7.326 1.511-2.178 3.444-3.636 5.798-4.374.14-2.354.658-4.542 1.554-6.562.896-2.02 2.091-3.777 3.584-5.27 1.494-1.494 3.25-2.662 5.27-3.505C20.493.422 22.733 0 25.193 0c1.898 0 3.637.237 5.218.711 1.581.475 3.004 1.151 4.269 2.03a13.518 13.518 0 0 1 3.268 3.215 18.628 18.628 0 0 1 2.266 4.216Zm-11.964 13.44 6.22 6.85c.245.247.368.537.368.87 0 .334-.123.642-.369.923l-.421.263c-.211.246-.484.343-.817.29a1.544 1.544 0 0 1-.87-.448l-3.69-4.11v16.97c0 .492-.166.896-.5 1.212-.334.316-.729.474-1.186.474-.492 0-.896-.158-1.212-.474-.316-.316-.474-.72-.474-1.212V28.25l-3.584 4.005a1.544 1.544 0 0 1-.87.448.959.959 0 0 1-.87-.29l-.42-.264c-.247-.28-.37-.588-.37-.922 0-.334.123-.624.37-.87l6.113-6.746v-.052l.421-.422a.804.804 0 0 1 .396-.29c.158-.053.307-.079.448-.079.175 0 .333.026.474.079.14.053.281.15.422.29l.421.422v.052Z",
+                        fill: "none"
+                        })));
+                        }</span></div>
+                            </div>
+                            <div class="jfUpload-button-container">
+                                <div aria-hidden="true" class="jfUpload-button" data-version="v2" style="display:none"
+                                     tabindex="0">Browse Files
+                                    <div class="jfUpload-heading forDesktop">Drag and drop files here</div>
+                                    <div class="jfUpload-heading forMobile">Choose a file</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jfUpload-files-container">
+                            <div class="validate[multipleUpload]"><input aria-label="Browse Files" class="form-upload-multiple validate[required]" data-component="fileupload"
+                                                                         data-file-accept="pdf, doc, docx, xls, xlsx, csv, txt, rtf, html, zip, mp3, wma, mpg, flv, avi, jpg, jpeg, png, gif"
+                                                                         data-file-limit="1"
+                                                                         data-file-maxsize="10854"
+                                                                         data-file-minsize="0"
+                                                                         data-imagevalidate="yes" id="input_8"
+                                                                         multiple="" name="specsDoc"
+                                                                         required="" type="file"/></div>
+                        </div>
+                    </div>
+                    <div data-wrapper-react="true"></div>
+                </div>
+                <span class="cancelText" style="display:none">Cancel</span><span class="ofText"
+                                                                                 style="display:none">of</span>
+            </div>
+        </div>
+    </li>
+    <li class="form-line jf-required" data-type="control_captcha" id="id_12"><label
+            class="form-label form-label-top form-label-auto" for="input_12" id="label_12"> Please verify that you are
+        human<span class="form-required">*</span> </label>
+        <div class="form-input-wide jf-required" data-layout="full" id="cid_12">
+            <section data-wrapper-react="true">
+                <div data-callback="recaptchaCallbackinput_12" data-component="recaptcha" data-expired-callback="recaptchaExpiredCallbackinput_12"
+                     id="recaptcha_input_12"></div>
+                <input class="hidden validate[required]" id="input_12" name="recaptcha_visible" required=""
+                       type="hidden"/>
+                <script src="https://www.google.com/recaptcha/api.js?render=explicit&amp;onload=recaptchaLoadedinput_12"
+                        type="text/javascript"></script>
+                <script type="text/javascript">
+                    var recaptchaLoadedinput_12 = function () {
+                        window.grecaptcha.render($("recaptcha_input_12"),
+                            {
+                                sitekey: '6LdU3CgUAAAAAB0nnFM3M3T0sy707slYYU51RroJ',
+                            });
+                        var grecaptchaBadge = document.querySelector('.grecaptcha-badge');
+                        if (grecaptchaBadge) {
+                            grecaptchaBadge.style.boxShadow = 'gray 0px 0px 2px';
+                        }
+                    };
+
+                    /**
+                     * Called when the reCaptcha verifies the user is human
+                     * For invisible reCaptcha;
+                     *   Submit event is stopped after validations and recaptcha is executed.
+                     *   If a challenge is not displayed, this will be called right after grecaptcha.execute()
+                     *   If a challenge is displayed, this will be called when the challenge is solved successfully
+                     *   Submit is triggered to actually submit the form since it is stopped before.
+                     */
+                    var recaptchaCallbackinput_12 = function () {
+                        var isInvisibleReCaptcha = false;
+                        var hiddenInput = $("input_12");
+                        hiddenInput.setValue(1);
+                        if (!isInvisibleReCaptcha) {
+                            if (hiddenInput.validateInput) {
+                                hiddenInput.validateInput();
+                            }
+                        } else {
+                            triggerSubmit(hiddenInput.form)
+                        }
+
+                        function triggerSubmit(formElement) {
+                            var button = formElement.ownerDocument.createElement('input');
+                            button.style.display = 'none';
+                            button.type = 'submit';
+                            formElement.appendChild(button).click();
+                            formElement.removeChild(button);
+                        }
+                    }
+
+                    // not really required for invisible recaptcha
+                    var recaptchaExpiredCallbackinput_12 = function () {
+                        var hiddenInput = $("input_12");
+                        hiddenInput.writeAttribute("value", false);
+                        if (hiddenInput.validateInput) {
+                            hiddenInput.validateInput();
+                        }
+                    }
+                </script>
+            </section>
+        </div>
+    </li>
+    <li class="form-line" data-type="control_button" id="id_2">
+        <div class="form-input-wide" data-layout="full" id="cid_2">
+            <div class="form-buttons-wrapper form-buttons-auto   jsTest-button-wrapperField" data-align="auto">
+                <button class="form-submit-button submit-button jf-form-buttons jsTest-submitField" data-component="button"
+                        data-content=""
+                        id="input_2" type="submit">Submit
+                </button>
+            </div>
+        </div>
+    </li>
+    <li style="display:none">Should be Empty: <input name="website" type="text" value=""/></li>
+    </ul>
+    </div>
+    <script>
+        JotForm.showJotFormPowered = "new_footer";
+    </script>
+    <script>
+        JotForm.poweredByText = "Powered by Jotform";
+    </script>
+    <input class="simple_spc" id="simple_spc" name="simple_spc" type="hidden" value="230232068667052"/>
+    <script type="text/javascript">
+        var all_spc = document.querySelectorAll("form[id='230232068667052'] .si" + "mple" + "_spc");
+        for (var i = 0; i < all_spc.length; i++) {
+            all_spc[i].value = "230232068667052-230232068667052";
+        }
+    </script>
+    <div class="formFooter-heightMask"></div>
+    <div class="formFooter f6 branding21">
+        <div class="formFooter-wrapper formFooter-leftSide"><a
+                class="formFooter-logoLink"
+                href="https://www.jotform.com/?utm_source=formfooter&utm_medium=banner&utm_term=230232068667052&utm_content=jotform_logo&utm_campaign=powered_by_jotform_le" target="_blank"><img alt="Jotform Logo"
+                                                                 class="formFooter-logo"
+                                                                 src="https://cdn.jotfor.ms/assets/img/logo2021/jotform-logo-white.svg" style="height: 44px;"></a></div>
+        <div class="formFooter-wrapper formFooter-rightSide"><span class="formFooter-text">Now create your own Jotform - It's free!</span><a
+                class="formFooter-button"
+                href="https://www.jotform.com/?utm_source=formfooter&utm_medium=banner&utm_term=230232068667052&utm_content=jotform_button&utm_campaign=powered_by_jotform_le"
+                target="_blank">Create your own Jotform</a></div>
+    </div>
+</form>
+<script type="text/javascript">JotForm.ownerView = true;</script>
+<script src="https://cdn.jotfor.ms//js/vendor/smoothscroll.min.js?v=3.3.39013"></script>
+<script src="https://cdn.jotfor.ms//js/errorNavigation.js?v=3.3.39013"></script>
+
+</body>
+</html>

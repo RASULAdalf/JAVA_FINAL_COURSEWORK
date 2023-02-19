@@ -1,0 +1,46 @@
+<div class="row col-sm-12" mat-dialog-content>
+  <div class="all-content-outer" >
+    <div class="menu-outer">
+      <div class="menu-items-outer"><mat-button-toggle-group #chooseMenuItem="matButtonToggleGroup" aria-label="menu-label" appearance="standard" >
+        <mat-button-toggle value="CLOTHES" aria-orientation="vertical" (click)="loadData('CLOTHES')">CLOTHES</mat-button-toggle>
+        <mat-button-toggle value="BOOKS" aria-orientation="vertical" (click)="loadData('BOOKS')">BOOKS</mat-button-toggle>
+        <mat-button-toggle value="ELECTRONICS" aria-orientation="vertical" (click)="loadData('ELECTRONICS')">ELECTRONICS</mat-button-toggle>
+        <mat-button-toggle value="ELECTRICAL" aria-orientation="vertical" (click)="loadData('ELECTRICAL')">ELECTRICAL</mat-button-toggle>
+        <mat-button-toggle value="COSMETICS" aria-orientation="vertical" (click)="loadData('COSMETICS')">COSMETICS</mat-button-toggle>
+        <mat-button-toggle value="OTHER" aria-orientation="vertical" (click)="loadData('OTHER')">OTHER</mat-button-toggle>
+      </mat-button-toggle-group></div>
+    </div>
+    <div class="content-outer">
+      <div class="search-bar-outer">
+        <div class="search-bar-inner">
+          <div class="icon-inner"><i class="fa-brands fa-searchengin w3-xxlarge"></i></div>
+          <div class="text-inner">
+            <form [formGroup]="searchForm">
+              <input type="text" matInput [style.width.%]="100" [style.height.px]="43" formControlName="searchText" placeholder="Enter search Text">
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="content-inner">
+        <app-clothes class="inner-components" *ngIf="(chooseMenuItem.value=='CLOTHES'|| chooseMenuItem.value==undefined)" [data]="dataList" [buttonName]="buttonName"></app-clothes>
+        <app-books class="inner-components" *ngIf="chooseMenuItem.value=='BOOKS' " [data]="dataList" [buttonName]="buttonName"></app-books>
+        <app-electronics class="inner-components" *ngIf="chooseMenuItem.value=='ELECTRONICS' " [data]="dataList" [buttonName]="buttonName"></app-electronics>
+        <app-electrical class="inner-components" *ngIf="chooseMenuItem.value=='ELECTRICAL'" [data]="dataList" [buttonName]="buttonName"></app-electrical>
+        <app-cosmetics class="inner-components" *ngIf="chooseMenuItem.value=='COSMETICS'" [data]="dataList" [buttonName]="buttonName"></app-cosmetics>
+        <app-other class="inner-components" *ngIf="chooseMenuItem.value=='OTHER'" [data]="dataList" [buttonName]="buttonName"></app-other>
+      </div>
+
+      <div class="paginator-outer">
+        <mat-paginator [length]=dataCount [pageSize]=pageSize [pageIndex]=page [pageSizeOptions]=pageSizeOptions  aria-label="Select Page" (page)="pageEvent=loadServerData($event,chooseMenuItem.value,false)">
+
+        </mat-paginator>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<div class="buttons-outer" mat-dialog-actions>
+  <button mat-raised-button color="warn" mat-dialog-close="true">CLOSE</button>
+</div>
+

@@ -1,0 +1,10 @@
+<div class="order-element" *ngFor="let data of data; index as num" #viewButton [attr.data-index]="num">
+  <div class="header"><h2>{{data?.orderDescription}}</h2></div>
+  <div class="image-delivered" *ngIf="data?.state=='Delivered'"></div>
+  <div class="image-pending" *ngIf="data?.state=='Pending Delivery'"></div>
+  <div class="price">Rs.{{data?.totalPrice}}.00</div>
+  <div class="view-details">
+    <button color="primary" mat-raised-button (click)="openModal(viewButton,num)">SELECT</button>
+  </div>
+</div>
+
