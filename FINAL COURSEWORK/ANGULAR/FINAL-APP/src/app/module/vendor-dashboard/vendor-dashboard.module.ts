@@ -12,25 +12,43 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {CustomerDashboardModule} from "../customer-dashboard/customer-dashboard.module";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatIconModule} from "@angular/material/icon";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { OrdersComponent } from './components/orders/orders.component';
+import { ProductsComponent } from './components/products/products.component';
+import { ClientsComponent } from './components/clients/clients.component';
+import { EarningsComponent } from './components/earnings/earnings.component';
+import { AnalysisComponent } from './components/analysis/analysis.component';
+import { VendorDashboardBackgroundImagesPipe } from './pipes/vendor-dashboard-background-images.pipe';
 
 
 @NgModule({
   declarations: [
     VendorDashboardComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    OrdersComponent,
+    ProductsComponent,
+    ClientsComponent,
+    EarningsComponent,
+    AnalysisComponent,
+    VendorDashboardBackgroundImagesPipe
   ],
-  imports: [
-    CommonModule,
-    VendorDashboardRoutingModule,
-    MatTabsModule,
-    MatInputModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MatSelectModule,
-    CustomerDashboardModule,
-  ]
+    imports: [
+        CommonModule,
+        VendorDashboardRoutingModule,
+        MatTabsModule,
+        MatInputModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MatSelectModule,
+        CustomerDashboardModule,
+        MatButtonToggleModule,
+        MatIconModule,
+        MatPaginatorModule,
+    ]
 })
 export class VendorDashboardModule {
 }

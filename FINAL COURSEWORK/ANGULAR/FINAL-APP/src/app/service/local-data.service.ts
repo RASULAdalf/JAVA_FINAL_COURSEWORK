@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CookieService} from "ngx-cookie-service";
+import {CookieService} from "ng2-cookies";
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +19,9 @@ export class LocalDataService {
 
   public setCookie(key: string, data: any):Promise<any> {
     return new Promise((resolve, reject)=>{
-      this.cookieService.set(key, data, {
-        //domain: 'localhost:4200/login',
-        expires: 1
-      });
+      this.cookieService.set(key, data
+
+      );
       resolve(true);
     });
   }

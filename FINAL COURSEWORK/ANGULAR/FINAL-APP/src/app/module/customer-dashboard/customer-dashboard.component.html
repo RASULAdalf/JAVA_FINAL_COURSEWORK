@@ -1,14 +1,15 @@
 <div class="row col-sm-12">
   <div class="header-outer">
-    <h2 class="header-text">Customer Dashboard
-      <button mat-icon-button aria-label="Example icon button with a shopping cart icon" (click)="openModal()">
+    <h2 class="header-text">Customer Dashboard</h2>
+      <div class="header-buttons">
+      <button  mat-icon-button aria-label="Example icon button with a shopping cart icon" (click)="openModal()">
         <mat-icon [matBadge]="buyingCartService.cartData.numberOfItems" class="shopping-cart-button">add_shopping_cart</mat-icon>
     </button>
-      <button mat-icon-button (click)="logout()" aria-label="Example icon button with a logout icon">
+      <button mat-button (click)="logout()" aria-label="Example icon button with a logout icon">
         <mat-icon class="logout-button">logout</mat-icon>
     </button>
       <button mat-raised-button #orderBtn class="orders-button" color="accent" (click)="loadOrdersData()">Your Orders</button>
-    </h2>
+      </div>
 
   </div>
   <div class="all-content-outer">

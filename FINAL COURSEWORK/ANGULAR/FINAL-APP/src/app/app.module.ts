@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {AuthRoutingModule} from './auth-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {CookieService} from "ngx-cookie-service";
+import {CookieService} from "ng2-cookies";
 import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";

@@ -6,6 +6,8 @@ import {environment} from "../../../environments/environment";
 import {LoadingService} from "../customer-dashboard/services/loading.service";
 import {SnackBarService} from "../customer-dashboard/services/snack-bar.service";
 import {ModalService} from "../customer-dashboard/services/modal.service";
+import {LocalDataService} from "../../service/local-data.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-vendor-dashboard',
@@ -13,7 +15,7 @@ import {ModalService} from "../customer-dashboard/services/modal.service";
   styleUrls: ['./vendor-dashboard.component.scss']
 })
 export class VendorDashboardComponent implements OnInit {
-  vendorEmail:any;
+  vendorEmail:string|undefined|null;
 
   addNewItemsForm = new FormGroup({
     description:new FormControl('',[Validators.required,Validators.maxLength(10)]),
@@ -39,8 +41,14 @@ export class VendorDashboardComponent implements OnInit {
   onSlide:boolean = true;
   onSpec:boolean = true;
   type: any = "Bar";
+  totalEarnings: string = '$0.00';
+  year: number = 0;
+  vendorImage: string | null | undefined;
+  orderButtonClicked: boolean = false;
+  dataList: any[] | undefined;
+  buttonName: any;
 
-  constructor(private modalService:ModalService,public snackBarService:SnackBarService,public loadingService:LoadingService,private httpService:HttpService,private dashboardService: VendorDashboardServiceService) {
+  constructor(public route:ActivatedRoute,public localStorageService:LocalDataService,private modalService:ModalService,public snackBarService:SnackBarService,public loadingService:LoadingService,private httpService:HttpService,private dashboardService: VendorDashboardServiceService) {
     this.dashboardService.loginService.afAuth.currentUser.then(result=>{
       this.vendorEmail = result?.email;
     })
@@ -112,12 +120,18 @@ export class VendorDashboardComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.modalService.openLetSirKnowModal("Vendor Dashboard");
+    //this.modalService.openLetSirKnowModal("Vendor Dashboard");
+    this.vendorEmail = this.route.snapshot.queryParamMap.get('vendorEmail');
+    this.vendorImage = this.route.snapshot.queryParamMap.get('vendorImage');
+    this.year = new Date().getFullYear();
   }
 
-  logOut() {
+  logout() {
     this.dashboardService.logOut();
   }
 
 
+   loadData(value: string) {
+
+  }
 }

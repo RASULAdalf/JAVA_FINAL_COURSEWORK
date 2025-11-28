@@ -1,57 +1,110 @@
-<div class="row">
-  <div class="logout-button">
-<button class="logout-btn" color="warn" mat-raised-button (click)="logOut()">Logout</button>
+<!--<div class="row">-->
+<!--  <div class="logout-button">-->
+<!--<button class="logout-btn" color="warn" mat-raised-button (click)="logOut()">Logout</button>-->
+<!--  </div>-->
+<!--<div class="content-inner">-->
+
+<!--  <div class="form-inner">-->
+<!--    <app-loading *ngIf="loadingService.progrssBarLoadingState | async" [data]="type"></app-loading>-->
+<!--<form [formGroup]="addNewItemsForm" (ngSubmit)="submit()" enctype="multipart/form-data">-->
+
+<!--  <mat-form-field appearance="outline" [style.margin-top.px]=5 [style.width.px]=500 [style.margin-left.px]=140>-->
+<!--    <mat-label>Vendor Email</mat-label>-->
+<!--    <input matInput formControlName="vEmail" type="email">-->
+<!--  </mat-form-field>-->
+<!--  <br>-->
+<!--  <mat-form-field appearance="outline" [style.width.px]=500 [style.margin-left.px]=140>-->
+<!--    <mat-label>Item Name</mat-label>-->
+<!--    <input matInput formControlName="description" type="text">-->
+<!--    <mat-error>Maximum of 10 characters are allowed</mat-error>-->
+<!--  </mat-form-field>-->
+<!--  <br>-->
+<!--  <mat-form-field appearance="outline" [style.width.px]=500 [style.margin-left.px]=140>-->
+<!--    <mat-label>Item category</mat-label>-->
+<!--    <mat-select [(value)]="category" required formControlName="category">-->
+<!--      <mat-option *ngFor="let category of categories" [value]="category.value">-->
+<!--        {{category.value}}-->
+<!--      </mat-option>-->
+<!--    </mat-select>-->
+<!--  </mat-form-field>-->
+<!--  <br>-->
+<!--  <mat-form-field appearance="outline" [style.margin-left.px]=140>-->
+<!--    <mat-label>Quantity</mat-label>-->
+<!--    <input matInput formControlName="qty" type="text">-->
+<!--  </mat-form-field>-->
+<!--  <br>-->
+<!--  <mat-form-field appearance="outline" [style.margin-left.px]=140>-->
+<!--    <mat-label>Item price</mat-label>-->
+<!--    <input matInput formControlName="price" type="text">-->
+<!--  </mat-form-field>-->
+<!--  <br>-->
+<!--  <label for="img" [style.margin-left.px]=140>Item Image : &nbsp;</label>-->
+<!--  <input formControlName="img" type="file" id="img"  (change)="onImgChange($event)" accept="image/*" required>-->
+
+<!--  <br><br>-->
+<!--  <label for="slide" [style.margin-left.px]=140>Item SlideShow Images : &nbsp;</label>-->
+<!--  <input formControlName="slideShowImgs" id="slide" type="file"  multiple (change)="onSlideImgsChange($event)" accept="image/*" required>-->
+
+<!--  <br><br>-->
+<!--  <label for="specs" [style.margin-left.px]=140>Item Specifications Document : &nbsp;</label>-->
+<!--  <input formControlName="specsDoc" id="specs" type="file"  (change)="onSpecsDocChange($event)" accept="application/pdf" required>-->
+
+<!--  <br><br>-->
+<!--  <button type="submit" mat-raised-button color="primary"  [style.margin-left.px]=360  [disabled]="addNewItemsForm.invalid && (onImg||onSlide||onSpec)">Submit</button>-->
+<!--</form>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</div>-->
+
+<div class="row col-sm-12">
+  <div class="header-outer">
+    <h2 class="header-text">Vendor Dashboard</h2>
+    <div class="header-buttons">
+           <button mat-button (click)="this.logout()" aria-label="Example icon button with a logout icon">
+        <mat-icon class="logout-button">logout</mat-icon>
+      </button>
+      <button mat-button="outlined" #orderBtn class="orders-button" color="accent">{{totalEarnings}}</button>
+    </div>
+
   </div>
-<div class="content-inner">
+  <div class="all-content-outer">
+    <div class="menu-outer">
+      <div class="account-outer" *ngIf="vendorEmail!=undefined && vendorEmail!=null">
+        <div class="account-logo">
+          <div class="logo-box" [ngStyle]="{ background: this.vendorImage| vendorDashboardBackgroundImages,'background-size':'cover'}"></div>
+        </div>
+        <div class="account-name">{{this.vendorEmail}}</div>
+      </div>
+      <div class="menu-items-outer"><mat-button-toggle-group #chooseMenuItem="matButtonToggleGroup" aria-label="menu-label" appearance="standard" >
+        <mat-button-toggle value="ORDERS" aria-orientation="vertical" (click)="loadData('CLOTHES')">ORDERS</mat-button-toggle>
+        <mat-button-toggle value="PRODUCTS" aria-orientation="vertical" (click)="loadData('BOOKS')">PRODUCTS</mat-button-toggle>
+        <mat-button-toggle value="CLIENTS" aria-orientation="vertical" (click)="loadData('ELECTRONICS')">CLIENTS</mat-button-toggle>
+        <mat-button-toggle value="EARNINGS" aria-orientation="vertical" (click)="loadData('ELECTRICAL')">EARNINGS</mat-button-toggle>
+        <mat-button-toggle value="ANALYSIS" aria-orientation="vertical" (click)="loadData('COSMETICS')">ANALYSIS</mat-button-toggle>
+       </mat-button-toggle-group></div>
+      <div class="copyright-outer">
+        <small>&copy;{{year}}</small>&nbsp;
+        <small>All rights reserved</small>
+      </div>
+    </div>
+    <div class="content-outer">
+      <div class="content-inner">
+        <app-loading *ngIf="loadingService.progrssBarLoadingState |async" [data]="type"></app-loading>
+        <app-orders class="inner-components" *ngIf="chooseMenuItem.value=='ORDERS' && !orderButtonClicked" [data]="dataList" [buttonName]="buttonName"></app-orders>
+        <app-products class="inner-components" *ngIf="chooseMenuItem.value=='PRODUCTS' && !orderButtonClicked" [data]="dataList" [buttonName]="buttonName"></app-products>
+        <app-clients class="inner-components" *ngIf="chooseMenuItem.value=='CLIENTS' && !orderButtonClicked" [data]="dataList" [buttonName]="buttonName"></app-clients>
+        <app-earnings class="inner-components" *ngIf="chooseMenuItem.value=='EARNINGS'&& !orderButtonClicked" [data]="dataList" [buttonName]="buttonName"></app-earnings>
+        <app-analysis class="inner-components" *ngIf="chooseMenuItem.value=='ANALYSIS'&& !orderButtonClicked" [data]="dataList" [buttonName]="buttonName"></app-analysis>
+      </div>
 
-  <div class="form-inner">
-    <app-loading *ngIf="loadingService.progrssBarLoadingState | async" [data]="type"></app-loading>
-<form [formGroup]="addNewItemsForm" (ngSubmit)="submit()" enctype="multipart/form-data">
+      <div class="paginator-outer">
+<!--        <mat-paginator [length]=dataCount [pageSize]=pageSize [pageIndex]=page [pageSizeOptions]=pageSizeOptions  aria-label="Select Page" (page)="pageEvent=loadServerData($event,chooseMenuItem.value,orderButtonClicked)">-->
 
-  <mat-form-field appearance="outline" [style.margin-top.px]=5 [style.width.px]=500 [style.margin-left.px]=140>
-    <mat-label>Vendor Email</mat-label>
-    <input matInput formControlName="vEmail" type="email">
-  </mat-form-field>
-  <br>
-  <mat-form-field appearance="outline" [style.width.px]=500 [style.margin-left.px]=140>
-    <mat-label>Item Name</mat-label>
-    <input matInput formControlName="description" type="text">
-    <mat-error>Maximum of 10 characters are allowed</mat-error>
-  </mat-form-field>
-  <br>
-  <mat-form-field appearance="outline" [style.width.px]=500 [style.margin-left.px]=140>
-    <mat-label>Item category</mat-label>
-    <mat-select [(value)]="category" required formControlName="category">
-      <mat-option *ngFor="let category of categories" [value]="category.value">
-        {{category.value}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <br>
-  <mat-form-field appearance="outline" [style.margin-left.px]=140>
-    <mat-label>Quantity</mat-label>
-    <input matInput formControlName="qty" type="text">
-  </mat-form-field>
-  <br>
-  <mat-form-field appearance="outline" [style.margin-left.px]=140>
-    <mat-label>Item price</mat-label>
-    <input matInput formControlName="price" type="text">
-  </mat-form-field>
-  <br>
-  <label for="img" [style.margin-left.px]=140>Item Image : &nbsp;</label>
-  <input formControlName="img" type="file" id="img"  (change)="onImgChange($event)" accept="image/*" required>
+<!--        </mat-paginator>-->
+      </div>
+    </div>
 
-  <br><br>
-  <label for="slide" [style.margin-left.px]=140>Item SlideShow Images : &nbsp;</label>
-  <input formControlName="slideShowImgs" id="slide" type="file"  multiple (change)="onSlideImgsChange($event)" accept="image/*" required>
 
-  <br><br>
-  <label for="specs" [style.margin-left.px]=140>Item Specifications Document : &nbsp;</label>
-  <input formControlName="specsDoc" id="specs" type="file"  (change)="onSpecsDocChange($event)" accept="application/pdf" required>
-
-  <br><br>
-  <button type="submit" mat-raised-button color="primary"  [style.margin-left.px]=360  [disabled]="addNewItemsForm.invalid && (onImg||onSlide||onSpec)">Submit</button>
-</form>
   </div>
 </div>
-</div>
+

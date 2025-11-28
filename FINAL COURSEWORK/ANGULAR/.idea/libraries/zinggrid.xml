@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="zinggrid">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/FINAL-APP/node_modules/zinggrid/dist/zinggrid.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

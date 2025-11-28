@@ -131,7 +131,7 @@ export class LoginService {
 
   SignIn(email: string, password: string) {
     this.afAuth.signInWithEmailAndPassword(email, password).then(res => {
-      this.router.navigate(['VendorDashboard']);
+      this.router.navigate(['VendorDashboard'],{ queryParams: { vendorEmail: email } });
     }, error => {
       this.router.navigate(['/landing'], {queryParams: {err: error}});
     })
@@ -209,7 +209,8 @@ export class LoginService {
               this.userData = user;
               localStorage.setItem('user', JSON.stringify(this.userData));
               JSON.parse(localStorage.getItem('user')!);
-              this.router.navigate(['VendorDashboard']);
+              console.log(this.userData)
+              this.router.navigate(['VendorDashboard'],{queryParams:{vendorEmail:this.userData.email,vendorImage:this.userData.photoURL}});
             } else {
               localStorage.setItem('user', 'null');
               JSON.parse(localStorage.getItem('user')!);

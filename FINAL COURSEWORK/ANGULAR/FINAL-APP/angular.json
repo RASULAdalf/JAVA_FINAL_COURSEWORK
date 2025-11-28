@@ -109,5 +109,8 @@
       }
     }
   },
-  "defaultProject": "FINAL-APP"
+  "defaultProject": "FINAL-APP",
+  "cli": {
+    "analytics": false
+  }
 }
