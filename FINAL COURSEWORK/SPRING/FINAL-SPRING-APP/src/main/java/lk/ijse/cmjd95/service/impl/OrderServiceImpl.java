@@ -288,72 +288,76 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public PaginatedOrderResponseDto findOrder(String searchText, int page, int pageSize, String token, String byWhom, String customer_email, String vendor_email) {
         List<OrderResponseDto> ordersList = new ArrayList<>();
-        switch (byWhom) {
-            case "customer": {
-                if (!TokenValidator.validateToken(token)) {
-                    return null;
-                }
-
-                PaginatedOrderResponseDto customerOrderById = findCustomerOrderById(searchText, customer_email, page, pageSize, token);
-                if (customerOrderById.getDataCount() > 0) {
-                    for (OrderResponseDto dto : customerOrderById.getOrders()) {
-                        ordersList.add(dto);
+        try {
+            switch (byWhom) {
+                case "customer": {
+                    if (!TokenValidator.validateToken(token)) {
+                        return null;
                     }
-                    return new PaginatedOrderResponseDto(ordersList, ordersList.size());
-                }
 
-                PaginatedOrderResponseDto customerOrderByDescription = findCustomerOrderByDescription(searchText, customer_email, page, pageSize, token);
-                if (customerOrderByDescription.getDataCount() > 0) {
-                    for (OrderResponseDto dto : customerOrderByDescription.getOrders()) {
-                        ordersList.add(dto);
+                    PaginatedOrderResponseDto customerOrderById = findCustomerOrderById(searchText, customer_email, page, pageSize, token);
+                    if (customerOrderById.getDataCount() > 0) {
+                        for (OrderResponseDto dto : customerOrderById.getOrders()) {
+                            ordersList.add(dto);
+                        }
+                        return new PaginatedOrderResponseDto(ordersList, ordersList.size());
                     }
-                    return new PaginatedOrderResponseDto(ordersList, ordersList.size());
-                }
 
-                PaginatedOrderResponseDto customerOrderByDate = findCustomerOrderByDate(searchText + "T18:30:00.000Z", customer_email, page, pageSize, token);
-                if (customerOrderByDate.getDataCount() > 0) {
-                    for (OrderResponseDto dto : customerOrderByDate.getOrders()) {
-                        ordersList.add(dto);
+                    PaginatedOrderResponseDto customerOrderByDescription = findCustomerOrderByDescription(searchText, customer_email, page, pageSize, token);
+                    if (customerOrderByDescription.getDataCount() > 0) {
+                        for (OrderResponseDto dto : customerOrderByDescription.getOrders()) {
+                            ordersList.add(dto);
+                        }
+                        return new PaginatedOrderResponseDto(ordersList, ordersList.size());
                     }
-                    return new PaginatedOrderResponseDto(ordersList, ordersList.size());
-                }
-            }
 
-            break;
-
-            case "vendor": {
-                if (!TokenValidator.validateToken(token)) {
-                    return null;
-                }
-
-                Optional<Order> byId = orderRepo.findById(searchText);
-                if (byId.isPresent()) {
-                    return new PaginatedOrderResponseDto(generateOrderResponseForVendorDisplay(byId, vendor_email, token), 1);
+                    PaginatedOrderResponseDto customerOrderByDate = findCustomerOrderByDate(searchText + "T18:30:00.000Z", customer_email, page, pageSize, token);
+                    if (customerOrderByDate.getDataCount() > 0) {
+                        for (OrderResponseDto dto : customerOrderByDate.getOrders()) {
+                            ordersList.add(dto);
+                        }
+                        return new PaginatedOrderResponseDto(ordersList, ordersList.size());
+                    }
                 }
 
-                Page<OrderDataCustomerDisplayInterface> ordersByCustomerEmail = orderRepo.getOrdersByCustomerEmail(searchText, PageRequest.of(page, pageSize));
-                if (ordersByCustomerEmail != null) {
-                    List<? extends OrderResponseDto> orderResponseDtos = generateOrdersResponseForVendorDisplay(mapper.toOrderResponseCustomerDisplayDto(ordersByCustomerEmail), vendor_email, token);
-                    return new PaginatedOrderResponseDto(orderResponseDtos, orderResponseDtos.size());
+                break;
+
+                case "vendor": {
+                    if (!TokenValidator.validateToken(token)) {
+                        return null;
+                    }
+
+                    Optional<Order> byId = orderRepo.findById(searchText);
+                    if (byId.isPresent()) {
+                        return new PaginatedOrderResponseDto(generateOrderResponseForVendorDisplay(byId, vendor_email, token), 1);
+                    }
+
+                    Page<OrderDataCustomerDisplayInterface> ordersByCustomerEmail = orderRepo.getOrdersByCustomerEmail(searchText, PageRequest.of(page, pageSize));
+                    if (ordersByCustomerEmail != null) {
+                        List<? extends OrderResponseDto> orderResponseDtos = generateOrdersResponseForVendorDisplay(mapper.toOrderResponseCustomerDisplayDto(ordersByCustomerEmail), vendor_email, token);
+                        return new PaginatedOrderResponseDto(orderResponseDtos, orderResponseDtos.size());
 //
+                    }
+                    Page<OrderDataCustomerDisplayInterface> ordersByDate = orderRepo.getOrdersByDate(searchText + "T18:30:00.000Z", PageRequest.of(page, pageSize));
+                    if (ordersByDate != null) {
+                        List<? extends OrderResponseDto> orderResponseDtos = generateOrdersResponseForVendorDisplay(mapper.toOrderResponseCustomerDisplayDto(ordersByDate), vendor_email, token);
+                        return new PaginatedOrderResponseDto(orderResponseDtos, orderResponseDtos.size());
+
+                    } else {
+                        return new PaginatedOrderResponseDto(generateOrdersResponseForVendorDisplay(mapper.toOrderResponseCustomerDisplayDto(orderRepo.getOrdersByDescription(searchText, PageRequest.of(page, pageSize))), vendor_email, token), orderRepo.getOrdersCountByDescription(searchText));
+                    }
+
+
                 }
-                Page<OrderDataCustomerDisplayInterface> ordersByDate = orderRepo.getOrdersByDate(searchText + "T18:30:00.000Z", PageRequest.of(page, pageSize));
-                if (ordersByDate != null) {
-                    List<? extends OrderResponseDto> orderResponseDtos = generateOrdersResponseForVendorDisplay(mapper.toOrderResponseCustomerDisplayDto(ordersByDate), vendor_email, token);
-                    return new PaginatedOrderResponseDto(orderResponseDtos, orderResponseDtos.size());
-
-                } else {
-                    return new PaginatedOrderResponseDto(generateOrdersResponseForVendorDisplay(mapper.toOrderResponseCustomerDisplayDto(orderRepo.getOrdersByDescription(searchText, PageRequest.of(page, pageSize))), vendor_email, token), orderRepo.getOrdersCountByDescription(searchText));
-                }
 
 
+                default:
+                    throw new IllegalStateException("Unexpected value: " + byWhom);
             }
-
-
-            default:
-                throw new IllegalStateException("Unexpected value: " + byWhom);
+            return new PaginatedOrderResponseDto(ordersList, ordersList.size());
+        } catch (Exception e) {
+            return null;
         }
-        return new PaginatedOrderResponseDto(ordersList, ordersList.size());
     }
 
 

@@ -49,7 +49,7 @@ export class CustomerDashboardService {
   }
 
   loadOrderDataAll(page: number | undefined, pageSize: number | undefined, email: string | undefined): Observable<any> {
-    return this.httpService.get(this.baseUrl + "order/list?email=" + email + "&page=" + page + "&pageSize=" + pageSize)
+    return this.httpService.get(this.baseUrl + "order/listByCustomerEmail?email=" + email + "&page=" + page + "&pageSize=" + pageSize)
 
   }
 
@@ -57,7 +57,7 @@ export class CustomerDashboardService {
     if (!orderButtonClicked) {
       return this.httpService.get(this.baseUrl + "item/find?searchText=" + searchText + "&page=" + page + "&pageSize=" + pageSize)
     } else {
-      return this.httpService.get(this.baseUrl + "order/findCustomerOrder?email=" + email + "&searchText=" + searchText + "&page=" + page + "&pageSize=" + pageSize)
+      return this.httpService.get(this.baseUrl + "order/find?customer_email=" + email + "&searchText=" + searchText + "&page=" + page + "&pageSize=" + pageSize + "&byWhom=" + "customer")
     }
 
   }

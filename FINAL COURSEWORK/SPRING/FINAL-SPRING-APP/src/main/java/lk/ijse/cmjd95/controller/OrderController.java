@@ -59,7 +59,7 @@ public class OrderController {
         return new ResponseEntity<>(new StandardResponse(200, "Item Deleted!", null), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/listByCustomer", params = {"email", "page", "pageSize"})
+    @GetMapping(path = "/listByCustomerEmail", params = {"email", "page", "pageSize"})
     public ResponseEntity<StandardResponse> listAllOrdersByCustomerEmail(@RequestHeader String token, @RequestParam("email") String email, @RequestParam("page") int page, @RequestParam("pageSize") @Max(50) int pageSize) {
         return new ResponseEntity<>(new StandardResponse(200, "Items Fetched!", orderService.getAllOrdersByCustomerEmail(email, page, pageSize, token)), HttpStatus.OK);
     }
