@@ -30,9 +30,10 @@ public class ItemController {
     public ResponseEntity<StandardResponse> find(@RequestParam("searchText") String searchText, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize, @RequestHeader String token) {
         return new ResponseEntity<>(new StandardResponse(200, "Item Found!", itemService.findItem(searchText, page, pageSize, token)), HttpStatus.OK);
     }
+
     @GetMapping(path = "/find", params = {"searchText"})
-    public ResponseEntity<StandardResponse> findById(@RequestParam("searchText") String searchText,@RequestHeader String token) {
-        return new ResponseEntity<>(new StandardResponse(200, "Item Found!", itemService.findItemById(searchText,token)), HttpStatus.OK);
+    public ResponseEntity<StandardResponse> findById(@RequestParam("searchText") String searchText, @RequestHeader String token) {
+        return new ResponseEntity<>(new StandardResponse(200, "Item Found!", itemService.findItemById(searchText, token)), HttpStatus.OK);
     }
 
     @PutMapping

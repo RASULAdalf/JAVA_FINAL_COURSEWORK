@@ -2,7 +2,9 @@ package lk.ijse.cmjd95.service.impl;
 
 import lk.ijse.cmjd95.dto.paginate.PaginatedOrderResponseDto;
 import lk.ijse.cmjd95.dto.request.OrderRequestDto;
+import lk.ijse.cmjd95.dto.response.OrderResponseCustomerDisplayDto;
 import lk.ijse.cmjd95.dto.response.OrderResponseDto;
+import lk.ijse.cmjd95.dto.response.OrderResponseVendorDisplayDto;
 import lk.ijse.cmjd95.entity.Item;
 import lk.ijse.cmjd95.entity.Order;
 import lk.ijse.cmjd95.entity.OrderItem;
@@ -16,9 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 
@@ -27,6 +27,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepo orderRepo;
     private final ItemService itemService;
     private final ItemRepo itemRepo;
+    private ByWhom byWhom;
 
     public OrderServiceImpl(Mapper mapper, OrderRepo orderRepo, final ItemService itemService, final ItemRepo itemRepo) {
         this.mapper = mapper;
@@ -56,31 +57,63 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public PaginatedOrderResponseDto findOrderById(String searchText, int page, int pageSize, String token) {
+    public PaginatedOrderResponseDto findOrderById(String searchText, int page, int pageSize, String token, String byWhom, String vendor_email) {
         if (!TokenValidator.validateToken(token)) {
             return null;
         }
-        Optional<Order> byId = orderRepo.findById(searchText);
-        if (byId.isPresent()) {
-            List<OrderResponseDto> list = new ArrayList<>();
-            list.add(mapper.toOrderResponseDto(byId.get()));
-            return new PaginatedOrderResponseDto(list, 1);
-        } else {
-            return new PaginatedOrderResponseDto(mapper.toOrderResponseDto(orderRepo.getOrdersByDescription(searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByDescription(searchText));
+
+        switch (byWhom) {
+            case "customer": {
+                Optional<Order> byId = orderRepo.findById(searchText);
+                if (byId.isPresent()) {
+                    List<OrderResponseDto> list = new ArrayList<>();
+                    list.add(mapper.toOrderResponseCustomerDisplayDto(byId.get()));
+                    return new PaginatedOrderResponseDto(list, 1);
+                } else {
+                    return new PaginatedOrderResponseDto(mapper.toOrderResponseCustomerDisplayDto(orderRepo.getOrdersByDescription(searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByDescription(searchText));
+                }
+            }
+            case "vendor": {
+                Optional<Order> byId = orderRepo.findById(searchText);
+                if (byId.isPresent()) {
+                    return new PaginatedOrderResponseDto(generateOrderResponseForVendorDisplay(byId, vendor_email, token), 1);
+                } else {
+                    return new PaginatedOrderResponseDto(generateOrdersResponseForVendorDisplay(mapper.toOrderResponseCustomerDisplayDto(orderRepo.getOrdersByDescription(searchText, PageRequest.of(page, pageSize))), vendor_email, token), orderRepo.getOrdersCountByDescription(searchText));
+                }
+            }
         }
+
+        return null;
     }
 
     @Override
-    public PaginatedOrderResponseDto findOrderByEmail(String searchText, int page, int pageSize, String token) {
-        return getPaginatedOrderResponseDto(searchText, page, pageSize, token);
+    public PaginatedOrderResponseDto findOrderByEmail(String searchText, int page, int pageSize, String token, String byWhom, String vendor_email) {
+        if (!TokenValidator.validateToken(token)) {
+            return null;
+        }
+
+        switch (byWhom) {
+            case "customer":
+                return new PaginatedOrderResponseDto(mapper.toOrderResponseCustomerDisplayDto(orderRepo.getOrdersByCustomerEmail(searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByDescription(searchText));
+
+
+            case "vendor":
+
+                //return new PaginatedOrderResponseDto(generateOrdersResponseForVendorDisplay(mapper.toOrderResponseCustomerDisplayDto(orderRepo.findAll(PageRequest.of(page, pageSize)))),vendor_email,token), orderRepo.getOrdersCountByDescription(searchText));
+
+        }
+
+
+        return null;
     }
+
 
     @Override
     public PaginatedOrderResponseDto findOrderByDescription(String searchText, int page, int pageSize, String token) {
         if (!TokenValidator.validateToken(token)) {
             return null;
         }
-        PaginatedOrderResponseDto paginatedOrderResponseDto = new PaginatedOrderResponseDto(mapper.toOrderResponseDto(orderRepo.getOrdersByDescription(searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByDescription(searchText));
+        PaginatedOrderResponseDto paginatedOrderResponseDto = new PaginatedOrderResponseDto(mapper.toOrderResponseCustomerDisplayDto(orderRepo.getOrdersByDescription(searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByDescription(searchText));
         if (0 < paginatedOrderResponseDto.getOrders().size()) {
             return paginatedOrderResponseDto;
         } else {
@@ -89,17 +122,28 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public PaginatedOrderResponseDto findOrderByDate(String searchText, int page, int pageSize, String token) {
+    public PaginatedOrderResponseDto findOrderByDate(String searchText, int page, int pageSize, String token, String byWhom, String vendor_email) {
         if (!TokenValidator.validateToken(token)) {
             return null;
         }
-        PaginatedOrderResponseDto paginatedOrderResponseDto = new PaginatedOrderResponseDto(mapper.toOrderResponseDto(orderRepo.getOrdersByDate(searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByDate(searchText));
-        System.out.println(searchText);
-        if (0 < paginatedOrderResponseDto.getOrders().size()) {
-            return paginatedOrderResponseDto;
-        } else {
-            return null;
+        switch (byWhom) {
+            case "customer": {
+                PaginatedOrderResponseDto paginatedOrderResponseDto = new PaginatedOrderResponseDto(mapper.toOrderResponseCustomerDisplayDto(orderRepo.getOrdersByDate(searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByDate(searchText));
+                System.out.println(searchText);
+                if (0 < paginatedOrderResponseDto.getOrders().size()) {
+                    return paginatedOrderResponseDto;
+                } else {
+                    return null;
+                }
+            }
+
+            case "vendor": {
+                return new PaginatedOrderResponseDto(generateOrdersResponseForVendorDisplay(mapper.toOrderResponseCustomerDisplayDto(orderRepo.getOrdersByDate(searchText, PageRequest.of(page, pageSize))), vendor_email, token), orderRepo.getOrdersCountByDate(searchText));
+            }
+
         }
+
+        return null;
 
     }
 
@@ -157,7 +201,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public PaginatedOrderResponseDto getAllOrdersByCustomerEmail(String searchText, int page, int pageSize, String token) {
-        return getPaginatedOrderResponseDto(searchText, page, pageSize, token);
+        return getPaginatedOrderResponseDto(searchText, page, pageSize, token, byWhom.CUSTOMER_EMAIL);
     }
 
     @Override
@@ -165,7 +209,7 @@ public class OrderServiceImpl implements OrderService {
         if (!TokenValidator.validateToken(token)) {
             return null;
         }
-        return new PaginatedOrderResponseDto(mapper.toOrderResponseDto(orderRepo.getOrdersByCustomerEmailAndOrderId(email, searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByCustomerEmailAndOrderId(email, searchText));
+        return new PaginatedOrderResponseDto(mapper.toOrderResponseCustomerDisplayDto(orderRepo.getOrdersByCustomerEmailAndOrderId(email, searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByCustomerEmailAndOrderId(email, searchText));
     }
 
     @Override
@@ -173,7 +217,7 @@ public class OrderServiceImpl implements OrderService {
         if (!TokenValidator.validateToken(token)) {
             return null;
         }
-        return new PaginatedOrderResponseDto(mapper.toOrderResponseDto(orderRepo.getOrdersByCustomerEmail(email, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByCustomerEmail(email));
+        return new PaginatedOrderResponseDto(mapper.toOrderResponseCustomerDisplayDto(orderRepo.getOrdersByCustomerEmail(email, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByCustomerEmail(email));
     }
 
     @Override
@@ -181,7 +225,7 @@ public class OrderServiceImpl implements OrderService {
         if (!TokenValidator.validateToken(token)) {
             return null;
         }
-        return new PaginatedOrderResponseDto(mapper.toOrderResponseDto(orderRepo.getOrdersByCustomerEmailAndOrderDescription(email, searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByCustomerEmailAndOrderDescription(email, searchText));
+        return new PaginatedOrderResponseDto(mapper.toOrderResponseCustomerDisplayDto(orderRepo.getOrdersByCustomerEmailAndOrderDescription(email, searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByCustomerEmailAndOrderDescription(email, searchText));
     }
 
     @Override
@@ -189,54 +233,117 @@ public class OrderServiceImpl implements OrderService {
         if (!TokenValidator.validateToken(token)) {
             return null;
         }
-        return new PaginatedOrderResponseDto(mapper.toOrderResponseDto(orderRepo.getOrdersByCustomerEmailAndOrderDate(email, searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByCustomerEmailAndOrderDate(email, searchText));
+        return new PaginatedOrderResponseDto(mapper.toOrderResponseCustomerDisplayDto(orderRepo.getOrdersByCustomerEmailAndOrderDate(email, searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByCustomerEmailAndOrderDate(email, searchText));
 
     }
 
     @Override
     public PaginatedOrderResponseDto findCustomerOrder(String searchText, String email, int page, int pageSize, String token) {
-        if (!TokenValidator.validateToken(token)){
+        if (!TokenValidator.validateToken(token)) {
             return null;
         }
         List<OrderResponseDto> ordersList = new ArrayList<>();
 
         PaginatedOrderResponseDto customerOrderById = findCustomerOrderById(searchText, email, page, pageSize, token);
         //System.out.println("out");
-        if (customerOrderById.getDataCount()>0){
-           // System.out.println("in");
-            for (OrderResponseDto dto: customerOrderById.getOrders()){
+        if (customerOrderById.getDataCount() > 0) {
+            // System.out.println("in");
+            for (OrderResponseDto dto : customerOrderById.getOrders()) {
                 ordersList.add(dto);
             }
         }
 
         PaginatedOrderResponseDto customerOrderByDescription = findCustomerOrderByDescription(searchText, email, page, pageSize, token);
-        if (customerOrderByDescription.getDataCount()>0){
-            for (OrderResponseDto dto: customerOrderByDescription.getOrders()){
+        if (customerOrderByDescription.getDataCount() > 0) {
+            for (OrderResponseDto dto : customerOrderByDescription.getOrders()) {
                 ordersList.add(dto);
             }
         }
 
         PaginatedOrderResponseDto customerOrderByDate = findCustomerOrderByDate(searchText + "T18:30:00.000Z", email, page, pageSize, token);
-        if (customerOrderByDate.getDataCount()>0){
-            for (OrderResponseDto dto: customerOrderByDate.getOrders()){
+        if (customerOrderByDate.getDataCount() > 0) {
+            for (OrderResponseDto dto : customerOrderByDate.getOrders()) {
                 ordersList.add(dto);
             }
         }
 
-        return new PaginatedOrderResponseDto(ordersList,ordersList.size());
+        return new PaginatedOrderResponseDto(ordersList, ordersList.size());
 
 
     }
 
-    private PaginatedOrderResponseDto getPaginatedOrderResponseDto(String searchText, int page, int pageSize, String token) {
+    @Override
+    public PaginatedOrderResponseDto getAllOrdersByVendorEmail(String searchText, int page, int pageSize, String token) {
+        return getPaginatedOrderResponseDto(searchText,page,pageSize,token,byWhom.VENDOR_EMAIL);
+    }
+
+
+    private PaginatedOrderResponseDto getPaginatedOrderResponseDto(String searchText, int page, int pageSize, String token, ByWhom byWhom) {
+        PaginatedOrderResponseDto paginatedOrderResponseDto = null;
         if (!TokenValidator.validateToken(token)) {
             return null;
         }
-        PaginatedOrderResponseDto paginatedOrderResponseDto = new PaginatedOrderResponseDto(mapper.toOrderResponseDto(orderRepo.getOrdersByCustomerEmail(searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByCustomerEmail(searchText));
+        switch (byWhom) {
+            case VENDOR_EMAIL:
+            {
+                List<OrderResponseCustomerDisplayDto> orderAllResponseCustomerDisplayDto = new ArrayList<>();
+                for (Order order_instance : orderRepo.findAll(PageRequest.of(page, pageSize))) {
+                    orderAllResponseCustomerDisplayDto.add(mapper.toOrderResponseCustomerDisplayDto(order_instance));
+                }
+
+                List<? extends OrderResponseDto> orderResponseDtos = generateOrdersResponseForVendorDisplay(orderAllResponseCustomerDisplayDto, searchText, token);
+                paginatedOrderResponseDto = new PaginatedOrderResponseDto(orderResponseDtos, orderResponseDtos.size());
+            }
+                break;
+
+            case CUSTOMER_EMAIL:
+                paginatedOrderResponseDto = new PaginatedOrderResponseDto(mapper.toOrderResponseCustomerDisplayDto(orderRepo.getOrdersByCustomerEmail(searchText, PageRequest.of(page, pageSize))), orderRepo.getOrdersCountByCustomerEmail(searchText));
+               break;
+
+
+            default:
+                break;
+
+
+
+        }
+        System.gc();
+
         if (0 < paginatedOrderResponseDto.getOrders().size()) {
             return paginatedOrderResponseDto;
         } else {
             return null;
         }
+
+
+
     }
+
+    private List<? extends OrderResponseDto> generateOrdersResponseForVendorDisplay(List<? extends OrderResponseDto> orders, String vendorEmail, String token) {
+        List<OrderResponseDto> orderResponseVendorDisplayDtoList = new ArrayList<>();
+        for (OrderResponseDto order : orders) {
+            OrderResponseCustomerDisplayDto order_inside = (OrderResponseCustomerDisplayDto) order;
+            for (OrderItem orderItem : order_inside.getOrders()) {
+                Item itemById = itemService.findItemById(orderItem.getItemCode(), token);
+                if (Objects.equals(itemById.getVendorEmail(), vendorEmail)) {
+                    orderResponseVendorDisplayDtoList.add(new OrderResponseVendorDisplayDto(orderItem.getItemCode(), order_inside.getOrderDate(), orderItem.getItemDescription(), itemById.getItemCategory(), itemById.getItemLogoUrl(), orderItem.getQty(), orderItem.getItemFullPrice(), order_inside.getCustomerEmail(), order_inside.getState()));
+                }
+            }
+        }
+        return orderResponseVendorDisplayDtoList;
+
+    }
+
+    private List<OrderResponseDto> generateOrderResponseForVendorDisplay(Optional<Order> order, String vendorEmail, String token) {
+        OrderResponseCustomerDisplayDto orderResponseCustomerDisplayDto = mapper.toOrderResponseCustomerDisplayDto(order.get());
+        List<OrderResponseDto> orderResponseVendorDisplayDtoList = new ArrayList<>();
+        for (OrderItem orderItem : orderResponseCustomerDisplayDto.getOrders()) {
+            Item itemById = itemService.findItemById(orderItem.getItemCode(), token);
+            if (Objects.equals(itemById.getVendorEmail(), vendorEmail)) {
+                orderResponseVendorDisplayDtoList.add(new OrderResponseVendorDisplayDto(orderItem.getItemCode(), orderResponseCustomerDisplayDto.getOrderDate(), orderItem.getItemDescription(), itemById.getItemCategory(), itemById.getItemLogoUrl(), orderItem.getQty(), orderItem.getItemFullPrice(), orderResponseCustomerDisplayDto.getCustomerEmail(), orderResponseCustomerDisplayDto.getState()));
+            }
+        }
+        return orderResponseVendorDisplayDtoList;
+    }
+
 }

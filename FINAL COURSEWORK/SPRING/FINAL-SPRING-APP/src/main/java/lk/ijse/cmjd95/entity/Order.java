@@ -1,5 +1,6 @@
 package lk.ijse.cmjd95.entity;
 
+import lk.ijse.cmjd95.dto.response.OrderResponseDto;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Order {
+public class Order{
     @Id
     private String orderId;
     private String customerEmail;

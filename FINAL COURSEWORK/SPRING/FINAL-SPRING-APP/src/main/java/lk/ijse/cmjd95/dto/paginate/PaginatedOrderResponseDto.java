@@ -11,6 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 public class PaginatedOrderResponseDto {
-    private List<OrderResponseDto> orders;
+    private List<? extends OrderResponseDto> orders;
     private int dataCount;
 }

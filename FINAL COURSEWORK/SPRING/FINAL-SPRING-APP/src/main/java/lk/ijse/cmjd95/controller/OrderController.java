@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Max;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 @RestController
 @RequestMapping("api/v1/order")
@@ -28,14 +27,14 @@ public class OrderController {
 
     }
 
-    @GetMapping(path = "/findById", params = {"searchText", "page", "pageSize"})
-    public ResponseEntity<StandardResponse> findById(@RequestParam("searchText") String searchText, @RequestParam("page") int page, @RequestParam("pageSize") @Max(50) int pageSize, @RequestHeader String token) {
-        return new ResponseEntity<>(new StandardResponse(200, "Item Found!", orderService.findOrderById(searchText, page, pageSize, token)), HttpStatus.OK);
+    @GetMapping(path = "/findById", params = {"searchText", "page", "pageSize", "byWhom"})
+    public ResponseEntity<StandardResponse> findById(@RequestParam("searchText") String searchText, @RequestParam("page") int page, @RequestParam("pageSize") @Max(50) int pageSize, @RequestHeader String token, @RequestParam("byWhom") String byWhom, @RequestParam(name = "vendor_email", defaultValue = " ") String vendor_email) throws ParseException {
+        return new ResponseEntity<>(new StandardResponse(200, "Item Found!", orderService.findOrderById(searchText, page, pageSize, token, byWhom, vendor_email)), HttpStatus.OK);
     }
 
     @GetMapping(path = "/findByEmail", params = {"searchText", "page", "pageSize"})
-    public ResponseEntity<StandardResponse> findByEmail(@RequestParam("searchText") String searchText, @RequestParam("page") int page, @RequestParam("pageSize") @Max(50) int pageSize, @RequestHeader String token) {
-        return new ResponseEntity<>(new StandardResponse(200, "Item Found!", orderService.findOrderByEmail(searchText, page, pageSize, token)), HttpStatus.OK);
+    public ResponseEntity<StandardResponse> findByEmail(@RequestParam("searchText") String searchText, @RequestParam("page") int page, @RequestParam("pageSize") @Max(50) int pageSize, @RequestHeader String token, @RequestParam("byWhom") String byWhom, @RequestParam(name = "vendor_email", defaultValue = " ") String vendor_email) {
+        return new ResponseEntity<>(new StandardResponse(200, "Item Found!", orderService.findOrderByEmail(searchText, page, pageSize, token, byWhom, vendor_email)), HttpStatus.OK);
     }
 
     @GetMapping(path = "/findByDescription", params = {"searchText", "page", "pageSize"})
@@ -44,9 +43,9 @@ public class OrderController {
     }
 
     @GetMapping(path = "/findByDate", params = {"searchText", "page", "pageSize"})
-    public ResponseEntity<StandardResponse> findByDate(@RequestParam("searchText") String searchText, @RequestParam("page") int page, @RequestParam("pageSize") @Max(50) int pageSize, @RequestHeader String token) {
+    public ResponseEntity<StandardResponse> findByDate(@RequestParam("searchText") String searchText, @RequestParam("page") int page, @RequestParam("pageSize") @Max(50) int pageSize, @RequestHeader String token, @RequestParam("byWhom") String byWhom, @RequestParam(name = "vendor_email", defaultValue = " ") String vendor_email) {
 
-        return new ResponseEntity<>(new StandardResponse(200, "Item Found!", orderService.findOrderByDate(searchText, page, pageSize, token)), HttpStatus.OK);
+        return new ResponseEntity<>(new StandardResponse(200, "Item Found!", orderService.findOrderByDate(searchText, page, pageSize, token, byWhom, vendor_email)), HttpStatus.OK);
     }
 
     @PutMapping
@@ -79,11 +78,16 @@ public class OrderController {
     public ResponseEntity<StandardResponse> listOrdersByCustomerEmailAndOrderDate(@RequestParam("email") String email, @RequestParam("searchText") String searchText, @RequestParam("page") int page, @RequestParam("pageSize") @Max(50) int pageSize, @RequestHeader String token) {
         return new ResponseEntity<>(new StandardResponse(200, "Items Fetched!", orderService.findCustomerOrderByDate(searchText, email, page, pageSize, token)), HttpStatus.OK);
     }
+
     @GetMapping(path = "/findCustomerOrder", params = {"email", "searchText", "page", "pageSize"})
     public ResponseEntity<StandardResponse> findCustomerOrder(@RequestParam("email") String email, @RequestParam("searchText") String searchText, @RequestParam("page") int page, @RequestParam("pageSize") @Max(50) int pageSize, @RequestHeader String token) {
         return new ResponseEntity<>(new StandardResponse(200, "Items Fetched!", orderService.findCustomerOrder(searchText, email, page, pageSize, token)), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/findByVendorEmail", params = {"email", "page", "pageSize"})
+    public ResponseEntity<StandardResponse> listOrdersByVendorEmail(@RequestHeader String token, @RequestParam("email") String email, @RequestParam("page") int page, @RequestParam("pageSize") @Max(50) int pageSize) {
+        return new ResponseEntity<>(new StandardResponse(200, "OrdersFetched", orderService.getAllOrdersByVendorEmail(email, page, pageSize, token)), HttpStatus.OK);
+    }
 
 
 }

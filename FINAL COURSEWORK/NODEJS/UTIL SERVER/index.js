@@ -3,6 +3,8 @@ var cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const admin = require('firebase-admin');
+
 const port = process.env.SERVER_PORT;
 var corsMiddleware = function (req, res, next) {
     res.header('Access-Control-Allow-Origin', 'localhost'); //replace localhost with actual host
@@ -11,11 +13,16 @@ var corsMiddleware = function (req, res, next) {
 
     next();
 }
+const firebaseBot = require('./firebasebot.json');
 
-
+admin.initializeApp({
+    credential: admin.credential.cert(firebaseBot),
+    storageBucket:'angshop-cb664.firebasestorage.app',
+});
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
+
 app.get('/', (req, res) => {
     res.sendFile('H:\\JAVA_COURSE\\WEB\\CLASS_WORKS\\95\\FINAL COURSEWORK\\NODEJS\\UTIL SERVER\\test.html');
 })

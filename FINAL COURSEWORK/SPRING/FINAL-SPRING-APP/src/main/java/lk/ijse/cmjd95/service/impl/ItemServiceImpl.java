@@ -107,10 +107,10 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item findItemById(String searchText, String token) {
-        if (!TokenValidator.validateToken(token)){
+        if (!TokenValidator.validateToken(token)) {
             return null;
         }
         Optional<Item> byId = itemRepo.findById(searchText);
-        return (byId.isPresent())? byId.get():null;
+        return (byId.isPresent()) ? byId.get() : null;
     }
 }

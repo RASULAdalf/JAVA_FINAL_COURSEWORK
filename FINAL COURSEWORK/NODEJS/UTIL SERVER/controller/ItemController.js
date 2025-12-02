@@ -1,11 +1,10 @@
 const ItemModel = require('../model/ItemModel');
-const {google} = require('googleapis');
-const path = require('path');
 const fs = require('fs');
 const formidable = require("formidable");
 const extract = require('pdf-parse');
 const GSON = require('gson');
 const axios = require('axios');
+const admin = require('firebase-admin');
 
 let showImg = "";
 let specsDocUrl = "";
@@ -16,14 +15,15 @@ let specsDocContent = "";
 
 const proceed = (req, resp) => {
     let i = 0;
+    let bucket = admin.storage().bucket();
     const itemModel = new ItemModel('', '', '', [], 0, 0, '', '', '');
-    const KEYPATH = './drive.json';
-    const SCOPES = ['https://www.googleapis.com/auth/drive'];
-    //fieldsInfo = fields;
-    const auth = new google.auth.GoogleAuth({
-        keyFile: KEYPATH,
-        scopes: SCOPES
-    });
+    // const KEYPATH = './drive.json';
+    // const SCOPES = ['https://www.googleapis.com/auth/drive'];
+    // //fieldsInfo = fields;
+    // const auth = new google.auth.GoogleAuth({
+    //     keyFile: KEYPATH,
+    //     scopes: SCOPES
+    // });
     slideShowImgUrls = [];
     const form = new formidable.IncomingForm();
     form.parse(req);
@@ -52,27 +52,28 @@ const proceed = (req, resp) => {
     })
 
     form.on('file', (field, file) => {
-        let parents = '';
-        let _field = field;
-        // console.log("inside file");
-        if (_field === "slideShowImgs") {
-            parents = '1cHET8_6ozSzScV4HkgOMa4ltLOzyTlVu';
-        } else if (_field === "specsDoc") {
-            parents = "1X0_SNx60tkCG2PfR6z5omFmw310AzkE2";
-        } else if (_field === "showImg") {
-            parents = "1-k1otsFRka3vCUicOVBXCopQzlwlVOG9";
-        }
-        // console.log("inside");
-        let fileMetaData = {
-            'name': file.name,
-            'parents': [parents]
-        }
-        const media = {
-            mimeType: file.mimeType,
-            body: fs.createReadStream(file.filepath)
-        };
+        let destinationPath = `${itemModel.vendorEmail}/${itemModel.itemDescription}/${field}/${file.originalFilename}`;
+        let contentType = file.mimetype
+        // let _field = field;
+        // // console.log("inside file");
+        // if (_field === "slideShowImgs") {
+        //     parents = 'slideShowImgs';
+        // } else if (_field === "specsDoc") {
+        //     parents = "1fYEjwOpbiS_sAH4dtafOM_NaLn4g4RyX";
+        // } else if (_field === "showImg") {
+        //     parents = "1moKJZqcotloZyTpjgZtBTPzuKuELkK_f";
+        // }
+        // // console.log("inside");
+        // let fileMetaData = {
+        //     'name': file.name,
+        //     'parents': [parents]
+        // }
+        // const media = {
+        //     mimeType: file.mimeType,
+        //     body: fs.createReadStream(file.filepath)
+        // };
 
-        uploadToDrive(auth, fileMetaData, media, _field, file).then(r => console.log());
+        uploadToFireStorage(destinationPath,contentType,file,field).then(r => console.log());
 
 
     });
@@ -89,31 +90,28 @@ const proceed = (req, resp) => {
 
      })*/
 
-    async function uploadToDrive(auth, fileMetaData, media, _field, file) {
+    async function uploadToFireStorage(destinationPath,contentType,file,field) {
 
-        const driveService = google.drive({version: 'v3', auth: auth});
+        // const driveService = google.drive({version: 'v3', auth: auth});
 
-        let response = await driveService.files.create({
-            resource: fileMetaData,
-            media: media,
-            fields: 'id'
+        let response = await bucket.upload(file.filepath,{
+            destination: destinationPath,
+            metadata:{
+                contentType: contentType,
+            }
         });
-        console.log(response.data);
-        console.log(response.data.id);
-        if (_field === "slideShowImgs") {
-            console.log('slide')
-            slideShowImgUrls.push("https://drive.google.com/uc?export=download&id="+response.data.id);
-        } else if (_field === "specsDoc") {
-            console.log('specsDoc')
-            specsDocUrl = "https://drive.google.com/file/d/"+response.data.id+"/view";
-            console.log(specsDocUrl)
+        console.log(response[0].metadata.mediaLink);
+
+        if (field === "slideShowImgs") {
+            slideShowImgUrls.push(response[0].metadata.mediaLink);
+        } else if (field === "specsDoc") {
+            specsDocUrl = response[0].metadata.mediaLink;
             extract(fs.readFileSync(file.filepath)).then(function (data) {
                 specsDocContent = data.text;
 
             });
-        } else if (_field === "showImg") {
-            console.log('shImg')
-            showImg = "https://drive.google.com/uc?export=download&id="+response.data.id;
+        } else if (field === "showImg") {
+            showImg = response[0].metadata.mediaLink;
         }
         i++;
         if (i === form.openedFiles.length) {
@@ -122,6 +120,7 @@ const proceed = (req, resp) => {
             itemModel.specsDocContent = specsDocContent;
             itemModel.itemLogoUrl = showImg;
             const body = GSON.parse(GSON.stringify(itemModel));
+            console.log(body);
             axios.post('http://localhost:8080/api/v1/item',body,{
                 headers: {'token': 'snfjg85YY39475fhestdgff'}
             }).then(res=>{
