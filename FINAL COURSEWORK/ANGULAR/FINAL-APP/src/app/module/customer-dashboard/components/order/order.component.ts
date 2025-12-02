@@ -9,14 +9,16 @@ import {UpdateViewOrderService} from "../../services/update-view-order.service";
 })
 export class OrderComponent implements OnInit {
   @Input() data: any[] | undefined;
-  constructor(private modalService:ModalService,private updateViewOrderService:UpdateViewOrderService) { }
+
+  constructor(private modalService: ModalService, private updateViewOrderService: UpdateViewOrderService) {
+  }
 
   ngOnInit(): void {
 
   }
 
   openModal(viewButton: any, num: number) {
-    this.modalService.openOrderModal(this.data,viewButton.getAttribute("data-index"),num);
+    this.modalService.openOrderModal(this.data, viewButton.getAttribute("data-index"), num);
     // @ts-ignore
     this.updateViewOrderService.orderId = this.data[num]?.orderId;
     this.updateViewOrderService.orderNum = num;

@@ -1,4 +1,4 @@
-.electrical-element{
+.electrical-element {
   border: 1px solid red;
   display: flex;
   position: relative;
@@ -8,13 +8,15 @@
   margin-left: 20px;
   margin-top: 30px;
 }
-.header{
+
+.header {
   width: 100%;
   height: 50px;
   border: 1px solid black;
   text-align: center;
 }
-.image{
+
+.image {
   width: 80%;
   margin-right: 10px;
   margin-left: 15px;
@@ -23,7 +25,8 @@
   background-size: cover;
   right: 30px;
 }
-.price{
+
+.price {
   width: 100%;
   height: 40px;
   border: 1px solid black;
@@ -31,7 +34,8 @@
   font-size: large;
   padding-top: 10px;
 }
-.view-details{
+
+.view-details {
   width: 100%;
   flex: 1;
   border: 1px solid orange;

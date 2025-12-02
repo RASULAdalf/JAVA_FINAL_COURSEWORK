@@ -5,11 +5,11 @@ import lk.ijse.cmjd95.entity.OrderItemVendorDisplay;
 import java.util.Date;
 
 public interface OrderDataVendorDisplayInterface {
-    public String getCustomerEmail();
+    String getCustomerEmail();
 
-    public Date getOrderDate();
+    Date getOrderDate();
 
-    public OrderItemVendorDisplay[] getOrders();
+    OrderItemVendorDisplay[] getOrders();
 
-    public String getState();
+    String getState();
 }

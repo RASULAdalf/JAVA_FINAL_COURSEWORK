@@ -12,8 +12,8 @@ import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
-import { NotFoundPageComponent } from './core/components/not-found-page/not-found-page.component';
-import { ItemModalComponent } from './module/customer-dashboard/components/item-modal/item-modal.component';
+import {NotFoundPageComponent} from './core/components/not-found-page/not-found-page.component';
+import {ItemModalComponent} from './module/customer-dashboard/components/item-modal/item-modal.component';
 import {MdbModalModule} from "mdb-angular-ui-kit/modal";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MdbCarouselModule} from "mdb-angular-ui-kit/carousel";
@@ -24,10 +24,9 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {CustomerDashboardInterceptor} from "./module/customer-dashboard/interceptors/customer-dashboard.interceptor";
-import { LetSirKnowComponent } from './core/components/let-sir-know/let-sir-know.component';
+import {LetSirKnowComponent} from './core/components/let-sir-know/let-sir-know.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatSelectModule} from "@angular/material/select";
-
 
 
 export const firebaseConfig = {
@@ -79,7 +78,7 @@ export const firebaseConfig = {
     MatAutocompleteModule,
     MatSelectModule
   ],
-  providers: [CookieService,{provide:HTTP_INTERCEPTORS,useClass:CustomerDashboardInterceptor,multi:true}],
+  providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: CustomerDashboardInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

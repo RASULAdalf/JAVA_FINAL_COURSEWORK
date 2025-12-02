@@ -12,7 +12,6 @@ let slideShowImgUrls = [];
 let specsDocContent = "";
 
 
-
 const proceed = (req, resp) => {
     let i = 0;
     let bucket = admin.storage().bucket();
@@ -73,7 +72,7 @@ const proceed = (req, resp) => {
         //     body: fs.createReadStream(file.filepath)
         // };
 
-        uploadToFireStorage(destinationPath,contentType,file,field).then(r => console.log());
+        uploadToFireStorage(destinationPath, contentType, file, field).then(r => console.log());
 
 
     });
@@ -90,13 +89,13 @@ const proceed = (req, resp) => {
 
      })*/
 
-    async function uploadToFireStorage(destinationPath,contentType,file,field) {
+    async function uploadToFireStorage(destinationPath, contentType, file, field) {
 
         // const driveService = google.drive({version: 'v3', auth: auth});
 
-        let response = await bucket.upload(file.filepath,{
+        let response = await bucket.upload(file.filepath, {
             destination: destinationPath,
-            metadata:{
+            metadata: {
                 contentType: contentType,
             }
         });
@@ -121,12 +120,12 @@ const proceed = (req, resp) => {
             itemModel.itemLogoUrl = showImg;
             const body = GSON.parse(GSON.stringify(itemModel));
             console.log(body);
-            axios.post('http://localhost:8080/api/v1/item',body,{
+            axios.post('http://localhost:8080/api/v1/item', body, {
                 headers: {'token': 'snfjg85YY39475fhestdgff'}
-            }).then(res=>{
-                resp.json({'message':'Uploaded successfully!'});
-            },err=>{
-                resp.send({'message':err});
+            }).then(res => {
+                resp.json({'message': 'Uploaded successfully!'});
+            }, err => {
+                resp.send({'message': err});
             })
 
         }

@@ -3,13 +3,13 @@
   <div class="header-content" mat-dialog-title>What do you want to do?</div>
   <div class="buttons-content" mat-dialog-content>
     <div class="view-button">
-      <button mat-raised-button color="warn" mat-dialog-close="true" (click)="viewOrder()" >VIEW YOUR ORDER</button>
+      <button (click)="viewOrder()" color="warn" mat-dialog-close="true" mat-raised-button>VIEW YOUR ORDER</button>
     </div>
     <div class="delete-button">
-      <button mat-raised-button color="warn" (click)="deleteOrder()">DELETE YOUR ORDER</button>
+      <button (click)="deleteOrder()" color="warn" mat-raised-button>DELETE YOUR ORDER</button>
     </div>
     <div class="update-button">
-      <button mat-raised-button color="warn" mat-dialog-close="true" (click)="viewOrder()">UPDATE YOUR ORDER</button>
+      <button (click)="viewOrder()" color="warn" mat-dialog-close="true" mat-raised-button>UPDATE YOUR ORDER</button>
     </div>
   </div>
 </div>

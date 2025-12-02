@@ -27,5 +27,4 @@ public interface Mapper {
     List<OrderResponseCustomerDisplayDto> toOrderResponseCustomerDisplayDto(Page<OrderDataCustomerDisplayInterface> data);
 
 
-
 }

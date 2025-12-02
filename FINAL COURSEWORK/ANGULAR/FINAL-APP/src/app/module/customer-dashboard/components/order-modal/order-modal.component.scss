@@ -1,36 +1,41 @@
-.content-outer{
+.content-outer {
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.header-content{
+
+.header-content {
   height: 40px;
   width: 100%;
 
 }
-.buttons-content{
+
+.buttons-content {
   flex: 1;
   width: 100%;
- // margin: 0 10px 20px 20px;
+  // margin: 0 10px 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
-.view-button{
+
+.view-button {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-left: 30px;
 }
-.delete-button{
+
+.delete-button {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-left: 30px;
 }
-.update-button{
+
+.update-button {
   display: flex;
   align-items: center;
   justify-content: center;

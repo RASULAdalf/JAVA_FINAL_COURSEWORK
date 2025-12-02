@@ -15,31 +15,31 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./vendor-dashboard.component.scss']
 })
 export class VendorDashboardComponent implements OnInit {
-  vendorEmail:string|undefined|null;
+  vendorEmail: string | undefined | null;
 
   addNewItemsForm = new FormGroup({
-    description:new FormControl('',[Validators.required,Validators.maxLength(10)]),
-    qty:new FormControl('',Validators.required),
-    price:new FormControl('',Validators.required),
-    imgSource:new FormControl('',Validators.required),
-    img:new FormControl('',Validators.required),
+    description: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+    qty: new FormControl('', Validators.required),
+    price: new FormControl('', Validators.required),
+    imgSource: new FormControl('', Validators.required),
+    img: new FormControl('', Validators.required),
     //slideShowImgsSource:new FormControl('',Validators.required),
-    slideShowImgs:new FormControl('',Validators.required),
-    specsDocSource:new FormControl('',Validators.required),
-    specsDoc:new FormControl('',Validators.required),
-    category:new FormControl('',Validators.required),
-    vEmail:new FormControl(this.dashboardService.vendorEmail,Validators.required)
+    slideShowImgs: new FormControl('', Validators.required),
+    specsDocSource: new FormControl('', Validators.required),
+    specsDoc: new FormControl('', Validators.required),
+    category: new FormControl('', Validators.required),
+    vEmail: new FormControl(this.dashboardService.vendorEmail, Validators.required)
   })
   category: any;
-  categories: any[]=[{value:'Books'},{value:'Clothes'},{value:'Electronics'},{value:'Electrical'},{value:'Cosmetics'},{value:'Other'}];
-  slideShowImgs:any[] = [];
+  categories: any[] = [{value: 'Books'}, {value: 'Clothes'}, {value: 'Electronics'}, {value: 'Electrical'}, {value: 'Cosmetics'}, {value: 'Other'}];
+  slideShowImgs: any[] = [];
   baseDatabaseServerUrl = environment.DatabaseServerUrl;
   baseUtilServerUrl = environment.UtilServerUrl;
   formData = new FormData();
 
-  onImg:boolean = true;
-  onSlide:boolean = true;
-  onSpec:boolean = true;
+  onImg: boolean = true;
+  onSlide: boolean = true;
+  onSpec: boolean = true;
   type: any = "Bar";
   totalEarnings: string = '$0.00';
   year: number = 0;
@@ -48,8 +48,8 @@ export class VendorDashboardComponent implements OnInit {
   dataList: any[] | undefined;
   buttonName: any;
 
-  constructor(public route:ActivatedRoute,public localStorageService:LocalDataService,private modalService:ModalService,public snackBarService:SnackBarService,public loadingService:LoadingService,private httpService:HttpService,private dashboardService: VendorDashboardServiceService) {
-    this.dashboardService.loginService.afAuth.currentUser.then(result=>{
+  constructor(public route: ActivatedRoute, public localStorageService: LocalDataService, private modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, private dashboardService: VendorDashboardServiceService) {
+    this.dashboardService.loginService.afAuth.currentUser.then(result => {
       this.vendorEmail = result?.email;
     })
 
@@ -57,7 +57,7 @@ export class VendorDashboardComponent implements OnInit {
 
 
   onImgChange($event: Event) {
-        this.onImg = false;
+    this.onImg = false;
     // @ts-ignore
     if (event.target.files.length > 0) {
 
@@ -89,28 +89,28 @@ export class VendorDashboardComponent implements OnInit {
 
     }
   }
+
   onSlideImgsChange($event: Event) {
     this.onSlide = false;
     // @ts-ignore
-    for (const file of event.target.files){
-      this.formData.append("slideShowImgs",file);
+    for (const file of event.target.files) {
+      this.formData.append("slideShowImgs", file);
     }
   }
 
-  submit(){
-
+  submit() {
 
 
     this.formData.append('specsDoc', this.addNewItemsForm.get('specsDocSource')?.value);
-    this.formData.append('itemDescription',this.addNewItemsForm.get('description')?.value)
-    this.formData.append('itemCategory',this.category)
+    this.formData.append('itemDescription', this.addNewItemsForm.get('description')?.value)
+    this.formData.append('itemCategory', this.category)
     this.formData.append('showImg', this.addNewItemsForm.get('imgSource')?.value);
-    this.formData.append('unitPrice',this.addNewItemsForm.get('price')?.value)
-    this.formData.append('qty',this.addNewItemsForm.get('qty')?.value)
-    this.formData.append('vendorEmail',this.addNewItemsForm.get('vEmail')?.value)
+    this.formData.append('unitPrice', this.addNewItemsForm.get('price')?.value)
+    this.formData.append('qty', this.addNewItemsForm.get('qty')?.value)
+    this.formData.append('vendorEmail', this.addNewItemsForm.get('vEmail')?.value)
 
 
-    this.httpService.post(this.baseUtilServerUrl+'Item/saveItem', this.formData)
+    this.httpService.post(this.baseUtilServerUrl + 'Item/saveItem', this.formData)
 
       .subscribe(res => {
 
@@ -119,6 +119,7 @@ export class VendorDashboardComponent implements OnInit {
       })
 
   }
+
   ngOnInit(): void {
     //this.modalService.openLetSirKnowModal("Vendor Dashboard");
     this.vendorEmail = this.route.snapshot.queryParamMap.get('vendorEmail');
@@ -131,7 +132,7 @@ export class VendorDashboardComponent implements OnInit {
   }
 
 
-   loadData(value: string) {
+  loadData(value: string) {
 
   }
 }

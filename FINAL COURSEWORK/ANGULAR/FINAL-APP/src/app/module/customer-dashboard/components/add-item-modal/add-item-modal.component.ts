@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PageEvent} from "@angular/material/paginator";
 import {LocalDataService} from "../../../../service/local-data.service";
@@ -18,19 +18,18 @@ import {debounceTime} from "rxjs";
 export class AddItemModalComponent implements OnInit {
   year: any;
   searchForm = new FormGroup({
-    searchText : new FormControl('',Validators.required)
+    searchText: new FormControl('', Validators.required)
   })
-  page:number | undefined=0;
-  pageSize:number | undefined=6;
-  pageSizeOptions=[10,20,30,40];//The number of data which can be loaded inside one page
-  pageEvent:PageEvent | undefined;
-  dataCount=0;
-  dataList:any[] | undefined;
+  page: number | undefined = 0;
+  pageSize: number | undefined = 6;
+  pageSizeOptions = [10, 20, 30, 40];//The number of data which can be loaded inside one page
+  pageEvent: PageEvent | undefined;
+  dataCount = 0;
+  dataList: any[] | undefined;
+  buttonName: any = 'ADD';
   private searchText: any;
-  buttonName: any='ADD';
 
-
-  constructor(public localStorageService:LocalDataService,public auth:AuthService,public buyingCartService:BuyingCartService,private modalService:ModalService,private dashboardService: CustomerDashboardService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(public localStorageService: LocalDataService, public auth: AuthService, public buyingCartService: BuyingCartService, private modalService: ModalService, private dashboardService: CustomerDashboardService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private router: Router) {
 
   }
 
@@ -43,7 +42,7 @@ export class AddItemModalComponent implements OnInit {
     this.loadData('CLOTHES');
 
     this.year = new Date().getFullYear();
-    this.searchForm.valueChanges.pipe(debounceTime(1080)).subscribe(data=>{
+    this.searchForm.valueChanges.pipe(debounceTime(1080)).subscribe(data => {
       //This 1080 is a debounceTime, means that to make a request to the server only if the user has stopped typing for a second rather than making requests to the server whenever the user types something
       this.searchText = data.searchText;
       this.loadDataSearch();
@@ -53,60 +52,50 @@ export class AddItemModalComponent implements OnInit {
   }
 
 
-  loadServerData(event: PageEvent, value: any, orderButtonClicked: boolean):any{
+  loadServerData(event: PageEvent, value: any, orderButtonClicked: boolean): any {
     this.page = event?.pageIndex;
     this.pageSize = event?.pageSize;
     this.loadData(value);
 
-    }
+  }
 
-  loadDataSearch(){
-    this.dashboardService.loadSearchDataAll(this.page, this.pageSize,this.searchText,false,this.localStorageService.getCookie('userEmail')).subscribe(data => {
+  loadDataSearch() {
+    this.dashboardService.loadSearchDataAll(this.page, this.pageSize, this.searchText, false, this.localStorageService.getCookie('userEmail')).subscribe(data => {
 
-        this.dataList = data?.data?.items;
+      this.dataList = data?.data?.items;
       this.dataCount = data?.data?.dataCount;
     }, error => console.log(error));
 
   }
 
-  loadData(value:any) {
-    if (value=='CLOTHES'|| value==undefined) {
+  loadData(value: any) {
+    if (value == 'CLOTHES' || value == undefined) {
       this.dashboardService.loadClothesDataAll(this.page, this.pageSize).subscribe(data => {
         this.dataList = data?.data?.items;
         this.dataCount = data?.data?.dataCount;
       }, error => console.log(error));
       console.log(this.dataList);
-    }
-
-    else if (value=='BOOKS') {
+    } else if (value == 'BOOKS') {
       this.dashboardService.loadBooksDataAll(this.page, this.pageSize).subscribe(data => {
         this.dataList = data?.data?.items;
         this.dataCount = data?.data?.dataCount;
       }, error => console.log(error));
-    }
-
-    else if (value=='ELECTRONICS') {
+    } else if (value == 'ELECTRONICS') {
       this.dashboardService.loadElectronicsDataAll(this.page, this.pageSize).subscribe(data => {
         this.dataList = data?.data?.items;
         this.dataCount = data?.data?.dataCount;
       }, error => console.log(error));
-    }
-
-    else if (value=='ELECTRICAL') {
+    } else if (value == 'ELECTRICAL') {
       this.dashboardService.loadElectricalsDataAll(this.page, this.pageSize).subscribe(data => {
         this.dataList = data?.data?.items;
         this.dataCount = data?.data?.dataCount;
       }, error => console.log(error));
-    }
-
-    else if (value=='COSMETICS') {
+    } else if (value == 'COSMETICS') {
       this.dashboardService.loadCosmeticsDataAll(this.page, this.pageSize).subscribe(data => {
         this.dataList = data?.data?.items;
         this.dataCount = data?.data?.dataCount;
       }, error => console.log(error));
-    }
-
-    else if (value=='OTHER') {
+    } else if (value == 'OTHER') {
       this.dashboardService.loadOtherDataAll(this.page, this.pageSize).subscribe(data => {
         this.dataList = data?.data?.items;
         this.dataCount = data?.data?.dataCount;
@@ -114,10 +103,6 @@ export class AddItemModalComponent implements OnInit {
     }
 
   }
-
-
-
-
 
 
 }

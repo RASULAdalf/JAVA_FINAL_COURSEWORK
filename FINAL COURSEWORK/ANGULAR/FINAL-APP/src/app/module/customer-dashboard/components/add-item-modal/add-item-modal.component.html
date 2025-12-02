@@ -1,14 +1,24 @@
 <div class="row col-sm-12" mat-dialog-content>
-  <div class="all-content-outer" >
+  <div class="all-content-outer">
     <div class="menu-outer">
-      <div class="menu-items-outer"><mat-button-toggle-group #chooseMenuItem="matButtonToggleGroup" aria-label="menu-label" appearance="standard" >
-        <mat-button-toggle value="CLOTHES" aria-orientation="vertical" (click)="loadData('CLOTHES')">CLOTHES</mat-button-toggle>
-        <mat-button-toggle value="BOOKS" aria-orientation="vertical" (click)="loadData('BOOKS')">BOOKS</mat-button-toggle>
-        <mat-button-toggle value="ELECTRONICS" aria-orientation="vertical" (click)="loadData('ELECTRONICS')">ELECTRONICS</mat-button-toggle>
-        <mat-button-toggle value="ELECTRICAL" aria-orientation="vertical" (click)="loadData('ELECTRICAL')">ELECTRICAL</mat-button-toggle>
-        <mat-button-toggle value="COSMETICS" aria-orientation="vertical" (click)="loadData('COSMETICS')">COSMETICS</mat-button-toggle>
-        <mat-button-toggle value="OTHER" aria-orientation="vertical" (click)="loadData('OTHER')">OTHER</mat-button-toggle>
-      </mat-button-toggle-group></div>
+      <div class="menu-items-outer">
+        <mat-button-toggle-group #chooseMenuItem="matButtonToggleGroup" appearance="standard" aria-label="menu-label">
+          <mat-button-toggle (click)="loadData('CLOTHES')" aria-orientation="vertical" value="CLOTHES">CLOTHES
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('BOOKS')" aria-orientation="vertical" value="BOOKS">BOOKS
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('ELECTRONICS')" aria-orientation="vertical" value="ELECTRONICS">
+            ELECTRONICS
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('ELECTRICAL')" aria-orientation="vertical" value="ELECTRICAL">
+            ELECTRICAL
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('COSMETICS')" aria-orientation="vertical" value="COSMETICS">COSMETICS
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('OTHER')" aria-orientation="vertical" value="OTHER">OTHER
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
     </div>
     <div class="content-outer">
       <div class="search-bar-outer">
@@ -16,22 +26,31 @@
           <div class="icon-inner"><i class="fa-brands fa-searchengin w3-xxlarge"></i></div>
           <div class="text-inner">
             <form [formGroup]="searchForm">
-              <input type="text" matInput [style.width.%]="100" [style.height.px]="43" formControlName="searchText" placeholder="Enter search Text">
+              <input [style.height.px]="43" [style.width.%]="100" formControlName="searchText" matInput placeholder="Enter search Text"
+                     type="text">
             </form>
           </div>
         </div>
       </div>
       <div class="content-inner">
-        <app-clothes class="inner-components" *ngIf="(chooseMenuItem.value=='CLOTHES'|| chooseMenuItem.value==undefined)" [data]="dataList" [buttonName]="buttonName"></app-clothes>
-        <app-books class="inner-components" *ngIf="chooseMenuItem.value=='BOOKS' " [data]="dataList" [buttonName]="buttonName"></app-books>
-        <app-electronics class="inner-components" *ngIf="chooseMenuItem.value=='ELECTRONICS' " [data]="dataList" [buttonName]="buttonName"></app-electronics>
-        <app-electrical class="inner-components" *ngIf="chooseMenuItem.value=='ELECTRICAL'" [data]="dataList" [buttonName]="buttonName"></app-electrical>
-        <app-cosmetics class="inner-components" *ngIf="chooseMenuItem.value=='COSMETICS'" [data]="dataList" [buttonName]="buttonName"></app-cosmetics>
-        <app-other class="inner-components" *ngIf="chooseMenuItem.value=='OTHER'" [data]="dataList" [buttonName]="buttonName"></app-other>
+        <app-clothes *ngIf="(chooseMenuItem.value=='CLOTHES'|| chooseMenuItem.value==undefined)"
+                     [buttonName]="buttonName" [data]="dataList"
+                     class="inner-components"></app-clothes>
+        <app-books *ngIf="chooseMenuItem.value=='BOOKS' " [buttonName]="buttonName" [data]="dataList"
+                   class="inner-components"></app-books>
+        <app-electronics *ngIf="chooseMenuItem.value=='ELECTRONICS' " [buttonName]="buttonName" [data]="dataList"
+                         class="inner-components"></app-electronics>
+        <app-electrical *ngIf="chooseMenuItem.value=='ELECTRICAL'" [buttonName]="buttonName" [data]="dataList"
+                        class="inner-components"></app-electrical>
+        <app-cosmetics *ngIf="chooseMenuItem.value=='COSMETICS'" [buttonName]="buttonName" [data]="dataList"
+                       class="inner-components"></app-cosmetics>
+        <app-other *ngIf="chooseMenuItem.value=='OTHER'" [buttonName]="buttonName" [data]="dataList"
+                   class="inner-components"></app-other>
       </div>
 
       <div class="paginator-outer">
-        <mat-paginator [length]=dataCount [pageSize]=pageSize [pageIndex]=page [pageSizeOptions]=pageSizeOptions  aria-label="Select Page" (page)="pageEvent=loadServerData($event,chooseMenuItem.value,false)">
+        <mat-paginator (page)="pageEvent=loadServerData($event,chooseMenuItem.value,false)" [length]=dataCount [pageIndex]=page [pageSizeOptions]=pageSizeOptions
+                       [pageSize]=pageSize aria-label="Select Page">
 
         </mat-paginator>
       </div>
@@ -41,6 +60,6 @@
 
 </div>
 <div class="buttons-outer" mat-dialog-actions>
-  <button mat-raised-button color="warn" mat-dialog-close="true">CLOSE</button>
+  <button color="warn" mat-dialog-close="true" mat-raised-button>CLOSE</button>
 </div>
 

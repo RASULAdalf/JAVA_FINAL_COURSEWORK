@@ -5,19 +5,22 @@
   margin: 0 0;
   overflow: hidden;
 }
-.content-outer{
+
+.content-outer {
   height: 520px;
   width: 100%;
   z-index: 2;
 }
-.heading{
+
+.heading {
   text-align: center;
   color: white;
   font-size: xxx-large;
   font-family: monospace;
   margin-top: 50px;
 }
-.content-inner{
+
+.content-inner {
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -25,7 +28,8 @@
   width: 100%;
 
 }
-.customer-details{
+
+.customer-details {
   height: 100%;
   width: 550px;
   border: 1px solid red;
@@ -35,24 +39,28 @@
   display: flex;
   flex-direction: column;
 }
-.header-customer{
+
+.header-customer {
   height: 40px;
   width: 100%;
 }
-.header-text{
+
+.header-text {
   height: 40px;
   width: 100%;
   border: 1px solid brown;
   text-align: center;
   color: purple;
 }
-.details-form{
+
+.details-form {
   flex: 1;
   width: 100%;
   overflow: scroll;
   margin-top: 5px;
 }
-.order-details{
+
+.order-details {
   height: 100%;
   width: 700px;
   border: 1px solid red;
@@ -64,18 +72,21 @@
   justify-content: space-between;
   background-color: white;
 }
-.order-content{
+
+.order-content {
   height: 450px;
   width: 100%;
   border: 1px solid black;
   display: flex;
   flex-direction: column;
 }
-.order-place{
+
+.order-place {
   height: 70px;
   width: 100%;
   border: 1px solid black;
 }
+
 .beautifying-elements {
   height: 100%;
   width: auto;
@@ -90,7 +101,7 @@
   left: 0;
   background-color: #07cfde;
   border-bottom-right-radius: 100%;
-  animation: upToDown 8s ease-in-out 2s infinite alternate,rotateCloud 8s ease-in-out 2s infinite alternate;
+  animation: upToDown 8s ease-in-out 2s infinite alternate, rotateCloud 8s ease-in-out 2s infinite alternate;
 }
 
 .second-cloud {
@@ -101,8 +112,9 @@
   right: 0;
   background-color: #07cfde;
   border-top-left-radius: 100%;
-  animation: downToUp 8s ease-in-out 2s infinite alternate,rotateCloud 8s ease-in-out 2s infinite alternate;
+  animation: downToUp 8s ease-in-out 2s infinite alternate, rotateCloud 8s ease-in-out 2s infinite alternate;
 }
+
 @keyframes downToUp {
   from {
     transform: translate(0%, 0%);
@@ -121,18 +133,22 @@
     transform: translate(600%, 250%);
   }
 }
+
 @keyframes rotateCloud {
-  50%{transform:rotate(90deg);}
+  50% {
+    transform: rotate(90deg);
+  }
 }
 
-.header-area{
+.header-area {
   height: 50px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.content-area{
+
+.content-area {
   margin-top: 3px;
   flex: 1;
   width: 100%;
@@ -140,7 +156,8 @@
   flex-direction: column;
 
 }
-.items-area{
+
+.items-area {
   //margin-top: 30px;
   // margin-left: 5px;
   margin: 0 0;
@@ -149,7 +166,8 @@
   border: 1px solid red;
   overflow: scroll;
 }
-.item{
+
+.item {
   margin-top: 4px;
   height: 50px;
   width: 100%;
@@ -157,53 +175,62 @@
   display: flex;
   align-items: center;
 }
-.item-picture{
+
+.item-picture {
   height: 100%;
-  width:60px;
+  width: 60px;
   background-size: cover;
   border: 1px solid black;
 }
-.item-name-price{
+
+.item-name-price {
   margin-left: 15px;
   color: red;
   font-size: large;
 }
-.item-price{
+
+.item-price {
   margin-left: 15px;
   color: black;
   font-size: large;
   font-family: monospace;
 }
-.item-controls{
+
+.item-controls {
   margin-left: 20px;
 }
-.item-full-price{
+
+.item-full-price {
   margin-left: 20px;
   color: black;
   font-size: xx-large;
   font-family: monospace;
 }
-.total-price-area{
+
+.total-price-area {
   height: 60px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.total-price-text{
+
+.total-price-text {
   width: 70%;
   font-family: monospace;
   font-size: xx-large;
   color: blueviolet;
 }
-.add-items-button{
+
+.add-items-button {
   height: 100%;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.order-place{
+
+.order-place {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -232,6 +259,7 @@
   overflow: hidden;
   mask-image: -webkit-radial-gradient(white, black);
   transition: transform .3s ease;
+
   span {
     --y: 0;
     position: absolute;
@@ -244,13 +272,16 @@
     font-size: 16px;
     font-weight: 500;
     transform: translateY(var(--y));
+
     &.default {
       transition-delay: .3s;
       transition: opacity .3s ease .3s;
     }
+
     &.success {
       --y: 60px;
       transition: transform .5s ease;
+
       svg {
         width: 12px;
         height: 10px;
@@ -268,13 +299,16 @@
       }
     }
   }
+
   &:active {
     transform: scale(.94);
   }
+
   .box,
   .drone {
     position: absolute;
   }
+
   .box {
     width: 20px;
     height: 20px;
@@ -283,6 +317,7 @@
     top: 100%;
     border-radius: 2px;
     background: var(--sand);
+
     &:before,
     &:after {
       content: '';
@@ -290,12 +325,14 @@
       display: block;
       left: 5px;
     }
+
     &:before {
       top: 0;
       width: 4px;
       height: 9px;
       background: rgba(255, 255, 255, .3);
     }
+
     &:after {
       z-index: 1;
       top: 7px;
@@ -306,6 +343,7 @@
       border-color: transparent transparent var(--sand) transparent;
     }
   }
+
   .drone {
     width: 42px;
     height: 14px;
@@ -313,8 +351,10 @@
     top: 16px;
     right: 100%;
     transform: translateX(-7px);
+
     svg {
       display: block;
+
       &.body {
         width: 42px;
         height: 14px;
@@ -322,19 +362,23 @@
         z-index: 1;
         color: var(--primary);
       }
+
       &.wing {
         position: absolute;
         width: 21px;
         height: 2px;
         top: 1px;
         color: var(--primary-light);
+
         &.left {
           left: -7px;
         }
+
         &.right {
           right: -7px;
         }
       }
+
       &.grab {
         position: absolute;
         width: 26px;
@@ -347,28 +391,35 @@
       }
     }
   }
+
   &.animate {
     .default {
       opacity: 0;
       transition-delay: 0s;
     }
+
     .success {
       --y: 0;
       transition-delay: 3.85s;
+
       svg {
         transition-delay: 4.3s;
         stroke-dashoffset: 0;
       }
     }
+
     .drone {
       animation: move 5s ease forwards;
+
       .wing {
         animation: wing 5s linear forwards;
       }
+
       .grab {
         animation: grab .6s ease forwards 2.3s;
       }
     }
+
     .box {
       animation: box 5s ease forwards;
     }
@@ -384,7 +435,7 @@
     transform: translateX(141px) rotate(0deg);
   }
   100% {
-    transform: translateX(141px) translateY(-84px)  rotate(0deg);
+    transform: translateX(141px) translateY(-84px) rotate(0deg);
   }
 }
 
@@ -422,6 +473,7 @@ html {
 
 * {
   box-sizing: inherit;
+
   &:before,
   &:after {
     box-sizing: inherit;
@@ -436,11 +488,13 @@ body {
   justify-content: center;
   align-items: center;
   background: #121621;
+
   .dribbble {
     position: fixed;
     display: block;
     right: 20px;
     bottom: 20px;
+
     img {
       display: block;
       height: 28px;

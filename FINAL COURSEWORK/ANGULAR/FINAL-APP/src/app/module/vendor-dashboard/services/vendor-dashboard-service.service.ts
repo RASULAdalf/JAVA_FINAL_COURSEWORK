@@ -5,9 +5,10 @@ import {LoginService} from "../../../service/login.service";
   providedIn: 'root'
 })
 export class VendorDashboardServiceService {
-  vendorEmail:any;
+  vendorEmail: any;
+
   constructor(public loginService: LoginService) {
-    this.loginService.afAuth.currentUser.then(res=>{
+    this.loginService.afAuth.currentUser.then(res => {
       this.vendorEmail = res?.email;
     })
   }

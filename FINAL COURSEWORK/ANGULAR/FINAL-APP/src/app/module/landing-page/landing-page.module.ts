@@ -6,7 +6,6 @@ import {LandingPageComponent} from './landing-page.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
-
 @NgModule({
   declarations: [
     LandingPageComponent,

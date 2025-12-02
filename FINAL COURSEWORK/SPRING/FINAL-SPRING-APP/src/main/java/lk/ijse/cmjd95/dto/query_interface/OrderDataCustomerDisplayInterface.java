@@ -5,26 +5,26 @@ import lk.ijse.cmjd95.entity.OrderItem;
 import java.util.Date;
 
 public interface OrderDataCustomerDisplayInterface {
-    public String getOrderId();
+    String getOrderId();
 
-    public String getCustomerEmail();
+    String getCustomerEmail();
 
-    public String getCustomerName();
+    String getCustomerName();
 
-    public String getCustomerAddress();
+    String getCustomerAddress();
 
-    public String getCustomerPhoneNumber();
+    String getCustomerPhoneNumber();
 
-    public Date getOrderDate();
+    Date getOrderDate();
 
-    public String getOrderDescription();
+    String getOrderDescription();
 
-    public OrderItem[] getOrders();
+    OrderItem[] getOrders();
 
-    public Double getTotalPrice();
+    Double getTotalPrice();
 
-    public String getPaymentMethod();
+    String getPaymentMethod();
 
-    public String getState();
+    String getState();
 
 }

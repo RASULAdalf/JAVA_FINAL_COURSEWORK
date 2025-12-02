@@ -15,15 +15,23 @@ const routes: Routes = [{path: '', redirectTo: '/landing', pathMatch: 'full'}, {
     path: 'VendorDashboard',
     loadChildren: () => import('./module/vendor-dashboard/vendor-dashboard.module').then(m => m.VendorDashboardModule)
   },
-  { path: 'AdminDashboard',canActivate:[AdminDashboardGuard], loadChildren: () => import('./module/admin-dashboard/admin-dashboard.module').then(m => m.AdminDashboardModule) },
-  { path: 'CustomerDashboard',canActivate:[CustomerDashboardGuard], loadChildren: () => import('./module/customer-dashboard/customer-dashboard.module').then(m => m.CustomerDashboardModule) },
-  {path:'**',component:NotFoundPageComponent,pathMatch:'full'},
+  {
+    path: 'AdminDashboard',
+    canActivate: [AdminDashboardGuard],
+    loadChildren: () => import('./module/admin-dashboard/admin-dashboard.module').then(m => m.AdminDashboardModule)
+  },
+  {
+    path: 'CustomerDashboard',
+    canActivate: [CustomerDashboardGuard],
+    loadChildren: () => import('./module/customer-dashboard/customer-dashboard.module').then(m => m.CustomerDashboardModule)
+  },
+  {path: '**', component: NotFoundPageComponent, pathMatch: 'full'},
 
 ];
 
 
 @NgModule({
-  declarations:[],
+  declarations: [],
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })

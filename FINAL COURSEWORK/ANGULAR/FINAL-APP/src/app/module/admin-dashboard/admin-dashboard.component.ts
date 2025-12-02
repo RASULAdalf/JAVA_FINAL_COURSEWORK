@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../../service/login.service";
 import {ModalService} from "../customer-dashboard/services/modal.service";
 
@@ -9,7 +9,8 @@ import {ModalService} from "../customer-dashboard/services/modal.service";
 })
 export class AdminDashboardComponent implements OnInit {
 
-  constructor(private modalService:ModalService,private loginService:LoginService) { }
+  constructor(private modalService: ModalService, private loginService: LoginService) {
+  }
 
   ngOnInit(): void {
     this.modalService.openLetSirKnowModal('Admin Dashboard');

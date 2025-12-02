@@ -1,9 +1,10 @@
-.header-area{
+.header-area {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.content-area{
+
+.content-area {
   margin-top: 30px;
   margin-left: 5px;
   height: 600px;
@@ -12,15 +13,17 @@
   flex-direction: column;
 
 }
-.items-area{
+
+.items-area {
   //margin-top: 30px;
- // margin-left: 5px;
+  // margin-left: 5px;
   height: 360px;
   width: 100%;
   border: 1px solid red;
   overflow: scroll;
 }
-.item{
+
+.item {
   margin-top: 10px;
   height: 100px;
   width: 100%;
@@ -28,60 +31,71 @@
   display: flex;
   align-items: center;
 }
-.item-picture{
+
+.item-picture {
   height: 100%;
-  width:100px;
+  width: 100px;
   background-size: cover;
   border: 1px solid black;
 }
-.item-name-price{
+
+.item-name-price {
   margin-left: 30px;
   color: red;
   font-size: x-large;
- }
-.item-price{
+}
+
+.item-price {
   margin-left: 30px;
   color: black;
   font-size: xx-large;
   font-family: monospace;
 }
-.item-controls{
+
+.item-controls {
   margin-left: 40px;
 }
-.item-full-price{
+
+.item-full-price {
   margin-left: 30px;
   color: black;
   font-size: xx-large;
   font-family: monospace;
 }
-.delete-button{
+
+.delete-button {
   margin-left: 80px;
 }
-.total-price-area{
+
+.total-price-area {
   flex: 1;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.total-price-text{
+
+.total-price-text {
   font-family: monospace;
   font-size: xx-large;
   color: blueviolet;
 }
-.footer-area{
+
+.footer-area {
   height: 70px;
   width: 100%;
   display: flex;
 }
-.button-close{
+
+.button-close {
   height: 100%;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.button-buy{
+
+.button-buy {
   height: 100%;
   flex: 1;
   display: flex;

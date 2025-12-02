@@ -1,4 +1,4 @@
-export interface Buying_Cart{
-  numberOfItems:number,
-  ItemList:any[]
+export interface Buying_Cart {
+  numberOfItems: number,
+  ItemList: any[]
 }

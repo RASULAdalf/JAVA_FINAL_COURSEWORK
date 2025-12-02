@@ -8,7 +8,8 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 })
 export class LetSirKnowComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { data:any}) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { data: any }) {
+  }
 
   ngOnInit(): void {
   }

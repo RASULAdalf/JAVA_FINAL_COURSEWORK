@@ -17,7 +17,7 @@ const firebaseBot = require('./firebasebot.json');
 
 admin.initializeApp({
     credential: admin.credential.cert(firebaseBot),
-    storageBucket:'angshop-cb664.firebasestorage.app',
+    storageBucket: 'angshop-cb664.firebasestorage.app',
 });
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());

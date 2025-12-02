@@ -7,8 +7,10 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class ProductsComponent implements OnInit {
   @Input() data: any[] | undefined;
-  @Input() buttonName:any | undefined;
-  constructor() { }
+  @Input() buttonName: any | undefined;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

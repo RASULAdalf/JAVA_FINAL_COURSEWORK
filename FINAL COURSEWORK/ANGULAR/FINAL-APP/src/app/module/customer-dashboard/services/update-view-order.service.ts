@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {BehaviorSubject, debounceTime, Observable} from "rxjs";
+import {Injectable} from '@angular/core';
+import {debounceTime} from "rxjs";
 import {HttpService} from "../../../service/http.service";
 import {environment} from "../../../../environments/environment";
 import {OrderItem} from "../../../model/OrderItem";
@@ -18,12 +18,12 @@ export class UpdateViewOrderService {
   QTYarray: number[] = [];
   QTYs: FormGroup[] = [];
   TotalPrice: number = 0;
-  orderFormValidated: boolean= false;
+  orderFormValidated: boolean = false;
   updateBtn: HTMLButtonElement | undefined;
   orderId: any;
   orderNum: number | undefined;
 
-  constructor(private httpService: HttpService,private snackBarService:SnackBarService) {
+  constructor(private httpService: HttpService, private snackBarService: SnackBarService) {
   }
 
   getItemQtyOnHand(itemCode: any): Promise<any> {
@@ -52,7 +52,7 @@ export class UpdateViewOrderService {
       QTYtext: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(data?.qtyOnHand)])
     }));
     this.QTYarray.push(1);
-    console.log(this.QTYarray.length+" "+this.QTYs.length);
+    console.log(this.QTYarray.length + " " + this.QTYs.length);
     this.data?.orders.push(orderItem);
     this.countTotalPrice();
 
@@ -60,7 +60,7 @@ export class UpdateViewOrderService {
 
     for (let i = 0; i < this.data.orders.length; i++) {
       this.QTYs[i].valueChanges.pipe(debounceTime(1080)).subscribe((value: { index: number; QTYtext: string; }) => {
-        console.log(i +" upelement")
+        console.log(i + " upelement")
         //this.countTotalPrice();
         this.checkValidity().then(r => console.log(r));
         this.QTYarray.splice(i, 1, parseInt(value.QTYtext));
@@ -82,8 +82,8 @@ export class UpdateViewOrderService {
 
   }
 
-  checkValidity():Promise<any> {
-    return new Promise((resolve, reject)=>{
+  checkValidity(): Promise<any> {
+    return new Promise((resolve, reject) => {
       for (let i = 0; i < this.QTYs.length; i++) {
         if (this.QTYs[i].invalid) {
 
@@ -93,7 +93,7 @@ export class UpdateViewOrderService {
           resolve(true);
 
           break;
-        }else {
+        } else {
           console.log("vlidted")
           this.orderFormValidated = false;
 
@@ -106,17 +106,18 @@ export class UpdateViewOrderService {
     })
 
   }
-  public createOrderBody(name:any,email:any,address:any,phone:any,description:any,date:any,method:any,state:any):OrderBody{
-    let orderBody:OrderBody={
-      customerName:name,
-      customerEmail:email,
-      customerAddress:address,
-      customerPhoneNumber:phone,
-      orderDescription:description,
-      orderDate:date,
-      paymentMethod:method,
-      state:state
+
+  public createOrderBody(name: any, email: any, address: any, phone: any, description: any, date: any, method: any, state: any): OrderBody {
+    let orderBody: OrderBody = {
+      customerName: name,
+      customerEmail: email,
+      customerAddress: address,
+      customerPhoneNumber: phone,
+      orderDescription: description,
+      orderDate: date,
+      paymentMethod: method,
+      state: state
     }
-    return  orderBody;
+    return orderBody;
   }
 }

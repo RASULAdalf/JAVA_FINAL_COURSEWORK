@@ -1,36 +1,51 @@
 <div class="row col-sm-12">
   <div class="header-outer">
     <h2 class="header-text">Customer Dashboard</h2>
-      <div class="header-buttons">
-      <button  mat-icon-button aria-label="Example icon button with a shopping cart icon" (click)="openModal()">
-        <mat-icon [matBadge]="buyingCartService.cartData.numberOfItems" class="shopping-cart-button">add_shopping_cart</mat-icon>
-    </button>
-      <button mat-button (click)="logout()" aria-label="Example icon button with a logout icon">
+    <div class="header-buttons">
+      <button (click)="openModal()" aria-label="Example icon button with a shopping cart icon" mat-icon-button>
+        <mat-icon [matBadge]="buyingCartService.cartData.numberOfItems" class="shopping-cart-button">add_shopping_cart
+        </mat-icon>
+      </button>
+      <button (click)="logout()" aria-label="Example icon button with a logout icon" mat-button>
         <mat-icon class="logout-button">logout</mat-icon>
-    </button>
-      <button mat-raised-button #orderBtn class="orders-button" color="accent" (click)="loadOrdersData()">Your Orders</button>
-      </div>
+      </button>
+      <button #orderBtn (click)="loadOrdersData()" class="orders-button" color="accent" mat-raised-button>Your Orders
+      </button>
+    </div>
 
   </div>
   <div class="all-content-outer">
     <div class="menu-outer">
-      <div class="account-outer" *ngIf="localStorageService.getCookie('userEmail')">
+      <div *ngIf="localStorageService.getCookie('userEmail')" class="account-outer">
         <div class="account-logo">
-          <div class="logo-box" [ngStyle]="{ background: localStorageService.getCookie('userPic') | customerDashboardBackgroundImages,'background-size':'cover'}"></div>
+          <div [ngStyle]="{ background: localStorageService.getCookie('userPic') | customerDashboardBackgroundImages,'background-size':'cover'}"
+               class="logo-box"></div>
         </div>
-        <div class="account-name">{{localStorageService.getCookie('userEmail')}}</div>
+        <div class="account-name">{{ localStorageService.getCookie('userEmail') }}</div>
       </div>
-      <div class="menu-items-outer"><mat-button-toggle-group #chooseMenuItem="matButtonToggleGroup" aria-label="menu-label" appearance="standard" >
-        <mat-button-toggle value="CLOTHES" aria-orientation="vertical" (click)="loadData('CLOTHES')">CLOTHES</mat-button-toggle>
-        <mat-button-toggle value="BOOKS" aria-orientation="vertical" (click)="loadData('BOOKS')">BOOKS</mat-button-toggle>
-        <mat-button-toggle value="ELECTRONICS" aria-orientation="vertical" (click)="loadData('ELECTRONICS')">ELECTRONICS</mat-button-toggle>
-        <mat-button-toggle value="ELECTRICALS" aria-orientation="vertical" (click)="loadData('ELECTRICAL')">ELECTRICAL</mat-button-toggle>
-        <mat-button-toggle value="COSMETICS" aria-orientation="vertical" (click)="loadData('COSMETICS')">COSMETICS</mat-button-toggle>
-        <mat-button-toggle value="OTHER" aria-orientation="vertical" (click)="loadData('OTHER')">OTHER</mat-button-toggle>
-        <mat-button-toggle class="orders-button" value="ORDERS" aria-orientation="vertical" (click)="loadOrdersData()">Your orders</mat-button-toggle>
-      </mat-button-toggle-group></div>
+      <div class="menu-items-outer">
+        <mat-button-toggle-group #chooseMenuItem="matButtonToggleGroup" appearance="standard" aria-label="menu-label">
+          <mat-button-toggle (click)="loadData('CLOTHES')" aria-orientation="vertical" value="CLOTHES">CLOTHES
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('BOOKS')" aria-orientation="vertical" value="BOOKS">BOOKS
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('ELECTRONICS')" aria-orientation="vertical" value="ELECTRONICS">
+            ELECTRONICS
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('ELECTRICAL')" aria-orientation="vertical" value="ELECTRICALS">
+            ELECTRICAL
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('COSMETICS')" aria-orientation="vertical" value="COSMETICS">COSMETICS
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('OTHER')" aria-orientation="vertical" value="OTHER">OTHER
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadOrdersData()" aria-orientation="vertical" class="orders-button"
+                             value="ORDERS">Your orders
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
       <div class="copyright-outer">
-        <small>&copy;{{year}}</small>&nbsp;
+        <small>&copy;{{ year }}</small>&nbsp;
         <small>All rights reserved</small>
       </div>
     </div>
@@ -40,27 +55,37 @@
           <div class="icon-inner"><i class="fa-brands fa-searchengin w3-xxlarge"></i></div>
           <div class="text-inner">
             <form [formGroup]="searchForm">
-              <input type="text" matInput [style.width.%]="100" [style.height.px]="43" formControlName="searchText" placeholder="Enter search Text">
+              <input [style.height.px]="43" [style.width.%]="100" formControlName="searchText" matInput placeholder="Enter search Text"
+                     type="text">
             </form>
           </div>
         </div>
       </div>
       <div class="content-inner">
         <app-loading *ngIf="loadingService.progrssBarLoadingState |async" [data]="type"></app-loading>
-        <app-clothes class="inner-components" *ngIf="(chooseMenuItem.value=='CLOTHES'|| chooseMenuItem.value==undefined) && !orderButtonClicked" [data]="dataList" [buttonName]="buttonName"></app-clothes>
-        <app-books class="inner-components" *ngIf="chooseMenuItem.value=='BOOKS' && !orderButtonClicked" [data]="dataList" [buttonName]="buttonName"></app-books>
-        <app-electronics class="inner-components" *ngIf="chooseMenuItem.value=='ELECTRONICS' && !orderButtonClicked" [data]="dataList" [buttonName]="buttonName"></app-electronics>
-        <app-electrical class="inner-components" *ngIf="chooseMenuItem.value=='ELECTRICALS' && !orderButtonClicked" [data]="dataList" [buttonName]="buttonName"></app-electrical>
-        <app-cosmetics class="inner-components" *ngIf="chooseMenuItem.value=='COSMETICS'&& !orderButtonClicked" [data]="dataList" [buttonName]="buttonName"></app-cosmetics>
-        <app-other class="inner-components" *ngIf="chooseMenuItem.value=='OTHER'&& !orderButtonClicked" [data]="dataList" [buttonName]="buttonName"></app-other>
-        <app-order class="inner-components" *ngIf="orderButtonClicked" [data]="dataList"></app-order>
+        <app-clothes *ngIf="(chooseMenuItem.value=='CLOTHES'|| chooseMenuItem.value==undefined) && !orderButtonClicked"
+                     [buttonName]="buttonName"
+                     [data]="dataList" class="inner-components"></app-clothes>
+        <app-books *ngIf="chooseMenuItem.value=='BOOKS' && !orderButtonClicked" [buttonName]="buttonName"
+                   [data]="dataList" class="inner-components"></app-books>
+        <app-electronics *ngIf="chooseMenuItem.value=='ELECTRONICS' && !orderButtonClicked" [buttonName]="buttonName"
+                         [data]="dataList" class="inner-components"></app-electronics>
+        <app-electrical *ngIf="chooseMenuItem.value=='ELECTRICALS' && !orderButtonClicked" [buttonName]="buttonName"
+                        [data]="dataList" class="inner-components"></app-electrical>
+        <app-cosmetics *ngIf="chooseMenuItem.value=='COSMETICS'&& !orderButtonClicked" [buttonName]="buttonName"
+                       [data]="dataList" class="inner-components"></app-cosmetics>
+        <app-other *ngIf="chooseMenuItem.value=='OTHER'&& !orderButtonClicked" [buttonName]="buttonName"
+                   [data]="dataList" class="inner-components"></app-other>
+        <app-order *ngIf="orderButtonClicked" [data]="dataList" class="inner-components"></app-order>
       </div>
 
-    <div class="paginator-outer">
-      <mat-paginator [length]=dataCount [pageSize]=pageSize [pageIndex]=page [pageSizeOptions]=pageSizeOptions  aria-label="Select Page" (page)="pageEvent=loadServerData($event,chooseMenuItem.value,orderButtonClicked)">
+      <div class="paginator-outer">
+        <mat-paginator (page)="pageEvent=loadServerData($event,chooseMenuItem.value,orderButtonClicked)" [length]=dataCount [pageIndex]=page [pageSizeOptions]=pageSizeOptions
+                       [pageSize]=pageSize
+                       aria-label="Select Page">
 
-      </mat-paginator>
-    </div>
+        </mat-paginator>
+      </div>
     </div>
 
 

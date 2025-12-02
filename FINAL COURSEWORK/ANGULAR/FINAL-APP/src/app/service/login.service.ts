@@ -1,15 +1,14 @@
 import {Injectable, NgZone} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {ActivatedRoute, Router} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {LocalDataService} from "./local-data.service";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
 //import auth = firebase.auth;
 import {Vendor} from "../model/Vendor";
 import firebase from "firebase/compat/app";
-import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import {SnackBarService} from "../module/customer-dashboard/services/snack-bar.service";
+import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
 //import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
@@ -53,11 +52,11 @@ export class LoginService {
 
     } else if (data['err'] != undefined) {
       this.snackBarService.openSnackBar(data['err']);
-    }else if (data['token']!= undefined){
-      this.localDataService.setCookie('token',data['token']).then(res=>{
+    } else if (data['token'] != undefined) {
+      this.localDataService.setCookie('token', data['token']).then(res => {
         this.router.navigate(['/AdminDashboard'])
-      },err=>{
-        this.router.navigate(['landing'],{queryParams:{err:'Error Occurred '}});
+      }, err => {
+        this.router.navigate(['landing'], {queryParams: {err: 'Error Occurred '}});
       })
     }
   }
@@ -65,21 +64,21 @@ export class LoginService {
   public CustomerDashboardLoginOperations(data: any): void {
 
     if (data['code'] != undefined) {
-      this.localDataService.setCookie('userToken', data['code']).then(result=>{
+      this.localDataService.setCookie('userToken', data['code']).then(result => {
 
-        this.auth.user$.subscribe(res=>{
-          console.log(res?.picture+" "+res?.email);
-          this.localDataService.setCookie('userPic',res?.picture).then(r=>{
-           this.localDataService.setCookie('userEmail',res?.email).then(rr=>{
-             window.location.replace("http://localhost:4200/CustomerDashboard");
-           })
+        this.auth.user$.subscribe(res => {
+          console.log(res?.picture + " " + res?.email);
+          this.localDataService.setCookie('userPic', res?.picture).then(r => {
+            this.localDataService.setCookie('userEmail', res?.email).then(rr => {
+              window.location.replace("http://localhost:4200/CustomerDashboard");
+            })
           });
         })
         // this.localDataService.setCookie('userPic',)
-          this.localDataService.deleteCookie('login_init', '/');
+        this.localDataService.deleteCookie('login_init', '/');
 
 
-      }).catch(error=>console.log(error));
+      }).catch(error => console.log(error));
 
 
     }
@@ -94,18 +93,18 @@ export class LoginService {
     }
 
 
-
   }
 
   public async isLoggedAuth0(): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (this.getCookie('userToken')|| this.getCookie('login_init')) {
+      if (this.getCookie('userToken') || this.getCookie('login_init')) {
         resolve(true);
       } else {
         reject(false);
       }
     });
   }
+
   public getCookie(key: string): any {
     return this.localDataService.getCookie(key);
   }
@@ -131,7 +130,7 @@ export class LoginService {
 
   SignIn(email: string, password: string) {
     this.afAuth.signInWithEmailAndPassword(email, password).then(res => {
-      this.router.navigate(['VendorDashboard'],{ queryParams: { vendorEmail: email } });
+      this.router.navigate(['VendorDashboard'], {queryParams: {vendorEmail: email}});
     }, error => {
       this.router.navigate(['/landing'], {queryParams: {err: error}});
     })
@@ -210,7 +209,12 @@ export class LoginService {
               localStorage.setItem('user', JSON.stringify(this.userData));
               JSON.parse(localStorage.getItem('user')!);
               console.log(this.userData)
-              this.router.navigate(['VendorDashboard'],{queryParams:{vendorEmail:this.userData.email,vendorImage:this.userData.photoURL}});
+              this.router.navigate(['VendorDashboard'], {
+                queryParams: {
+                  vendorEmail: this.userData.email,
+                  vendorImage: this.userData.photoURL
+                }
+              });
             } else {
               localStorage.setItem('user', 'null');
               JSON.parse(localStorage.getItem('user')!);
@@ -244,7 +248,7 @@ export class LoginService {
     });
   }
 
-  forgotPassword(email:any) {
+  forgotPassword(email: any) {
     this.ForgotPassword(email).then(res => {
       this.router.navigate(['/landing'], {queryParams: {err: `Reset link sent to ${email}`}});
     }, err => {
@@ -252,8 +256,8 @@ export class LoginService {
     })
   }
 
-  VendorLogin(email:any,password:any) {
-    this.SignIn(email,password);
+  VendorLogin(email: any, password: any) {
+    this.SignIn(email, password);
 
   }
 
@@ -269,8 +273,8 @@ export class LoginService {
     this.GoogleAuth();
   }
 
-  register(email:any,password:any) {
-    this.SignUp(email,password).then(res => {
+  register(email: any, password: any) {
+    this.SignUp(email, password).then(res => {
       this.router.navigate(['VendorDashboard/login']);
     }, err => {
       this.router.navigate(['/landing'], {queryParams: {err: err}});
@@ -282,11 +286,11 @@ export class LoginService {
     this.afAuth.signInWithEmailLink('')
   }
 
-  public async isLoggedAdmin():Promise<any>{
-    return new Promise((resolve,reject)=>{
-      if (this.localDataService.getCookie('token')){
+  public async isLoggedAdmin(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (this.localDataService.getCookie('token')) {
         resolve(true);
-      }else {
+      } else {
         reject(false);
       }
     })
@@ -294,7 +298,7 @@ export class LoginService {
 
 
   AdminLogout() {
-    this.localDataService.deleteCookie('token','path').then(res=>{
+    this.localDataService.deleteCookie('token', 'path').then(res => {
       this.router.navigate(['/landing']);
     })
   }

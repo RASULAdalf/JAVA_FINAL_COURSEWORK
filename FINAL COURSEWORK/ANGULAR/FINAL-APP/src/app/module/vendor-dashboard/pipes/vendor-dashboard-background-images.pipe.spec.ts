@@ -1,4 +1,4 @@
-import { VendorDashboardBackgroundImagesPipe } from './vendor-dashboard-background-images.pipe';
+import {VendorDashboardBackgroundImagesPipe} from './vendor-dashboard-background-images.pipe';
 
 describe('VendorDashboardBackgroundImagesPipe', () => {
   it('create an instance', () => {

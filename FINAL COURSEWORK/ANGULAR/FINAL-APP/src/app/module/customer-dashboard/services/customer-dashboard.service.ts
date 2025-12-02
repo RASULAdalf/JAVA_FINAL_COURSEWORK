@@ -10,52 +10,59 @@ import {environment} from "../../../../environments/environment";
 })
 export class CustomerDashboardService {
   baseUrl = environment.DatabaseServerUrl;
-  dataList:any[] | undefined;
-  constructor(private httpService:HttpService, private loginService: LoginService, @Inject(DOCUMENT) private doc: Document) {
+  dataList: any[] | undefined;
+
+  constructor(private httpService: HttpService, private loginService: LoginService, @Inject(DOCUMENT) private doc: Document) {
   }
 
   logout() {
     this.loginService.logoutFromAuth0({returnTo: this.doc.location.origin});
   }
 
-  loadClothesDataAll(page:any,pageSize:any):Observable<any>{
-    return this.httpService.get(this.baseUrl+"item/list/category?category=Clothes&page="+page+"&pageSize="+pageSize);
+  loadClothesDataAll(page: any, pageSize: any): Observable<any> {
+    return this.httpService.get(this.baseUrl + "item/list/category?category=Clothes&page=" + page + "&pageSize=" + pageSize);
   }
 
-  loadBooksDataAll(page: number | undefined, pageSize: number | undefined):Observable<any> {
+  loadBooksDataAll(page: number | undefined, pageSize: number | undefined): Observable<any> {
     return this.httpService.get(this.baseUrl + "item/list/category?category=Books&page=" + page + "&pageSize=" + pageSize)
 
   }
-  loadElectronicsDataAll(page: number | undefined, pageSize: number | undefined):Observable<any> {
+
+  loadElectronicsDataAll(page: number | undefined, pageSize: number | undefined): Observable<any> {
     return this.httpService.get(this.baseUrl + "item/list/category?category=Electronics&page=" + page + "&pageSize=" + pageSize)
 
   }
-  loadElectricalsDataAll(page: number | undefined, pageSize: number | undefined):Observable<any> {
+
+  loadElectricalsDataAll(page: number | undefined, pageSize: number | undefined): Observable<any> {
     return this.httpService.get(this.baseUrl + "item/list/category?category=Electrical&page=" + page + "&pageSize=" + pageSize)
 
   }
-  loadCosmeticsDataAll(page: number | undefined, pageSize: number | undefined):Observable<any> {
+
+  loadCosmeticsDataAll(page: number | undefined, pageSize: number | undefined): Observable<any> {
     return this.httpService.get(this.baseUrl + "item/list/category?category=Cosmetics&page=" + page + "&pageSize=" + pageSize)
 
   }
-  loadOtherDataAll(page: number | undefined, pageSize: number | undefined):Observable<any> {
+
+  loadOtherDataAll(page: number | undefined, pageSize: number | undefined): Observable<any> {
     return this.httpService.get(this.baseUrl + "item/list/category?category=Other&page=" + page + "&pageSize=" + pageSize)
 
   }
-  loadOrderDataAll(page: number | undefined, pageSize: number | undefined,email:string | undefined):Observable<any> {
+
+  loadOrderDataAll(page: number | undefined, pageSize: number | undefined, email: string | undefined): Observable<any> {
     return this.httpService.get(this.baseUrl + "order/list?email=" + email + "&page=" + page + "&pageSize=" + pageSize)
 
   }
 
-    loadSearchDataAll(page: number | undefined, pageSize: number | undefined, searchText: string | undefined, orderButtonClicked: boolean,email:any) {
+  loadSearchDataAll(page: number | undefined, pageSize: number | undefined, searchText: string | undefined, orderButtonClicked: boolean, email: any) {
     if (!orderButtonClicked) {
       return this.httpService.get(this.baseUrl + "item/find?searchText=" + searchText + "&page=" + page + "&pageSize=" + pageSize)
-    }else {
+    } else {
       return this.httpService.get(this.baseUrl + "order/findCustomerOrder?email=" + email + "&searchText=" + searchText + "&page=" + page + "&pageSize=" + pageSize)
     }
 
   }
 
-  setDataList(dataList: any[] | undefined){
-    this.dataList = dataList;}
+  setDataList(dataList: any[] | undefined) {
+    this.dataList = dataList;
+  }
 }
