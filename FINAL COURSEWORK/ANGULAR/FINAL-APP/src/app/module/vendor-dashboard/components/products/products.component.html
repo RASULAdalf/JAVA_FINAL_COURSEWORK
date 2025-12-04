@@ -1,1 +1,19 @@
-<p>products works!</p>
+<div class="content-outer">
+<mat-card *ngFor="let data of data; index as num" class="example-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>{{data?.itemDescription}}</mat-card-title>
+    <mat-card-subtitle>{{data?.itemCategory}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]="data?.itemLogoUrl" alt="Picture">
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="openViewModal(num)">VIEW</button>
+    <button mat-raised-button color="primary">UPDATE</button>
+    <button mat-raised-button color="warn" (click)="deleteProduct(data?.itemCode)">DELETE</button>
+  </mat-card-actions>
+  <mat-card-footer class="example-card-footer">
+    <mat-chip-list>
+     <mat-chip>Rs.{{data?.unitPrice}}</mat-chip>
+    </mat-chip-list>
+  </mat-card-footer>
+</mat-card>
+</div>

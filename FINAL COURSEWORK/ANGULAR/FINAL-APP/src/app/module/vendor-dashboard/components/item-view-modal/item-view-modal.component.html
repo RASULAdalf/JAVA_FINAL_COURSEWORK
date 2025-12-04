@@ -1,0 +1,40 @@
+<h1 mat-dialog-title><span class="description">{{ data.data[data.index]?.itemDescription }}</span><span class="price">Rs.{{ data.data[data.index]?.unitPrice }}</span>
+</h1>
+<div class="content" mat-dialog-content>
+  <div class="slideshow">
+    <mdb-carousel [animation]="'fade'" [controls]="true" [indicators]="true">
+      <mdb-carousel-item *ngFor="let image of data.data[data.index]?.slideShowImageUrls;index as num; "
+                         [interval]="4000">
+        <img
+          [src]="image"
+        />
+      </mdb-carousel-item>
+
+    </mdb-carousel>
+  </div>
+  <div class="specifications">
+    <button (click)="gotoSpecDoc(data.data[data.index]?.specsDocUrl)" class="specBTN" color="primary" mat-raised-button>
+      SEE SPECIFICATIONS
+    </button>
+  </div>
+</div>
+<div class="footer" mat-dialog-actions>
+  <div class="button-inner">
+    <div class="button-buy-related">
+      <div class="button-add-to-cart">
+        <button (click)="closeDialog()" color="primary" mat-raised-button>CLOSE</button>
+      </div>
+<!--      <div class="button-buy">-->
+<!--        <button (click)="gotoBuyingPage()" *ngIf="data?.buttonName!='ADD'" color="primary" mat-dialog-close="true"-->
+<!--                mat-raised-button>BUY ONE-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="button-close">-->
+<!--      <button color="warn" mat-dialog-close="true" mat-raised-button>CLOSE</button>-->
+<!--    </div>-->
+<!--  </div>-->
+</div>
+  </div>
+</div>
+

@@ -62,7 +62,7 @@
         </div>
       </div>
       <div class="content-inner">
-        <app-loading *ngIf="loadingService.progrssBarLoadingState |async" [data]="type"></app-loading>
+        <app-loading *ngIf="loadingService.progressBarLoadingState |async" [data]="type"></app-loading>
         <app-clothes *ngIf="(chooseMenuItem.value=='CLOTHES'|| chooseMenuItem.value==undefined) && !orderButtonClicked"
                      [buttonName]="buttonName"
                      [data]="dataList" class="inner-components"></app-clothes>

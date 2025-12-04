@@ -31,11 +31,6 @@ public class ItemController {
         return new ResponseEntity<>(new StandardResponse(200, "Item Found!", itemService.findItem(searchText, page, pageSize, token)), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/find", params = {"searchText"})
-    public ResponseEntity<StandardResponse> findById(@RequestParam("searchText") String searchText, @RequestHeader String token) {
-        return new ResponseEntity<>(new StandardResponse(200, "Item Found!", itemService.findItemById(searchText, token)), HttpStatus.OK);
-    }
-
     @PutMapping
     public ResponseEntity<StandardResponse> update(@RequestBody ItemRequestDto dto, @RequestParam String id, @RequestHeader String token) {
         return new ResponseEntity<>(new StandardResponse(201, "Item Updated!", itemService.updateItem(dto, id, token)), HttpStatus.CREATED);

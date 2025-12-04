@@ -27,6 +27,14 @@ public interface ItemRepo extends MongoRepository<Item, String> {
     @Query("{specsDocContent: {$regex: '?0'}}")
     Page<ItemDataInterface> getAllItemsBySpecsDocContent(String searchText, Pageable pageable);
 
-    @Query("{specsDocContent: {$regex: '?0'}}")
+    @Query(value = "{specsDocContent: {$regex: '?0'}}", count = true)
     int getAllItemsCountBySpecsDocContent(String searchText);
+
+    @Query("{vendorEmail: {$regex: '?0'}}")
+    Page<ItemDataInterface> getAllItemsByVendorEmail(String searchText, Pageable pageable);
+
+    @Query(value = "{vendorEmail: {$regex: '?0'}}", count = true)
+    int getAllItemsByVendorEmail(String searchText);
+
+
 }

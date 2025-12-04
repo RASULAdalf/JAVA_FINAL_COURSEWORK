@@ -5,7 +5,7 @@ import {BehaviorSubject} from "rxjs";
   providedIn: 'root'
 })
 export class LoadingService {
-  public progrssBarLoadingState: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public progressBarLoadingState: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor() {
   }

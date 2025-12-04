@@ -1,0 +1,16 @@
+.content-outer{
+  height: 100%;
+  width: 100%;
+  padding: 1% 1% 1% 1%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.example-card{
+  height: 36%;
+}
+.example-card-footer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

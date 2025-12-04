@@ -1,7 +1,6 @@
 package lk.ijse.cmjd95.service.impl;
 
 import lk.ijse.cmjd95.dto.paginate.PaginatedItemResponseDto;
-import lk.ijse.cmjd95.dto.query_interface.ItemDataInterface;
 import lk.ijse.cmjd95.dto.request.ItemRequestDto;
 import lk.ijse.cmjd95.dto.response.ItemResponseDto;
 import lk.ijse.cmjd95.entity.Item;
@@ -9,7 +8,6 @@ import lk.ijse.cmjd95.repo.ItemRepo;
 import lk.ijse.cmjd95.security.TokenValidator;
 import lk.ijse.cmjd95.service.ItemService;
 import lk.ijse.cmjd95.util.mapper.Mapper;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -40,28 +38,39 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public PaginatedItemResponseDto findItem(String searchText, int page, int pageSize, String token) {
         if (!TokenValidator.validateToken(token)) {
+            System.out.println("Invalid Token!");
             return null;
         }
-        Optional<Item> byId = itemRepo.findById(searchText);
-        if (byId.isPresent()) {
-            List<ItemResponseDto> list = new ArrayList<>();
-            list.add(mapper.toItemResponseDto(byId.get()));
-            return new PaginatedItemResponseDto(list, 1);
-        } else {
-            Page<ItemDataInterface> allItemsByDescription = itemRepo.getAllItemsByDescription(searchText, PageRequest.of(page, pageSize));
+
+        try {
+            Optional<Item> byId = itemRepo.findById(searchText);
+            if (byId.isPresent()) {
+                List<ItemResponseDto> list = new ArrayList<>();
+                list.add(mapper.toItemResponseDto(byId.get()));
+                return new PaginatedItemResponseDto(list, 1);
+            }
             PaginatedItemResponseDto paginatedItemResponseDto = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsByDescription(searchText, PageRequest.of(page, pageSize))), itemRepo.getAllItemsCountByDescription(searchText));
             if (0 < paginatedItemResponseDto.getItems().size()) {
                 return paginatedItemResponseDto;
-            } else {
-                PaginatedItemResponseDto paginatedItemResponseDto1 = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsBySpecsDocContent(searchText, PageRequest.of(page, pageSize))), itemRepo.getAllItemsCountBySpecsDocContent(searchText));
-                if (0 < paginatedItemResponseDto1.getItems().size()) {
-                    return paginatedItemResponseDto1;
-                } else {
-                    return null;
-                }
             }
+
+            PaginatedItemResponseDto paginatedItemResponseDto1 = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsBySpecsDocContent(searchText, PageRequest.of(page, pageSize))), itemRepo.getAllItemsCountBySpecsDocContent(searchText));
+            if (0 < paginatedItemResponseDto1.getItems().size()) {
+                return paginatedItemResponseDto1;
+            }
+            PaginatedItemResponseDto paginatedItemResponseDto2 = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsByVendorEmail(searchText, PageRequest.of(page, pageSize))), itemRepo.getAllItemsByVendorEmail(searchText));
+            if (0 < paginatedItemResponseDto2.getItems().size()) {
+                return paginatedItemResponseDto2;
+            }
+
+            return null;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
     }
+
 
     @Override
     public String updateItem(ItemRequestDto dto, String id, String token) {

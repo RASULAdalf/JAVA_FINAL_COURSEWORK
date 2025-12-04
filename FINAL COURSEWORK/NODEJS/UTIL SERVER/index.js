@@ -13,7 +13,7 @@ var corsMiddleware = function (req, res, next) {
 
     next();
 }
-const firebaseBot = require('./firebasebot.json');
+const firebaseBot = require('./credentials/firebasebot.json');
 
 admin.initializeApp({
     credential: admin.credential.cert(firebaseBot),
