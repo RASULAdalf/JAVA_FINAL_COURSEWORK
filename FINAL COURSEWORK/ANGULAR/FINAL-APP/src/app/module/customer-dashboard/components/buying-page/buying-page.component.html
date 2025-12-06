@@ -52,7 +52,8 @@
               </mat-select>
             </mat-form-field>
             <br>
-            <button #submit [disabled]="Details_Form.invalid" [style.margin-bottom.px]=5 [style.margin-left.px]=230 color="primary"
+            <button #submit [disabled]="Details_Form.invalid" [style.margin-bottom.px]=5 [style.margin-left.px]=230
+                    color="primary"
                     mat-raised-button type="submit">SUBMIT
             </button>
           </form>
@@ -71,7 +72,8 @@
                 <div class="item-name-price">{{ data?.itemDescription }}<span
                   class="item-price">Rs.{{ data?.unitPrice }}</span></div>
                 <div [formGroup]="QTYs[num]" class="item-controls">
-                  <mat-form-field [style.font-size.px]=13 [style.margin-bottom.em]=-1.25 appearance="outline" class="full-width"
+                  <mat-form-field [style.font-size.px]=13 [style.margin-bottom.em]=-1.25 appearance="outline"
+                                  class="full-width"
                                   readonly>
                     <input [style.height.px]="15" formControlName="QTYtext" matInput readonly type="text">
                   </mat-form-field>
@@ -85,9 +87,11 @@
           </div>
         </div>
         <div class="order-place">
-          <button (click)="createFinalOrderBodyAndSend()" [disabled]="submit.disabled" [matTooltipDisabled]="!submit.disabled"
+          <button (click)="createFinalOrderBodyAndSend()" [disabled]="submit.disabled"
+                  [matTooltipDisabled]="!submit.disabled"
                   class="order" mat-raised-button
-                  matTooltip="Please submit the details form first"><span class="default">Place Order</span><span class="success">Order Sent
+                  matTooltip="Please submit the details form first"><span class="default">Place Order</span><span
+            class="success">Order Sent
     <svg viewbox="0 0 12 10">
       <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
     </svg></span>

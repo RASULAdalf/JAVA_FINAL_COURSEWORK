@@ -1,22 +1,38 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ItemViewModalComponent} from "../components/item-view-modal/item-view-modal.component";
-import {ItemModalComponent} from "../../customer-dashboard/components/item-modal/item-modal.component";
+import {ItemEditModalComponent} from "../components/item-edit-modal/item-edit-modal.component";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
-  public itemViewDialogRef: MatDialogRef<ItemModalComponent, any> | undefined;
-  constructor(private modalService:MatDialog) { }
+  public itemViewDialogRef: MatDialogRef<ItemViewModalComponent, any> | undefined;
+  public itemEditDialogRef: MatDialogRef<ItemEditModalComponent, any> | undefined;
+
+  constructor(private modalService: MatDialog) {
+  }
 
   public openItemViewModal(data: any[] | undefined, index?: number) {
-    this.itemViewDialogRef =  this.modalService.open(ItemModalComponent, {
+    this.itemViewDialogRef = this.modalService.open(ItemViewModalComponent, {
       height: '620px',
       width: '750px',
       data: {
         data: data,
-        index:index
+        index: index
+      }
+    });
+  }
+
+  openItemEditModal(data: any[] | undefined, index: number, btnName: any) {
+    this.itemEditDialogRef = this.modalService.open(ItemEditModalComponent, {
+      height: '620px',
+      width: '750px',
+      data: {
+        data: data,
+        index: index,
+        buttonName: btnName
       }
     });
   }

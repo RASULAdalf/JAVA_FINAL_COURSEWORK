@@ -36,39 +36,72 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public PaginatedItemResponseDto findItem(String searchText, int page, int pageSize, String token) {
+    public PaginatedItemResponseDto findItem(String searchText, int page, int pageSize, String token,String byWhom,String email) {
         if (!TokenValidator.validateToken(token)) {
             System.out.println("Invalid Token!");
             return null;
         }
 
-        try {
-            Optional<Item> byId = itemRepo.findById(searchText);
-            if (byId.isPresent()) {
-                List<ItemResponseDto> list = new ArrayList<>();
-                list.add(mapper.toItemResponseDto(byId.get()));
-                return new PaginatedItemResponseDto(list, 1);
-            }
-            PaginatedItemResponseDto paginatedItemResponseDto = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsByDescription(searchText, PageRequest.of(page, pageSize))), itemRepo.getAllItemsCountByDescription(searchText));
-            if (0 < paginatedItemResponseDto.getItems().size()) {
-                return paginatedItemResponseDto;
+        switch (byWhom) {
+            case "customer":{
+                try {
+                    Optional<Item> byId = itemRepo.findById(searchText);
+                    if (byId.isPresent()) {
+                        List<ItemResponseDto> list = new ArrayList<>();
+                        list.add(mapper.toItemResponseDto(byId.get()));
+                        return new PaginatedItemResponseDto(list, 1);
+                    }
+                    PaginatedItemResponseDto paginatedItemResponseDto = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsByDescription(searchText, PageRequest.of(page, pageSize))), itemRepo.getAllItemsCountByDescription(searchText));
+                    if (0 < paginatedItemResponseDto.getItems().size()) {
+                        return paginatedItemResponseDto;
+                    }
+
+                    PaginatedItemResponseDto paginatedItemResponseDto1 = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsBySpecsDocContent(searchText, PageRequest.of(page, pageSize))), itemRepo.getAllItemsCountBySpecsDocContent(searchText));
+                    if (0 < paginatedItemResponseDto1.getItems().size()) {
+                        return paginatedItemResponseDto1;
+                    }
+                    PaginatedItemResponseDto paginatedItemResponseDto2 = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsByVendorEmail(searchText, PageRequest.of(page, pageSize))), itemRepo.getAllItemsByVendorEmail(searchText));
+                    if (0 < paginatedItemResponseDto2.getItems().size()) {
+                        return paginatedItemResponseDto2;
+                    }
+
+                    return null;
+
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    return null;
+                }
+
             }
 
-            PaginatedItemResponseDto paginatedItemResponseDto1 = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsBySpecsDocContent(searchText, PageRequest.of(page, pageSize))), itemRepo.getAllItemsCountBySpecsDocContent(searchText));
-            if (0 < paginatedItemResponseDto1.getItems().size()) {
-                return paginatedItemResponseDto1;
-            }
-            PaginatedItemResponseDto paginatedItemResponseDto2 = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsByVendorEmail(searchText, PageRequest.of(page, pageSize))), itemRepo.getAllItemsByVendorEmail(searchText));
-            if (0 < paginatedItemResponseDto2.getItems().size()) {
-                return paginatedItemResponseDto2;
-            }
+            case "vendor":{
+                try {
+                    Optional<Item> byId = itemRepo.findById(searchText);
+                    if (byId.isPresent()) {
+                        List<ItemResponseDto> list = new ArrayList<>();
+                        list.add(mapper.toItemResponseDto(byId.get()));
+                        return new PaginatedItemResponseDto(list, 1);
+                    }
+                    PaginatedItemResponseDto paginatedItemResponseDto = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsByDescriptionAndVendorEmail(searchText,email, PageRequest.of(page, pageSize))), itemRepo.getAllItemsCountByDescriptionAndVendorEmail(searchText,email));
+                    if (0 < paginatedItemResponseDto.getItems().size()) {
+                        return paginatedItemResponseDto;
+                    }
 
-            return null;
+                    PaginatedItemResponseDto paginatedItemResponseDto1 = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsBySpecsDocContentAndVendorEmail(searchText,email, PageRequest.of(page, pageSize))), itemRepo.getAllItemsCountBySpecsDocContentAndVendorEmail(searchText,email));
+                    if (0 < paginatedItemResponseDto1.getItems().size()) {
+                        return paginatedItemResponseDto1;
+                    }
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+                    return null;
+
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    return null;
+                }
+            }
         }
+
+        return null;
     }
 
 

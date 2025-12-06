@@ -10,10 +10,14 @@ let showImg = "";
 let specsDocUrl = "";
 let slideShowImgUrls = [];
 let specsDocContent = "";
+let vEmail = "";
+let itemDescription = "";
+let itemId = '';
 
 
 const proceed = (req, resp) => {
     let i = 0;
+    let itemIdSet = false
     let bucket = admin.storage().bucket();
     const itemModel = new ItemModel('', '', '', [], 0, 0, '', '', '');
     // const KEYPATH = './drive.json';
@@ -24,58 +28,138 @@ const proceed = (req, resp) => {
     //     scopes: SCOPES
     // });
     slideShowImgUrls = [];
+    const bufferedEvents = [];
     const form = new formidable.IncomingForm();
     form.parse(req);
-    form.on('field', function (field, value) {
-        // console.log("inside field");
-        switch (field) {
-            case 'itemDescription':
-                itemModel.itemDescription = value;
-                break;
-            case 'itemCategory':
-                itemModel.itemCategory = value;
-                break;
-            case 'unitPrice':
-                itemModel.unitPrice = value;
-                break;
-            case 'qty':
-                itemModel.qtyOnHand = value;
-                break;
-            case 'vendorEmail':
-                itemModel.vendorEmail = value;
-                break;
-            default:
-                break;
-        }
 
+    let formFieldPromise = new Promise((resolve, reject) => {
+        form.on('field', function (field, value) {
+            // console.log("inside field");
+            switch (field) {
+                case 'itemDescription': {
+                    itemModel.itemDescription = value;
+                    itemDescription = value;
+                    break;
+                }
+                case 'itemCategory':
+                    itemModel.itemCategory = value;
+                    break;
+                case 'unitPrice':
+                    itemModel.unitPrice = value;
+                    break;
+                case 'qty': {
+                    itemModel.qtyOnHand = value;
+                    resolve();
+                }
+                    break;
+                case 'vendorEmail': {
+                    itemModel.vendorEmail = value;
+                    vEmail = value;
+                    break;
+                }
+
+                default:
+                    break;
+            }
+
+        })
+    })
+
+    function handleBuffered() {
+        for(const event of bufferedEvents){
+            let destinationPath = `${vEmail}/${itemId}/${event.field}/${event.file.originalFilename}`;
+            console.log(destinationPath);
+            uploadToFireStorage(destinationPath, event.file.mimetype, event.file, event.field, itemId).then(r => console.log());
+
+        }
+    }
+
+    formFieldPromise.then(() => {
+        axios.post('http://localhost:8080/api/v1/item', GSON.parse(GSON.stringify(itemModel)), {
+            headers: {'token': 'snfjg85YY39475fhestdgff'}
+        }).then(response => {
+            itemId = response.data.data;
+            console.log("handling buffered");
+            handleBuffered();
+        }, error => {
+            console.log(error);
+        })
+    }, err => {
+
+        resp.send({'message': err});
     })
 
     form.on('file', (field, file) => {
-        let destinationPath = `${itemModel.vendorEmail}/${itemModel.itemDescription}/${field}/${file.originalFilename}`;
-        let contentType = file.mimetype
-        // let _field = field;
-        // // console.log("inside file");
-        // if (_field === "slideShowImgs") {
-        //     parents = 'slideShowImgs';
-        // } else if (_field === "specsDoc") {
-        //     parents = "1fYEjwOpbiS_sAH4dtafOM_NaLn4g4RyX";
-        // } else if (_field === "showImg") {
-        //     parents = "1moKJZqcotloZyTpjgZtBTPzuKuELkK_f";
+
+            bufferedEvents.push({type:"file",field,file});
+
+
+        // if (itemIdSet) {
+        //     let destinationPath = `${vEmail}/${itemId}/${field}/${file.originalFilename}`;
+        //     console.log(destinationPath);
+        //     uploadToFireStorage(destinationPath, file.mimetype, file, field, itemId).then(r => console.log());
+        //
         // }
-        // // console.log("inside");
-        // let fileMetaData = {
-        //     'name': file.name,
-        //     'parents': [parents]
-        // }
-        // const media = {
-        //     mimeType: file.mimeType,
-        //     body: fs.createReadStream(file.filepath)
-        // };
-
-        uploadToFireStorage(destinationPath, contentType, file, field).then(r => console.log());
 
 
-    });
+    })
+
+
+    // form.on('file', (field, file) => {
+    //     let promise = new Promise((resolve, reject) => {
+    //         if (i===0) {
+    //             axios.post('http://localhost:8080/api/v1/item', GSON.parse(GSON.stringify(itemModel)), {
+    //                 headers: {'token': 'snfjg85YY39475fhestdgff'}
+    //             }).then(res => {
+    //                 itemId = res.data.data;
+    //                 resolve();
+    //                 let destinationPath = `${vEmail}/${itemId}/${field}/${file.originalFilename}`;
+    //                 //uploadToFireStorage(destinationPath, file.mimetype, file, field,itemId).then(r => console.log());
+    //
+    //                 console.log("Axios post - "+i)
+    //             }, err => {
+    //                 reject();
+    //                 resp.send({'message': err});
+    //             })
+    //         }
+    //     })
+    //
+    //
+    //
+    //     //let contentType = file.mimetype
+    //     //console.log(vEmail);
+    //     // let _field = field;
+    //     // // console.log("inside file");
+    //     // if (_field === "slideShowImgs") {
+    //     //     parents = 'slideShowImgs';
+    //     // } else if (_field === "specsDoc") {
+    //     //     parents = "1fYEjwOpbiS_sAH4dtafOM_NaLn4g4RyX";
+    //     // } else if (_field === "showImg") {
+    //     //     parents = "1moKJZqcotloZyTpjgZtBTPzuKuELkK_f";
+    //     // }
+    //     // // console.log("inside");
+    //     // let fileMetaData = {
+    //     //     'name': file.name,
+    //     //     'parents': [parents]
+    //     // }
+    //     // const media = {
+    //     //     mimeType: file.mimeType,
+    //     //     body: fs.createReadStream(file.filepath)
+    //     // };
+    //     promise.then((res) => {
+    //         if (i>1) {
+    //             console.log("upload - "+i);
+    //             let destinationPath = `${vEmail}/${itemId}/${field}/${file.originalFilename}`;
+    //             //uploadToFireStorage(destinationPath, contentType, file, field, itemId).then(r => console.log());
+    //
+    //         }
+    //     })
+    //
+    //
+    //
+    //
+    // });
+
 
     /*form.on('end',()=>{
 
@@ -89,7 +173,7 @@ const proceed = (req, resp) => {
 
      })*/
 
-    async function uploadToFireStorage(destinationPath, contentType, file, field) {
+    async function uploadToFireStorage(destinationPath, contentType, file, field, itemId) {
 
         // const driveService = google.drive({version: 'v3', auth: auth});
 
@@ -120,8 +204,11 @@ const proceed = (req, resp) => {
             itemModel.itemLogoUrl = showImg;
             const body = GSON.parse(GSON.stringify(itemModel));
             console.log(body);
-            axios.post('http://localhost:8080/api/v1/item', body, {
-                headers: {'token': 'snfjg85YY39475fhestdgff'}
+            axios.put('http://localhost:8080/api/v1/item', body, {
+                headers: {'token': 'snfjg85YY39475fhestdgff'},
+                params: {
+                    id: itemId,
+                }
             }).then(res => {
                 resp.json({'message': 'Uploaded successfully!'});
             }, err => {

@@ -11,23 +11,30 @@ export class ProductsComponent implements OnInit {
   @Input() data: any[] | undefined;
   @Input() page: number = 1;
   @Input() pageSize: number = 10;
-  @Input() vendorEmail: string | undefined|null;
+  @Input() vendorEmail: string | undefined | null;
 
-  constructor(public VendorDashboardService:VendorDashboardServiceService, public modalService: ModalService) {
+  constructor(public VendorDashboardService: VendorDashboardServiceService, public modalService: ModalService) {
   }
 
   ngOnInit(): void {
   }
 
-   deleteProduct(itemCode: any) {
+  deleteProduct(itemCode: any) {
     this.VendorDashboardService.deleteProduct(itemCode).subscribe(response => {
-      this.VendorDashboardService.loadProductsDataAll(this.page,this.pageSize,this.vendorEmail);
+      this.VendorDashboardService.loadProductsDataAll(this.page, this.pageSize, this.vendorEmail);
     }, error => {
       console.log(error);
     })
   }
 
-  openViewModal(index:number) {
+  openViewModal(index: number) {
     this.modalService.openItemViewModal(this.data, index);
+  }
+
+  openEditModal(num: number) {
+    if (num===-1) {
+      this.modalService.openItemEditModal(this.data, num, "Save");
+    }else
+    this.modalService.openItemEditModal(this.data, num, "Update");
   }
 }

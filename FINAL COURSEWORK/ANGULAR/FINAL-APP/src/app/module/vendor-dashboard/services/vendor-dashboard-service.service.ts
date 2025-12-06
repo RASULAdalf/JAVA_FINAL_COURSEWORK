@@ -11,7 +11,7 @@ export class VendorDashboardServiceService {
   baseUrl = environment.DatabaseServerUrl;
   vendorEmail: any;
 
-  constructor(public httpService:HttpService,public loginService: LoginService) {
+  constructor(public httpService: HttpService, public loginService: LoginService) {
     this.loginService.afAuth.currentUser.then(res => {
       this.vendorEmail = res?.email;
     })
@@ -21,7 +21,7 @@ export class VendorDashboardServiceService {
     this.loginService.SignOut();
   }
 
-  loadProductsDataAll(page: any, pageSize: any,vendor_email :any): Observable<any> {
+  loadProductsDataAll(page: any, pageSize: any, vendor_email: any): Observable<any> {
     return this.httpService.get(this.baseUrl + "item/find?searchText=" + vendor_email + "&page=" + page + "&pageSize=" + pageSize);
   }
 
@@ -45,16 +45,16 @@ export class VendorDashboardServiceService {
 
   }
 
-  loadSearchDataAll(page: number | undefined, pageSize: number | undefined, searchText: string | undefined, orderButtonClicked: boolean, email: any) {
-    if (!orderButtonClicked) {
-      return this.httpService.get(this.baseUrl + "item/find?searchText=" + searchText + "&page=" + page + "&pageSize=" + pageSize)
-    } else {
-      return this.httpService.get(this.baseUrl + "order/find?customer_email=" + email + "&searchText=" + searchText + "&page=" + page + "&pageSize=" + pageSize + "&byWhom=" + "customer")
+  loadSearchDataAll(page: number | undefined, pageSize: number | undefined, searchText: string | undefined, email: any,type:any) {
+    if (type==='PRODUCTS') {
+      return this.httpService.get(this.baseUrl + "item/find?searchText=" + searchText + "&page=" + page + "&pageSize=" + "&byWhom=vendor" + "&email=" + email)
     }
+    else
+      return null;
 
   }
 
-  deleteProduct(itemCode:any) {
+  deleteProduct(itemCode: any) {
     return this.httpService.delete(this.baseUrl + "item?id=" + itemCode);
   }
 }

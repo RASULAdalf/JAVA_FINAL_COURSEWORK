@@ -1,1 +1,61 @@
-<p>item-edit-modal works!</p>
+<div class="row">
+  <div class="content-inner">
+    <div class="form-inner">
+      <app-loading *ngIf="loadingService.progressBarLoadingState | async" [data]="'Bar'"></app-loading>
+      <form (ngSubmit)="submit()" [formGroup]="addNewItemsForm" enctype="multipart/form-data">
+
+        <mat-form-field [style.margin-left.px]=140 [style.margin-top.px]=5 [style.width.px]=500 appearance="outline">
+          <mat-label>Vendor Email</mat-label>
+          <input [value]="data.data[data.index]?.vendorEmail" formControlName="vEmail" matInput readonly type="email">
+        </mat-form-field>
+        <br>
+        <mat-form-field [style.margin-left.px]=140 [style.width.px]=500 appearance="outline">
+          <mat-label>Item Name</mat-label>
+          <input [value]="data.data[data.index]?.itemDescription" formControlName="description" matInput type="text">
+          <mat-error>Maximum of 10 characters are allowed</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field [style.margin-left.px]=140 [style.width.px]=500 appearance="outline">
+          <mat-label>Item category</mat-label>
+          <mat-select [(value)]="category" [value]="data.data[data.index]?.itemCategory" formControlName="category"
+                      required>
+            <mat-option *ngFor="let category of categories" [value]="category.value">
+              {{ category.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field [style.margin-left.px]=140 appearance="outline">
+          <mat-label>Quantity</mat-label>
+          <input formControlName="qty" matInput type="text">
+        </mat-form-field>
+        <br>
+        <mat-form-field [style.margin-left.px]=140 appearance="outline">
+          <mat-label>Item price</mat-label>
+          <input formControlName="price" matInput type="text">
+        </mat-form-field>
+        <br>
+        <label [style.margin-left.px]=140 for="img">Item Image : &nbsp;</label>
+        <input (change)="onImgChange($event)" accept="image/*" formControlName="img" id="img" required type="file">
+
+        <br><br>
+        <label [style.margin-left.px]=140 for="slide">Item SlideShow Images : &nbsp;</label>
+        <input (change)="onSlideImgsChange($event)" accept="image/*" formControlName="slideShowImgs" id="slide" multiple
+               required type="file">
+
+        <br><br>
+        <label [style.margin-left.px]=140 for="specs">Item Specifications Document : &nbsp;</label>
+        <input (change)="onSpecsDocChange($event)" accept="application/pdf" formControlName="specsDoc" id="specs"
+               required type="file">
+
+        <br><br>
+        <button [style.margin-left.px]=40 color="primary" mat-raised-button
+                type="submit">{{ this.data.buttonName }}
+        </button>
+        <button (click)="closeDialog()" [style.margin-left.px]=430 color="warn"
+                mat-raised-button>Close
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -7,9 +7,9 @@ import {SnackBarService} from "../customer-dashboard/services/snack-bar.service"
 import {ModalService} from "../customer-dashboard/services/modal.service";
 import {LocalDataService} from "../../service/local-data.service";
 import {ActivatedRoute} from "@angular/router";
-import {debounceTime} from "rxjs";
 import {PageEvent} from "@angular/material/paginator";
 import {LoadingService} from "./services/loading.service";
+import {debounceTime} from "rxjs";
 
 @Component({
   selector: 'app-vendor-dashboard',
@@ -18,114 +18,44 @@ import {LoadingService} from "./services/loading.service";
 })
 export class VendorDashboardComponent implements OnInit {
   vendorEmail: string | undefined | null;
-
-  addNewItemsForm = new FormGroup({
-    description: new FormControl('', [Validators.required, Validators.maxLength(10)]),
-    qty: new FormControl('', Validators.required),
-    price: new FormControl('', Validators.required),
-    imgSource: new FormControl('', Validators.required),
-    img: new FormControl('', Validators.required),
-    //slideShowImgsSource:new FormControl('',Validators.required),
-    slideShowImgs: new FormControl('', Validators.required),
-    specsDocSource: new FormControl('', Validators.required),
-    specsDoc: new FormControl('', Validators.required),
-    category: new FormControl('', Validators.required),
-    vEmail: new FormControl(this.dashboardService.vendorEmail, Validators.required)
+  searchForm = new FormGroup({
+    searchText: new FormControl('', Validators.required)
   })
-  category: any;
-  categories: any[] = [{value: 'Books'}, {value: 'Clothes'}, {value: 'Electronics'}, {value: 'Electrical'}, {value: 'Cosmetics'}, {value: 'Other'}];
+
+  chooseMenuItem:any;
+
   slideShowImgs: any[] = [];
   baseDatabaseServerUrl = environment.DatabaseServerUrl;
   baseUtilServerUrl = environment.UtilServerUrl;
-  formData = new FormData();
 
-  onImg: boolean = true;
-  onSlide: boolean = true;
-  onSpec: boolean = true;
   type: any = "Bar";
   totalEarnings: string = '$0.00';
   year: number = 0;
   vendorImage: string | null | undefined;
   dataList: any[] | undefined;
   buttonName: any;
-   page: number = 0;
-   pageSize: number = 5;
-   dataCount: number = 0;
+  page: number = 0;
+  pageSize: number = 5;
+  dataCount: number = 0;
   pageSizeOptions = [10, 20, 30, 40];//The number of data which can be loaded inside one page
   pageEvent: PageEvent | undefined;
+  private searchText: any;
 
 
   constructor(public route: ActivatedRoute, public localStorageService: LocalDataService, private modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, private dashboardService: VendorDashboardServiceService) {
     this.dashboardService.loginService.afAuth.currentUser.then(result => {
       this.vendorEmail = result?.email;
     })
+    this.searchForm.valueChanges.pipe(debounceTime(1080)).subscribe(data => {
+      //This 1080 is a debounceTime, means that to make a request to the server only if the user has stopped typing for a second rather than making requests to the server whenever the user types something
+      this.searchText = data.searchText;
+      this.loadDataSearch();
+    });
 
   }
 
 
-  onImgChange($event: Event) {
-    this.onImg = false;
-    // @ts-ignore
-    if (event.target.files.length > 0) {
 
-      // @ts-ignore
-      const file = event.target.files[0];
-
-      this.addNewItemsForm.patchValue({
-
-        imgSource: file
-
-      });
-
-    }
-  }
-
-  onSpecsDocChange($event: Event) {
-    this.onSpec = false;
-    // @ts-ignore
-    if (event.target.files.length > 0) {
-
-      // @ts-ignore
-      const file = event.target.files[0];
-
-      this.addNewItemsForm.patchValue({
-
-        specsDocSource: file
-
-      });
-
-    }
-  }
-
-  onSlideImgsChange($event: Event) {
-    this.onSlide = false;
-    // @ts-ignore
-    for (const file of event.target.files) {
-      this.formData.append("slideShowImgs", file);
-    }
-  }
-
-  submit() {
-
-
-    this.formData.append('specsDoc', this.addNewItemsForm.get('specsDocSource')?.value);
-    this.formData.append('itemDescription', this.addNewItemsForm.get('description')?.value)
-    this.formData.append('itemCategory', this.category)
-    this.formData.append('showImg', this.addNewItemsForm.get('imgSource')?.value);
-    this.formData.append('unitPrice', this.addNewItemsForm.get('price')?.value)
-    this.formData.append('qty', this.addNewItemsForm.get('qty')?.value)
-    this.formData.append('vendorEmail', this.addNewItemsForm.get('vEmail')?.value)
-
-
-    this.httpService.post(this.baseUtilServerUrl + 'Item/saveItem', this.formData)
-
-      .subscribe(res => {
-
-        this.snackBarService.openSnackBar(res?.message);
-
-      })
-
-  }
 
   ngOnInit(): void {
     //this.modalService.openLetSirKnowModal("Vendor Dashboard");
@@ -141,7 +71,7 @@ export class VendorDashboardComponent implements OnInit {
   }
 
 
-  loadServerData(event: PageEvent, value: any):any{
+  loadServerData(event: PageEvent, value: any): any {
     this.page = event?.pageIndex;
     this.pageSize = event?.pageSize;
     this.loadData(value);
@@ -170,7 +100,7 @@ export class VendorDashboardComponent implements OnInit {
         this.dataList = data?.data?.items;
         this.dataCount = data?.data?.dataCount;
       }, error => console.log(error));
-    }else if (value == 'PRODUCTS') {
+    } else if (value == 'PRODUCTS') {
       this.dashboardService.loadProductsDataAll(this.page, this.pageSize, this.vendorEmail).subscribe(data => {
         this.dataList = data?.data?.items;
         this.dataCount = data?.data?.dataCount;
@@ -212,5 +142,14 @@ export class VendorDashboardComponent implements OnInit {
 // }
 //
 // }
+  chooseMenuItemValue: any;
 
+
+  loadDataSearch() {
+    // @ts-ignore
+    this.dashboardService.loadSearchDataAll(this.page,this.pageSize,this.searchText,this.vendorEmail,this.chooseMenuItemValue).subscribe(data => {
+     this.dataList = data?.data?.items;
+     this.dataCount = data?.data?.dataCount;
+   }, error => console.log(error));
+  }
 }

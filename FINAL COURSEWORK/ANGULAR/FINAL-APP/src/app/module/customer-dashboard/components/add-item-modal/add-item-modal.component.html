@@ -26,7 +26,8 @@
           <div class="icon-inner"><i class="fa-brands fa-searchengin w3-xxlarge"></i></div>
           <div class="text-inner">
             <form [formGroup]="searchForm">
-              <input [style.height.px]="43" [style.width.%]="100" formControlName="searchText" matInput placeholder="Enter search Text"
+              <input [style.height.px]="43" [style.width.%]="100" formControlName="searchText" matInput
+                     placeholder="Enter search Text"
                      type="text">
             </form>
           </div>
@@ -49,7 +50,8 @@
       </div>
 
       <div class="paginator-outer">
-        <mat-paginator (page)="pageEvent=loadServerData($event,chooseMenuItem.value,false)" [length]=dataCount [pageIndex]=page [pageSizeOptions]=pageSizeOptions
+        <mat-paginator (page)="pageEvent=loadServerData($event,chooseMenuItem.value,false)" [length]=dataCount
+                       [pageIndex]=page [pageSizeOptions]=pageSizeOptions
                        [pageSize]=pageSize aria-label="Select Page">
 
         </mat-paginator>

@@ -8,7 +8,7 @@ import lk.ijse.cmjd95.entity.Item;
 public interface ItemService {
     String saveItem(ItemRequestDto dto, String token);
 
-    PaginatedItemResponseDto findItem(String searchText, int page, int pageSize, String token);
+    PaginatedItemResponseDto findItem(String searchText, int page, int pageSize, String token,String byWhom,String email);
 
     String updateItem(ItemRequestDto dto, String id, String token);
 

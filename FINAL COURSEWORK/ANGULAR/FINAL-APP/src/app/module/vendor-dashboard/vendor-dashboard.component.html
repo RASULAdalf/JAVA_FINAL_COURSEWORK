@@ -1,109 +1,71 @@
-<!--<div class="row">-->
-<!--  <div class="logout-button">-->
-<!--    <button (click)="logout()" class="logout-btn" color="warn" mat-raised-button>Logout</button>-->
-<!--  </div>-->
-<!--  <div class="content-inner">-->
-
-<!--    <div class="form-inner">-->
-<!--      <app-loading *ngIf="loadingService.progrssBarLoadingState | async" [data]="type"></app-loading>-->
-<!--      <form (ngSubmit)="submit()" [formGroup]="addNewItemsForm" enctype="multipart/form-data">-->
-
-<!--        <mat-form-field [style.margin-left.px]=140 [style.margin-top.px]=5 [style.width.px]=500 appearance="outline">-->
-<!--          <mat-label>Vendor Email</mat-label>-->
-<!--          <input formControlName="vEmail" matInput type="email">-->
-<!--        </mat-form-field>-->
-<!--        <br>-->
-<!--        <mat-form-field [style.margin-left.px]=140 [style.width.px]=500 appearance="outline">-->
-<!--          <mat-label>Item Name</mat-label>-->
-<!--          <input formControlName="description" matInput type="text">-->
-<!--          <mat-error>Maximum of 10 characters are allowed</mat-error>-->
-<!--        </mat-form-field>-->
-<!--        <br>-->
-<!--        <mat-form-field [style.margin-left.px]=140 [style.width.px]=500 appearance="outline">-->
-<!--          <mat-label>Item category</mat-label>-->
-<!--          <mat-select [(value)]="category" formControlName="category" required>-->
-<!--            <mat-option *ngFor="let category of categories" [value]="category.value">-->
-<!--              {{ category.value }}-->
-<!--            </mat-option>-->
-<!--          </mat-select>-->
-<!--        </mat-form-field>-->
-<!--        <br>-->
-<!--        <mat-form-field [style.margin-left.px]=140 appearance="outline">-->
-<!--          <mat-label>Quantity</mat-label>-->
-<!--          <input formControlName="qty" matInput type="text">-->
-<!--        </mat-form-field>-->
-<!--        <br>-->
-<!--        <mat-form-field [style.margin-left.px]=140 appearance="outline">-->
-<!--          <mat-label>Item price</mat-label>-->
-<!--          <input formControlName="price" matInput type="text">-->
-<!--        </mat-form-field>-->
-<!--        <br>-->
-<!--        <label [style.margin-left.px]=140 for="img">Item Image : &nbsp;</label>-->
-<!--        <input (change)="onImgChange($event)" accept="image/*" formControlName="img" id="img" required type="file">-->
-
-<!--        <br><br>-->
-<!--        <label [style.margin-left.px]=140 for="slide">Item SlideShow Images : &nbsp;</label>-->
-<!--        <input (change)="onSlideImgsChange($event)" accept="image/*" formControlName="slideShowImgs" id="slide" multiple-->
-<!--               required type="file">-->
-
-<!--        <br><br>-->
-<!--        <label [style.margin-left.px]=140 for="specs">Item Specifications Document : &nbsp;</label>-->
-<!--        <input (change)="onSpecsDocChange($event)" accept="application/pdf" formControlName="specsDoc" id="specs"-->
-<!--               required type="file">-->
-
-<!--        <br><br>-->
-<!--        <button [disabled]="addNewItemsForm.invalid && (onImg||onSlide||onSpec)" [style.margin-left.px]=360 color="primary" mat-raised-button-->
-<!--                type="submit">Submit-->
-<!--        </button>-->
-<!--      </form>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-
 <div class="row col-sm-12">
   <div class="header-outer">
     <h2 class="header-text">Vendor Dashboard</h2>
     <div class="header-buttons">
-           <button mat-button (click)="this.logout()" aria-label="Example icon button with a logout icon">
+      <button (click)="this.logout()" aria-label="Example icon button with a logout icon" mat-button>
         <mat-icon class="logout-button">logout</mat-icon>
       </button>
-      <button mat-button="outlined" #orderBtn class="orders-button" color="accent">{{totalEarnings}}</button>
+      <button #orderBtn class="orders-button" color="accent" mat-button="outlined">{{ totalEarnings }}</button>
     </div>
 
   </div>
   <div class="all-content-outer">
     <div class="menu-outer">
-      <div class="account-outer" *ngIf="vendorEmail!=undefined && vendorEmail!=null">
+      <div *ngIf="vendorEmail!=undefined && vendorEmail!=null" class="account-outer">
         <div class="account-logo">
-          <div class="logo-box" [ngStyle]="{ background: this.vendorImage| vendorDashboardBackgroundImages,'background-size':'cover'}"></div>
+          <div [ngStyle]="{ background: this.vendorImage| vendorDashboardBackgroundImages,'background-size':'cover'}"
+               class="logo-box"></div>
         </div>
-        <div class="account-name">{{this.vendorEmail}}</div>
+        <div class="account-name">{{ this.vendorEmail }}</div>
       </div>
-      <div class="menu-items-outer"><mat-button-toggle-group #chooseMenuItem="matButtonToggleGroup" aria-label="menu-label" appearance="standard" >
-        <mat-button-toggle value="ORDERS" aria-orientation="vertical" (click)="loadData('ORDERS')">ORDERS</mat-button-toggle>
-        <mat-button-toggle value="PRODUCTS" aria-orientation="vertical" (click)="loadData('PRODUCTS')">PRODUCTS</mat-button-toggle>
-        <mat-button-toggle value="CLIENTS" aria-orientation="vertical" (click)="loadData('CLIENTS')">CLIENTS</mat-button-toggle>
-        <mat-button-toggle value="EARNINGS" aria-orientation="vertical" (click)="loadData('EARNINGS')">EARNINGS</mat-button-toggle>
-        <mat-button-toggle value="ANALYSIS" aria-orientation="vertical" (click)="loadData('ANALYSIS')">ANALYSIS</mat-button-toggle>
-       </mat-button-toggle-group></div>
+      <div class="menu-items-outer">
+        <mat-button-toggle-group #chooseMenuItem="matButtonToggleGroup" appearance="standard" aria-label="menu-label" [(ngModel)]="chooseMenuItemValue">
+          <mat-button-toggle (click)="loadData('ORDERS')" aria-orientation="vertical" value="ORDERS">ORDERS
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('PRODUCTS')" aria-orientation="vertical" value="PRODUCTS">PRODUCTS
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('CLIENTS')" aria-orientation="vertical" value="CLIENTS">CLIENTS
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('EARNINGS')" aria-orientation="vertical" value="EARNINGS">EARNINGS
+          </mat-button-toggle>
+          <mat-button-toggle (click)="loadData('ANALYSIS')" aria-orientation="vertical" value="ANALYSIS">ANALYSIS
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
       <div class="copyright-outer">
-        <small>&copy;{{year}}</small>&nbsp;
+        <small>&copy;{{ year }}</small>&nbsp;
         <small>All rights reserved</small>
       </div>
     </div>
     <div class="content-outer">
+      <div class="search-bar-outer">
+        <div class="search-bar-inner">
+          <div class="icon-inner"><i class="fa-brands fa-searchengin w3-xxlarge"></i></div>
+          <div class="text-inner">
+            <form [formGroup]="searchForm">
+              <input [style.height.px]="43" [style.width.%]="100" formControlName="searchText" matInput
+                     placeholder="Enter search Text"
+                     type="text">
+            </form>
+          </div>
+        </div>
+      </div>
       <div class="content-inner">
         <app-loading *ngIf="loadingService.progressBarLoadingState |async" [data]="type"></app-loading>
-        <app-orders class="inner-components" *ngIf="chooseMenuItem.value=='ORDERS' " [data]="dataList"></app-orders>
-        <app-products class="inner-components" *ngIf="chooseMenuItem.value=='PRODUCTS' " [data]="dataList" [page]="page" [pageSize]="pageSize" [vendorEmail]="vendorEmail"></app-products>
-        <app-clients class="inner-components" *ngIf="chooseMenuItem.value=='CLIENTS' " [data]="dataList" [buttonName]="buttonName"></app-clients>
-        <app-earnings class="inner-components" *ngIf="chooseMenuItem.value=='EARNINGS'" [data]="dataList" [buttonName]="buttonName"></app-earnings>
-        <app-analysis class="inner-components" *ngIf="chooseMenuItem.value=='ANALYSIS'" [data]="dataList" [buttonName]="buttonName"></app-analysis>
+        <app-orders *ngIf="chooseMenuItem.value=='ORDERS' " [data]="dataList" class="inner-components"></app-orders>
+        <app-products *ngIf="chooseMenuItem.value=='PRODUCTS' " [data]="dataList" [pageSize]="pageSize" [page]="page"
+                      [vendorEmail]="vendorEmail" class="inner-components"></app-products>
+        <app-clients *ngIf="chooseMenuItem.value=='CLIENTS' " [buttonName]="buttonName" [data]="dataList"
+                     class="inner-components"></app-clients>
+        <app-earnings *ngIf="chooseMenuItem.value=='EARNINGS'" [buttonName]="buttonName" [data]="dataList"
+                      class="inner-components"></app-earnings>
+        <app-analysis *ngIf="chooseMenuItem.value=='ANALYSIS'" [buttonName]="buttonName" [data]="dataList"
+                      class="inner-components"></app-analysis>
       </div>
 
       <div class="paginator-outer">
-        <mat-paginator [length]=dataCount [pageSize]=pageSize [pageIndex]=page [pageSizeOptions]=pageSizeOptions  aria-label="Select Page" (page)="pageEvent=loadServerData($event,chooseMenuItem.value)">
+        <mat-paginator (page)="pageEvent=loadServerData($event,chooseMenuItem.value)" [length]=dataCount [pageIndex]=page [pageSizeOptions]=pageSizeOptions
+                       [pageSize]=pageSize aria-label="Select Page">
 
         </mat-paginator>
       </div>

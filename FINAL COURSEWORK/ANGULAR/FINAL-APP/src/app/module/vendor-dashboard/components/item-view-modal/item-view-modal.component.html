@@ -12,29 +12,12 @@
 
     </mdb-carousel>
   </div>
-  <div class="specifications">
+  <div class="specifications" mat-dialog-actions>
     <button (click)="gotoSpecDoc(data.data[data.index]?.specsDocUrl)" class="specBTN" color="primary" mat-raised-button>
       SEE SPECIFICATIONS
     </button>
+    <button (click)="closeDialog()" color="warn" mat-raised-button>CLOSE</button>
   </div>
 </div>
-<div class="footer" mat-dialog-actions>
-  <div class="button-inner">
-    <div class="button-buy-related">
-      <div class="button-add-to-cart">
-        <button (click)="closeDialog()" color="primary" mat-raised-button>CLOSE</button>
-      </div>
-<!--      <div class="button-buy">-->
-<!--        <button (click)="gotoBuyingPage()" *ngIf="data?.buttonName!='ADD'" color="primary" mat-dialog-close="true"-->
-<!--                mat-raised-button>BUY ONE-->
-<!--        </button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="button-close">-->
-<!--      <button color="warn" mat-dialog-close="true" mat-raised-button>CLOSE</button>-->
-<!--    </div>-->
-<!--  </div>-->
-</div>
-  </div>
-</div>
+
 

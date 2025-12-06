@@ -22,11 +22,11 @@ import {AnalysisComponent} from './components/analysis/analysis.component';
 import {VendorDashboardBackgroundImagesPipe} from './pipes/vendor-dashboard-background-images.pipe';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatCardModule} from "@angular/material/card";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {VendorDashboardInterceptor} from "./interceptors/vendor-dashboard.interceptor";
 import {MatChipsModule} from "@angular/material/chips";
-import { ItemViewModalComponent } from './components/item-view-modal/item-view-modal.component';
-import { ItemEditModalComponent } from './components/item-edit-modal/item-edit-modal.component';
+import {ItemViewModalComponent} from './components/item-view-modal/item-view-modal.component';
+import {ItemEditModalComponent} from './components/item-edit-modal/item-edit-modal.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MdbCarouselModule} from "mdb-angular-ui-kit/carousel";
 
@@ -45,26 +45,26 @@ import {MdbCarouselModule} from "mdb-angular-ui-kit/carousel";
     ItemViewModalComponent,
     ItemEditModalComponent
   ],
-    imports: [
-        CommonModule,
-        VendorDashboardRoutingModule,
-        MatTabsModule,
-        MatInputModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        MatSelectModule,
-        CustomerDashboardModule,
-        MatButtonToggleModule,
-        MatIconModule,
-        MatPaginatorModule,
-        MatGridListModule,
-        MatCardModule,
-        MatChipsModule,
-        MatDialogModule,
-        MdbCarouselModule,
-    ],
-  providers:[{provide:HTTP_INTERCEPTORS,useClass:VendorDashboardInterceptor,multi: true}]
+  imports: [
+    CommonModule,
+    VendorDashboardRoutingModule,
+    MatTabsModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatSelectModule,
+    CustomerDashboardModule,
+    MatButtonToggleModule,
+    MatIconModule,
+    MatPaginatorModule,
+    MatGridListModule,
+    MatCardModule,
+    MatChipsModule,
+    MatDialogModule,
+    MdbCarouselModule
+  ],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: VendorDashboardInterceptor, multi: true}]
 })
 export class VendorDashboardModule {
 }

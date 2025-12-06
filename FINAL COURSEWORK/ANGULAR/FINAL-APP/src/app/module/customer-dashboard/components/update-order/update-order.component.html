@@ -57,7 +57,8 @@
               <input formControlName="state" matInput readonly type="text">
             </mat-form-field>
             <br>
-            <button #submit [disabled]="!valueChanged" [style.margin-bottom.px]=5 [style.margin-left.px]=230 color="primary"
+            <button #submit [disabled]="!valueChanged" [style.margin-bottom.px]=5 [style.margin-left.px]=230
+                    color="primary"
                     mat-raised-button type="submit">SUBMIT
             </button>
           </form>
@@ -76,7 +77,8 @@
                 <div class="item-name-price">{{ data?.itemDescription }}<span
                   class="item-price">Rs.{{ data?.unitPrice }}</span></div>
                 <div [formGroup]="orderUpdateViewService.QTYs[num]" class="item-controls">
-                  <mat-form-field [style.font-size.px]=13 [style.margin-bottom.em]=-1.25 appearance="outline" class="full-width"
+                  <mat-form-field [style.font-size.px]=13 [style.margin-bottom.em]=-1.25 appearance="outline"
+                                  class="full-width"
                                   readonly>
                     <input [style.height.px]="15" formControlName="QTYtext" matInput type="text">
                     <mat-error>No enough stock</mat-error>
@@ -84,7 +86,8 @@
                 </div>
                 <div class="item-full-price">Rs.{{ data?.unitPrice * orderUpdateViewService.QTYarray[num] }}</div>
                 <div class="item-remove">
-                  <button (click)="remove(num)" aria-label="Example icon button with a delete icon" class="delete-button"
+                  <button (click)="remove(num)" aria-label="Example icon button with a delete icon"
+                          class="delete-button"
                           mat-icon-button>
                     <mat-icon [style.margin-left.px]=5 class="delete-button-icon">delete</mat-icon>
                   </button>
@@ -100,7 +103,8 @@
           </div>
         </div>
         <div class="order-place">
-          <button (click)="createFinalOrderBodyAndSend()" [disabled]="orderUpdateViewService.orderFormValidated" class="order"
+          <button (click)="createFinalOrderBodyAndSend()" [disabled]="orderUpdateViewService.orderFormValidated"
+                  class="order"
                   mat-raised-button><span class="default">Update Order</span><span
             class="success">Order Sent
     <svg viewbox="0 0 12 10">

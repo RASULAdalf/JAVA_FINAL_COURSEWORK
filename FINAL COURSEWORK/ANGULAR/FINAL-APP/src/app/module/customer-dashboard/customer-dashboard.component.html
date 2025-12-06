@@ -18,8 +18,9 @@
     <div class="menu-outer">
       <div *ngIf="localStorageService.getCookie('userEmail')" class="account-outer">
         <div class="account-logo">
-          <div [ngStyle]="{ background: localStorageService.getCookie('userPic') | customerDashboardBackgroundImages,'background-size':'cover'}"
-               class="logo-box"></div>
+          <div
+            [ngStyle]="{ background: localStorageService.getCookie('userPic') | customerDashboardBackgroundImages,'background-size':'cover'}"
+            class="logo-box"></div>
         </div>
         <div class="account-name">{{ localStorageService.getCookie('userEmail') }}</div>
       </div>
@@ -55,7 +56,8 @@
           <div class="icon-inner"><i class="fa-brands fa-searchengin w3-xxlarge"></i></div>
           <div class="text-inner">
             <form [formGroup]="searchForm">
-              <input [style.height.px]="43" [style.width.%]="100" formControlName="searchText" matInput placeholder="Enter search Text"
+              <input [style.height.px]="43" [style.width.%]="100" formControlName="searchText" matInput
+                     placeholder="Enter search Text"
                      type="text">
             </form>
           </div>
@@ -80,7 +82,8 @@
       </div>
 
       <div class="paginator-outer">
-        <mat-paginator (page)="pageEvent=loadServerData($event,chooseMenuItem.value,orderButtonClicked)" [length]=dataCount [pageIndex]=page [pageSizeOptions]=pageSizeOptions
+        <mat-paginator (page)="pageEvent=loadServerData($event,chooseMenuItem.value,orderButtonClicked)"
+                       [length]=dataCount [pageIndex]=page [pageSizeOptions]=pageSizeOptions
                        [pageSize]=pageSize
                        aria-label="Select Page">
 

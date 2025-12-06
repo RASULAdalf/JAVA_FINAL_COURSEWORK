@@ -78,7 +78,7 @@ export const firebaseConfig = {
     MatAutocompleteModule,
     MatSelectModule
   ],
-  providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: CustomerDashboardInterceptor, multi: true}],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

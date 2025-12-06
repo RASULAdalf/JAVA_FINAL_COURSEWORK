@@ -11,10 +11,11 @@ import {ItemModalComponent} from "../../../customer-dashboard/components/item-mo
 export class ItemViewModalComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {
-    index: any,
-    data: any[],
-    },private router: Router,
-              public dialogRef: MatDialogRef<ItemModalComponent>) { }
+                index: any,
+                data: any[],
+              }, private router: Router,
+              public dialogRef: MatDialogRef<ItemModalComponent>) {
+  }
 
   ngOnInit(): void {
   }
