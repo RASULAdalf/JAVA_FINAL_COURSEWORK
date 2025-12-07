@@ -19,7 +19,9 @@
         <div class="account-name">{{ this.vendorEmail }}</div>
       </div>
       <div class="menu-items-outer">
-        <mat-button-toggle-group #chooseMenuItem="matButtonToggleGroup" appearance="standard" aria-label="menu-label" [(ngModel)]="chooseMenuItemValue">
+        <mat-button-toggle-group #chooseMenuItem="matButtonToggleGroup" [(ngModel)]="chooseMenuItemValue"
+                                 appearance="standard"
+                                 aria-label="menu-label">
           <mat-button-toggle (click)="loadData('ORDERS')" aria-orientation="vertical" value="ORDERS">ORDERS
           </mat-button-toggle>
           <mat-button-toggle (click)="loadData('PRODUCTS')" aria-orientation="vertical" value="PRODUCTS">PRODUCTS
@@ -64,7 +66,8 @@
       </div>
 
       <div class="paginator-outer">
-        <mat-paginator (page)="pageEvent=loadServerData($event,chooseMenuItem.value)" [length]=dataCount [pageIndex]=page [pageSizeOptions]=pageSizeOptions
+        <mat-paginator (page)="pageEvent=loadServerData($event,chooseMenuItem.value)" [length]=dataCount
+                       [pageIndex]=page [pageSizeOptions]=pageSizeOptions
                        [pageSize]=pageSize aria-label="Select Page">
 
         </mat-paginator>

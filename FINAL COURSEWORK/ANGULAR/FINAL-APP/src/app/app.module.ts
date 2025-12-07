@@ -23,7 +23,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {CustomerDashboardInterceptor} from "./module/customer-dashboard/interceptors/customer-dashboard.interceptor";
+import {RequestInterceptor} from "./core/interceptors/request-interceptor";
 import {LetSirKnowComponent} from './core/components/let-sir-know/let-sir-know.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatSelectModule} from "@angular/material/select";
@@ -78,7 +78,7 @@ export const firebaseConfig = {
     MatAutocompleteModule,
     MatSelectModule
   ],
-  providers: [CookieService],
+  providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true},],
   bootstrap: [AppComponent]
 })
 export class AppModule {

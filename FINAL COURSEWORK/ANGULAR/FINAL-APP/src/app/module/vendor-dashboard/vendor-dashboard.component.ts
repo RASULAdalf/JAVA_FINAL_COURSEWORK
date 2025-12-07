@@ -1,15 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {VendorDashboardServiceService} from "./services/vendor-dashboard-service.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {HttpService} from "../../service/http.service";
+import {HttpService} from "../../core/services/http.service";
 import {environment} from "../../../environments/environment";
 import {SnackBarService} from "../customer-dashboard/services/snack-bar.service";
 import {ModalService} from "../customer-dashboard/services/modal.service";
-import {LocalDataService} from "../../service/local-data.service";
+import {LocalDataService} from "../../core/services/local-data.service";
 import {ActivatedRoute} from "@angular/router";
 import {PageEvent} from "@angular/material/paginator";
-import {LoadingService} from "./services/loading.service";
+
 import {debounceTime} from "rxjs";
+import {LoadingService} from "../../core/services/loading.service";
 
 @Component({
   selector: 'app-vendor-dashboard',
@@ -22,7 +23,7 @@ export class VendorDashboardComponent implements OnInit {
     searchText: new FormControl('', Validators.required)
   })
 
-  chooseMenuItem:any;
+  chooseMenuItem: any;
 
   slideShowImgs: any[] = [];
   baseDatabaseServerUrl = environment.DatabaseServerUrl;
@@ -39,8 +40,9 @@ export class VendorDashboardComponent implements OnInit {
   dataCount: number = 0;
   pageSizeOptions = [10, 20, 30, 40];//The number of data which can be loaded inside one page
   pageEvent: PageEvent | undefined;
+// }
+  chooseMenuItemValue: any;
   private searchText: any;
-
 
   constructor(public route: ActivatedRoute, public localStorageService: LocalDataService, private modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, private dashboardService: VendorDashboardServiceService) {
     this.dashboardService.loginService.afAuth.currentUser.then(result => {
@@ -53,9 +55,6 @@ export class VendorDashboardComponent implements OnInit {
     });
 
   }
-
-
-
 
   ngOnInit(): void {
     //this.modalService.openLetSirKnowModal("Vendor Dashboard");
@@ -71,15 +70,6 @@ export class VendorDashboardComponent implements OnInit {
   }
 
 
-  loadServerData(event: PageEvent, value: any): any {
-    this.page = event?.pageIndex;
-    this.pageSize = event?.pageSize;
-    this.loadData(value);
-
-
-  }
-
-
 // loadDataSearch() {
 //   this.dashboardService.loadSearchDataAll(this.page, this.pageSize, this.searchText, this.orderButtonClicked, this.localStorageService.getCookie('userEmail')).subscribe(data => {
 //     if (!this.orderButtonClicked) {
@@ -92,6 +82,32 @@ export class VendorDashboardComponent implements OnInit {
 //   }, error => console.log(error));
 //
 // }
+
+  loadServerData(event: PageEvent, value: any): any {
+    this.page = event?.pageIndex;
+    this.pageSize = event?.pageSize;
+    this.loadData(value);
+
+
+  }
+
+// openModal() {
+//   this.modalService.openCartModal(this.buyingCartService.cartData.ItemList);
+//   console.log(this.buyingCartService.cartData.ItemList);
+// }
+
+
+// loadOrdersData() {
+//   this.dashboardService.loadOrderDataAll(this.page, this.pageSize, this.localStorageService.getCookie('userEmail')).subscribe(data => {
+//     this.dataList = data?.data?.orders;
+//     console.log(this.dataList)
+//     this.dataCount = data?.data?.dataCount;
+//     this.dashboardService.setDataList(this.dataList);
+//   }, error => console.log(error));
+//
+// }
+// }
+//
 
   loadData(value: any) {
 
@@ -124,32 +140,11 @@ export class VendorDashboardComponent implements OnInit {
 
   }
 
-// openModal() {
-//   this.modalService.openCartModal(this.buyingCartService.cartData.ItemList);
-//   console.log(this.buyingCartService.cartData.ItemList);
-// }
-
-
-// loadOrdersData() {
-//   this.dashboardService.loadOrderDataAll(this.page, this.pageSize, this.localStorageService.getCookie('userEmail')).subscribe(data => {
-//     this.dataList = data?.data?.orders;
-//     console.log(this.dataList)
-//     this.dataCount = data?.data?.dataCount;
-//     this.dashboardService.setDataList(this.dataList);
-//   }, error => console.log(error));
-//
-// }
-// }
-//
-// }
-  chooseMenuItemValue: any;
-
-
   loadDataSearch() {
     // @ts-ignore
-    this.dashboardService.loadSearchDataAll(this.page,this.pageSize,this.searchText,this.vendorEmail,this.chooseMenuItemValue).subscribe(data => {
-     this.dataList = data?.data?.items;
-     this.dataCount = data?.data?.dataCount;
-   }, error => console.log(error));
+    this.dashboardService.loadSearchDataAll(this.page, this.pageSize, this.searchText, this.vendorEmail, this.chooseMenuItemValue).subscribe(data => {
+      this.dataList = data?.data?.items;
+      this.dataCount = data?.data?.dataCount;
+    }, error => console.log(error));
   }
 }

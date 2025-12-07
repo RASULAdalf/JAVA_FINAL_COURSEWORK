@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {debounceTime} from "rxjs";
-import {HttpService} from "../../../service/http.service";
+import {HttpService} from "../../../core/services/http.service";
 import {environment} from "../../../../environments/environment";
 import {OrderItem} from "../../../model/OrderItem";
 import {FormControl, FormGroup, Validators} from "@angular/forms";

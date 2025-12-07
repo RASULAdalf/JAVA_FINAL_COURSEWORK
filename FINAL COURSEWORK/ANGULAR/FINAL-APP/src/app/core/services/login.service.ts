@@ -5,9 +5,9 @@ import {LocalDataService} from "./local-data.service";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
 //import auth = firebase.auth;
-import {Vendor} from "../model/Vendor";
+import {Vendor} from "../../model/Vendor";
 import firebase from "firebase/compat/app";
-import {SnackBarService} from "../module/customer-dashboard/services/snack-bar.service";
+import {SnackBarService} from "../../module/customer-dashboard/services/snack-bar.service";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
 //import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;

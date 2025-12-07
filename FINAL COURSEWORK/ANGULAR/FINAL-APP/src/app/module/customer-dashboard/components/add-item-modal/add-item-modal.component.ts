@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PageEvent} from "@angular/material/paginator";
-import {LocalDataService} from "../../../../service/local-data.service";
+import {LocalDataService} from "../../../../core/services/local-data.service";
 import {AuthService} from "@auth0/auth0-angular";
 import {BuyingCartService} from "../../services/buying-cart.service";
 import {ModalService} from "../../services/modal.service";
 import {CustomerDashboardService} from "../../services/customer-dashboard.service";
-import {LoginService} from "../../../../service/login.service";
+import {LoginService} from "../../../../core/services/login.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {debounceTime} from "rxjs";
 

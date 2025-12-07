@@ -3,7 +3,7 @@ import {DOCUMENT} from '@angular/common';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {CustomerDashboardGuard} from "../customer-dashboard/guards/customer-dashboard.guard";
-import {LoginService} from "../../service/login.service";
+import {LoginService} from "../../core/services/login.service";
 import {CustomerDashboardService} from "../customer-dashboard/services/customer-dashboard.service";
 
 @Component({

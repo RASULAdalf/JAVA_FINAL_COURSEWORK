@@ -5,20 +5,13 @@ const extract = require('pdf-parse');
 const GSON = require('gson');
 const axios = require('axios');
 const admin = require('firebase-admin');
-
-let showImg = "";
-let specsDocUrl = "";
-let slideShowImgUrls = [];
-let specsDocContent = "";
-let vEmail = "";
-let itemDescription = "";
-let itemId = '';
+const crudUtil = require('../util/CrudUtil');
 
 
-const proceed = (req, resp) => {
-    let i = 0;
-    let itemIdSet = false
-    let bucket = admin.storage().bucket();
+const saveItem = (req, resp) => {
+    let vEmail = "";
+    let itemId = '';
+
     const itemModel = new ItemModel('', '', '', [], 0, 0, '', '', '');
     // const KEYPATH = './drive.json';
     // const SCOPES = ['https://www.googleapis.com/auth/drive'];
@@ -27,7 +20,7 @@ const proceed = (req, resp) => {
     //     keyFile: KEYPATH,
     //     scopes: SCOPES
     // });
-    slideShowImgUrls = [];
+
     const bufferedEvents = [];
     const form = new formidable.IncomingForm();
     form.parse(req);
@@ -38,7 +31,6 @@ const proceed = (req, resp) => {
             switch (field) {
                 case 'itemDescription': {
                     itemModel.itemDescription = value;
-                    itemDescription = value;
                     break;
                 }
                 case 'itemCategory':
@@ -66,10 +58,10 @@ const proceed = (req, resp) => {
     })
 
     function handleBuffered() {
-        for(const event of bufferedEvents){
+        for (const event of bufferedEvents) {
             let destinationPath = `${vEmail}/${itemId}/${event.field}/${event.file.originalFilename}`;
             console.log(destinationPath);
-            uploadToFireStorage(destinationPath, event.file.mimetype, event.file, event.field, itemId).then(r => console.log());
+            saveUploadToFireStorage(destinationPath, event.file.mimetype, event.file, event.field, itemId, form, itemModel, resp).then(r => console.log());
 
         }
     }
@@ -91,7 +83,7 @@ const proceed = (req, resp) => {
 
     form.on('file', (field, file) => {
 
-            bufferedEvents.push({type:"file",field,file});
+        bufferedEvents.push({type: "file", field, file});
 
 
         // if (itemIdSet) {
@@ -172,52 +164,6 @@ const proceed = (req, resp) => {
          resp.json(GSON.parse(GSON.stringify(itemModel)));
 
      })*/
-
-    async function uploadToFireStorage(destinationPath, contentType, file, field, itemId) {
-
-        // const driveService = google.drive({version: 'v3', auth: auth});
-
-        let response = await bucket.upload(file.filepath, {
-            destination: destinationPath,
-            metadata: {
-                contentType: contentType,
-            }
-        });
-        console.log(response[0].metadata.mediaLink);
-
-        if (field === "slideShowImgs") {
-            slideShowImgUrls.push(response[0].metadata.mediaLink);
-        } else if (field === "specsDoc") {
-            specsDocUrl = response[0].metadata.mediaLink;
-            extract(fs.readFileSync(file.filepath)).then(function (data) {
-                specsDocContent = data.text;
-
-            });
-        } else if (field === "showImg") {
-            showImg = response[0].metadata.mediaLink;
-        }
-        i++;
-        if (i === form.openedFiles.length) {
-            itemModel.slideShowImageUrls = slideShowImgUrls;
-            itemModel.specsDocUrl = specsDocUrl;
-            itemModel.specsDocContent = specsDocContent;
-            itemModel.itemLogoUrl = showImg;
-            const body = GSON.parse(GSON.stringify(itemModel));
-            console.log(body);
-            axios.put('http://localhost:8080/api/v1/item', body, {
-                headers: {'token': 'snfjg85YY39475fhestdgff'},
-                params: {
-                    id: itemId,
-                }
-            }).then(res => {
-                resp.json({'message': 'Uploaded successfully!'});
-            }, err => {
-                resp.send({'message': err});
-            })
-
-        }
-
-    }
 
 
     /*
@@ -345,4 +291,204 @@ const proceed = (req, resp) => {
 
 
 }
-module.exports = {proceed};
+const deleteItem = async (req, resp) => {
+    let vEmail = req.query.vEmail;
+    let itemId = req.query.id;
+    let destinationPath = `${vEmail}/${itemId}`;
+    console.log(vEmail + "-" + itemId);
+    crudUtil.deleteContent(destinationPath).then(response => {
+        axios.delete('http://localhost:8080/api/v1/item', {
+            headers: {'token': 'snfjg85YY39475fhestdgff'},
+            params: {
+                id: itemId,
+            }
+        }).then(res => {
+            resp.json({'message': 'Deleted successfully!'});
+        }, err => {
+            resp.send({'message': err});
+        })
+
+    }, err => {
+        resp.send({'message': err});
+    })
+}
+
+const updateItem = async (req, resp) => {
+    let vEmail = req.query.vEmail;
+    let itemId = req.query.id;
+    let updateOption = req.query.option;
+    let destinationPath = `${vEmail}/${itemId}`;
+    console.log(vEmail + "-" + itemId);
+
+
+    const itemModel = new ItemModel('', '', '', [], 0, 0, '', '', '');
+
+    const bufferedEvents = [];
+    const form = new formidable.IncomingForm();
+    form.parse(req);
+
+    let formFieldPromise = new Promise((resolve, reject) => {
+        form.on('field', function (field, value) {
+            // console.log("inside field");
+            switch (field) {
+                case 'itemDescription': {
+                    itemModel.itemDescription = value;
+                    break;
+                }
+                case 'itemCategory':
+                    itemModel.itemCategory = value;
+                    break;
+                case 'unitPrice':
+                    itemModel.unitPrice = value;
+                    break;
+                case 'qty': {
+                    itemModel.qtyOnHand = value;
+                    resolve();
+                }
+                    break;
+                case 'vendorEmail': {
+                    itemModel.vendorEmail = value;
+                    vEmail = value;
+                    break;
+                }
+
+                default:
+                    break;
+            }
+
+        })
+    })
+
+    formFieldPromise.then(() => {
+        handleBuffered();
+    })
+
+    function handleBuffered() {
+        switch (updateOption) {
+            case 'deleteUpdate': {
+                crudUtil.deleteContent(destinationPath).then(response => {
+                    for (const event of bufferedEvents) {
+                        let destinationPath = `${vEmail}/${itemId}/${event.field}/${event.file.originalFilename}`;
+                        console.log(destinationPath);
+                        saveUploadToFireStorage(destinationPath, event.file.mimetype, event.file, event.field, itemId, form, itemModel, resp).then(r => console.log());
+
+                    }
+                }, error => {
+                    resp.send({"message": "error updating item"});
+                })
+            }
+                break
+
+            case 'addUpdate': {
+
+                for (const event of bufferedEvents) {
+                    let destinationPath = `${vEmail}/${itemId}/${event.field}/${event.file.originalFilename}`;
+                    console.log(destinationPath);
+                    updateUploadToFireStorage(destinationPath, event.file.mimetype, event.file, event.field, itemId, form, itemModel, resp).then(r => console.log());
+
+                }
+
+
+            }
+
+        }
+
+    }
+
+
+    form.on('file', (field, file) => {
+
+        bufferedEvents.push({type: "file", field, file});
+
+
+    })
+
+
+}
+
+async function saveUploadToFireStorage(destinationPath, contentType, file, field, itemId, form, itemModel, resp) {
+
+    // const driveService = google.drive({version: 'v3', auth: auth});
+    let i = 0;
+
+    let response = await crudUtil.saveContent(destinationPath, contentType, file);
+
+    if (field === "slideShowImgs") {
+        itemModel.slideShowImageUrls.push(response[0].metadata.mediaLink);
+    } else if (field === "specsDoc") {
+        itemModel.specsDocUrl = response[0].metadata.mediaLink;
+        extract(fs.readFileSync(file.filepath)).then(function (data) {
+            itemModel.specsDocContent = data.text;
+
+        });
+    } else if (field === "showImg") {
+        itemModel.itemLogoUrl = response[0].metadata.mediaLink;
+    }
+    i++;
+    if (i === form.openedFiles.length) {
+        const body = GSON.parse(GSON.stringify(itemModel));
+        console.log(body);
+        axios.put('http://localhost:8080/api/v1/item', body, {
+            headers: {'token': 'snfjg85YY39475fhestdgff'},
+            params: {
+                id: itemId,
+            }
+        }).then(res => {
+            resp.json({'message': 'Updated successfully!'});
+        }, err => {
+            resp.send({'message': err});
+        })
+
+    }
+
+}
+
+async function updateUploadToFireStorage(destinationPath, contentType, file, field, itemId, form, itemModel, resp) {
+
+    // const driveService = google.drive({version: 'v3', auth: auth});
+    let i = 0;
+
+    let response = await crudUtil.saveContent(destinationPath, contentType, file);
+
+    if (field === "slideShowImgs") {
+        itemModel.slideShowImageUrls.push(response[0].metadata.mediaLink);
+    } else if (field === "specsDoc") {
+        itemModel.specsDocUrl = response[0].metadata.mediaLink;
+        extract(fs.readFileSync(file.filepath)).then(function (data) {
+            itemModel.specsDocContent = data.text;
+
+        });
+    } else if (field === "showImg") {
+        itemModel.itemLogoUrl = response[0].metadata.mediaLink;
+    }
+    i++;
+    if (i === form.openedFiles.length) {
+        axios.get('http://localhost:8080/api/v1/item/find', {
+            headers: {'token': 'snfjg85YY39475fhestdgff'},
+            params: {
+                searchText: itemId,
+            }
+        }).then(res => {
+
+            itemModel.slideShowImageUrls.push(res.data.slideShowImageUrls);
+            const body = GSON.parse(GSON.stringify(itemModel));
+            console.log(body);
+            axios.put('http://localhost:8080/api/v1/item', body, {
+                headers: {'token': 'snfjg85YY39475fhestdgff'},
+                params: {
+                    id: itemId,
+                }
+            }).then(res => {
+                resp.json({'message': 'Updated successfully!'});
+            }, err => {
+                resp.send({'message': err});
+            })
+        })
+
+
+    }
+
+}
+
+
+module.exports = {saveItem, deleteItem, updateItem};

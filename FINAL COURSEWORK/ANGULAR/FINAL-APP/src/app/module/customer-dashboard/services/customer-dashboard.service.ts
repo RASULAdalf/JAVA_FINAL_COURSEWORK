@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
-import {LoginService} from "../../../service/login.service";
+import {LoginService} from "../../../core/services/login.service";
 import {DOCUMENT} from "@angular/common";
-import {HttpService} from "../../../service/http.service";
+import {HttpService} from "../../../core/services/http.service";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
 

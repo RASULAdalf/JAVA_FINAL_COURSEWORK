@@ -27,8 +27,8 @@ public class ItemController {
     }
 
     @GetMapping(path = "/find", params = {"searchText"})
-    public ResponseEntity<StandardResponse> find(@RequestParam("searchText") String searchText, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "pageSize", defaultValue = "10") int pageSize, @RequestParam(name = "byWhom", defaultValue = "customer") String byWhom, @RequestParam(name = "email", defaultValue = "") String email,  @RequestHeader String token) {
-        return new ResponseEntity<>(new StandardResponse(200, "Item Found!", itemService.findItem(searchText, page, pageSize, token,byWhom,email)), HttpStatus.OK);
+    public ResponseEntity<StandardResponse> find(@RequestParam("searchText") String searchText, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "pageSize", defaultValue = "10") int pageSize, @RequestParam(name = "byWhom", defaultValue = "customer") String byWhom, @RequestParam(name = "email", defaultValue = "") String email, @RequestHeader String token) {
+        return new ResponseEntity<>(new StandardResponse(200, "Item Found!", itemService.findItem(searchText, page, pageSize, token, byWhom, email)), HttpStatus.OK);
     }
 
     @PutMapping

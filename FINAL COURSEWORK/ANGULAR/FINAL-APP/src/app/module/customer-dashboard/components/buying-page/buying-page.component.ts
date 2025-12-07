@@ -4,10 +4,10 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {OrderBody} from "../../../../model/OrderBody";
 import {FinalOrderBody} from "../../../../model/FinalOrderBody";
 import {OrderItem} from "../../../../model/OrderItem";
-import {HttpService} from "../../../../service/http.service";
+import {HttpService} from "../../../../core/services/http.service";
 import {environment} from "../../../../../environments/environment";
-import {LocalDataService} from "../../../../service/local-data.service";
-import {LoadingService} from "../../services/loading.service";
+import {LocalDataService} from "../../../../core/services/local-data.service";
+import {LoadingService} from "../../../../core/services/loading.service";
 import {SnackBarService} from "../../services/snack-bar.service";
 
 

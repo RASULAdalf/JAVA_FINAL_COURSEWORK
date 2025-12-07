@@ -3,7 +3,6 @@ package lk.ijse.cmjd95.repo;
 import lk.ijse.cmjd95.dto.query_interface.ItemDataInterface;
 import lk.ijse.cmjd95.entity.Item;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -38,17 +37,16 @@ public interface ItemRepo extends MongoRepository<Item, String> {
     int getAllItemsByVendorEmail(String searchText);
 
     @Query("{vendorEmail: '?1', itemDescription: {$regex: '?0'}}")
-    Page<ItemDataInterface> getAllItemsByDescriptionAndVendorEmail(String searchText, String email,Pageable pageable);
+    Page<ItemDataInterface> getAllItemsByDescriptionAndVendorEmail(String searchText, String email, Pageable pageable);
 
-    @Query(value = "{vendorEmail: '?1', itemDescription: {$regex: '?0'}}",count = true)
-   int getAllItemsCountByDescriptionAndVendorEmail(String searchText, String email);
+    @Query(value = "{vendorEmail: '?1', itemDescription: {$regex: '?0'}}", count = true)
+    int getAllItemsCountByDescriptionAndVendorEmail(String searchText, String email);
 
     @Query("{vendorEmail: '?1', specsDocContent: {$regex: '?0'}}")
-    Page<ItemDataInterface> getAllItemsBySpecsDocContentAndVendorEmail(String searchText, String email,Pageable pageable);
+    Page<ItemDataInterface> getAllItemsBySpecsDocContentAndVendorEmail(String searchText, String email, Pageable pageable);
 
-    @Query(value = "{vendorEmail: '?1', itemDescription: {$regex: '?0'}}",count = true)
-   int getAllItemsCountBySpecsDocContentAndVendorEmail(String searchText, String email);
-
+    @Query(value = "{vendorEmail: '?1', itemDescription: {$regex: '?0'}}", count = true)
+    int getAllItemsCountBySpecsDocContentAndVendorEmail(String searchText, String email);
 
 
 }

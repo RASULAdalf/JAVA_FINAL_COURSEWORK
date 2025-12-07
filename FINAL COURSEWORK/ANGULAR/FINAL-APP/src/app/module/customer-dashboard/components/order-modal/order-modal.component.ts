@@ -2,9 +2,9 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {UpdateViewOrderService} from "../../services/update-view-order.service";
-import {HttpService} from "../../../../service/http.service";
+import {HttpService} from "../../../../core/services/http.service";
 import {environment} from "../../../../../environments/environment";
-import {LoadingService} from "../../services/loading.service";
+import {LoadingService} from "../../../../core/services/loading.service";
 import {CustomerDashboardService} from "../../services/customer-dashboard.service";
 import {SnackBarService} from "../../services/snack-bar.service";
 

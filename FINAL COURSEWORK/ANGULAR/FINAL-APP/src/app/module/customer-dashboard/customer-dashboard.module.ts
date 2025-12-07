@@ -31,8 +31,6 @@ import {AddItemModalComponent} from './components/add-item-modal/add-item-modal.
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {LoadingComponent} from './components/loading/loading.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {CustomerDashboardInterceptor} from "./interceptors/customer-dashboard.interceptor";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
@@ -76,7 +74,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
   ],
   exports: [
     LoadingComponent
-  ]
+  ],
+
 
 })
 export class CustomerDashboardModule {

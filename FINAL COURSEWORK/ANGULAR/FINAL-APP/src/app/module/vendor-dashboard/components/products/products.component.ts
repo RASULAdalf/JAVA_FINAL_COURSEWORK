@@ -20,7 +20,7 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(itemCode: any) {
-    this.VendorDashboardService.deleteProduct(itemCode).subscribe(response => {
+    this.VendorDashboardService.deleteProduct(itemCode, this.vendorEmail).subscribe(response => {
       this.VendorDashboardService.loadProductsDataAll(this.page, this.pageSize, this.vendorEmail);
     }, error => {
       console.log(error);
@@ -32,9 +32,9 @@ export class ProductsComponent implements OnInit {
   }
 
   openEditModal(num: number) {
-    if (num===-1) {
+    if (num === -1) {
       this.modalService.openItemEditModal(this.data, num, "Save");
-    }else
-    this.modalService.openItemEditModal(this.data, num, "Update");
+    } else
+      this.modalService.openItemEditModal(this.data, num, "Update");
   }
 }

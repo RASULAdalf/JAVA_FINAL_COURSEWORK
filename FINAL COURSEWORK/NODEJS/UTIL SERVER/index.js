@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 })
 const itemRoute = require('./routes/ItemRouter');
 
-app.use('/api/v1/Item', itemRoute);
+app.use('/api/v1/item', itemRoute);
 
 app.listen(port, () => {
     console.log(`Server is up on the port ${port}`);

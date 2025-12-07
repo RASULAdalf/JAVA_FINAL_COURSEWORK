@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from "../../service/login.service";
+import {LoginService} from "../../core/services/login.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -9,8 +9,8 @@ import {debounceTime} from "rxjs";
 import {ModalService} from "./services/modal.service";
 import {BuyingCartService} from "./services/buying-cart.service";
 import {AuthService} from "@auth0/auth0-angular";
-import {LocalDataService} from "../../service/local-data.service";
-import {LoadingService} from "./services/loading.service";
+import {LocalDataService} from "../../core/services/local-data.service";
+import {LoadingService} from "../../core/services/loading.service";
 
 @Component({
   selector: 'app-customer-dashboard',

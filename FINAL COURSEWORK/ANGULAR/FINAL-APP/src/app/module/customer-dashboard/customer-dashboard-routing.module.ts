@@ -3,8 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {CustomerDashboardComponent} from './customer-dashboard.component';
 import {BuyingPageComponent} from "./components/buying-page/buying-page.component";
 import {UpdateOrderComponent} from "./components/update-order/update-order.component";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {CustomerDashboardInterceptor} from "./interceptors/customer-dashboard.interceptor";
+import {HttpClientModule} from "@angular/common/http";
 
 const routes: Routes = [{path: '', component: CustomerDashboardComponent}, {
   path: 'BuyingPage',
@@ -13,10 +12,9 @@ const routes: Routes = [{path: '', component: CustomerDashboardComponent}, {
 
 @NgModule({
   imports: [RouterModule.forChild(routes),
-  HttpClientModule
+    HttpClientModule
   ],
 
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: CustomerDashboardInterceptor, multi: true}],
 
   exports: [RouterModule]
 })

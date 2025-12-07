@@ -36,14 +36,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public PaginatedItemResponseDto findItem(String searchText, int page, int pageSize, String token,String byWhom,String email) {
+    public PaginatedItemResponseDto findItem(String searchText, int page, int pageSize, String token, String byWhom, String email) {
         if (!TokenValidator.validateToken(token)) {
             System.out.println("Invalid Token!");
             return null;
         }
 
         switch (byWhom) {
-            case "customer":{
+            case "customer": {
                 try {
                     Optional<Item> byId = itemRepo.findById(searchText);
                     if (byId.isPresent()) {
@@ -74,7 +74,7 @@ public class ItemServiceImpl implements ItemService {
 
             }
 
-            case "vendor":{
+            case "vendor": {
                 try {
                     Optional<Item> byId = itemRepo.findById(searchText);
                     if (byId.isPresent()) {
@@ -82,12 +82,12 @@ public class ItemServiceImpl implements ItemService {
                         list.add(mapper.toItemResponseDto(byId.get()));
                         return new PaginatedItemResponseDto(list, 1);
                     }
-                    PaginatedItemResponseDto paginatedItemResponseDto = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsByDescriptionAndVendorEmail(searchText,email, PageRequest.of(page, pageSize))), itemRepo.getAllItemsCountByDescriptionAndVendorEmail(searchText,email));
+                    PaginatedItemResponseDto paginatedItemResponseDto = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsByDescriptionAndVendorEmail(searchText, email, PageRequest.of(page, pageSize))), itemRepo.getAllItemsCountByDescriptionAndVendorEmail(searchText, email));
                     if (0 < paginatedItemResponseDto.getItems().size()) {
                         return paginatedItemResponseDto;
                     }
 
-                    PaginatedItemResponseDto paginatedItemResponseDto1 = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsBySpecsDocContentAndVendorEmail(searchText,email, PageRequest.of(page, pageSize))), itemRepo.getAllItemsCountBySpecsDocContentAndVendorEmail(searchText,email));
+                    PaginatedItemResponseDto paginatedItemResponseDto1 = new PaginatedItemResponseDto(mapper.toItemResponseDto(itemRepo.getAllItemsBySpecsDocContentAndVendorEmail(searchText, email, PageRequest.of(page, pageSize))), itemRepo.getAllItemsCountBySpecsDocContentAndVendorEmail(searchText, email));
                     if (0 < paginatedItemResponseDto1.getItems().size()) {
                         return paginatedItemResponseDto1;
                     }

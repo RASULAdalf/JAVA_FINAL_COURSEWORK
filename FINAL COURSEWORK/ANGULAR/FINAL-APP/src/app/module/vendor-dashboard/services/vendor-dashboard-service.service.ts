@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {LoginService} from "../../../service/login.service";
+import {LoginService} from "../../../core/services/login.service";
 import {Observable} from "rxjs";
-import {HttpService} from "../../../service/http.service";
+import {HttpService} from "../../../core/services/http.service";
 import {environment} from "../../../../environments/environment";
 
 @Injectable({
@@ -9,6 +9,7 @@ import {environment} from "../../../../environments/environment";
 })
 export class VendorDashboardServiceService {
   baseUrl = environment.DatabaseServerUrl;
+  baseUtilUrl = environment.UtilServerUrl;
   vendorEmail: any;
 
   constructor(public httpService: HttpService, public loginService: LoginService) {
@@ -45,16 +46,23 @@ export class VendorDashboardServiceService {
 
   }
 
-  loadSearchDataAll(page: number | undefined, pageSize: number | undefined, searchText: string | undefined, email: any,type:any) {
-    if (type==='PRODUCTS') {
+  loadSearchDataAll(page: number | undefined, pageSize: number | undefined, searchText: string | undefined, email: any, type: any) {
+    if (type === 'PRODUCTS') {
       return this.httpService.get(this.baseUrl + "item/find?searchText=" + searchText + "&page=" + page + "&pageSize=" + "&byWhom=vendor" + "&email=" + email)
-    }
-    else
+    } else
       return null;
 
   }
 
-  deleteProduct(itemCode: any) {
-    return this.httpService.delete(this.baseUrl + "item?id=" + itemCode);
+  deleteProduct(itemCode: any, vEmail: any) {
+    return this.httpService.delete(this.baseUtilUrl + "item/deleteItem?vEmail=" + vEmail + "&id=" + itemCode);
+  }
+
+  saveProduct(body: any) {
+    return this.httpService.post(this.baseUtilUrl + 'item/saveItem', body);
+  }
+
+  updateProduct(vEmail: any, itemId: any, updateOption: any, body: any) {
+    return this.httpService.put(this.baseUtilUrl + "item/updateItem?vEmail=" + vEmail + "&id=" + itemId + "&option=" + updateOption, body);
   }
 }

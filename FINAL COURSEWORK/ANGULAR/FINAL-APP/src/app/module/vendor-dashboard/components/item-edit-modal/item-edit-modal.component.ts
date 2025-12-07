@@ -2,8 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {VendorDashboardServiceService} from "../../services/vendor-dashboard-service.service";
-import {LoadingService} from "../../services/loading.service";
-import {HttpService} from "../../../../service/http.service";
+import {LoadingService} from "../../../../core/services/loading.service";
+import {HttpService} from "../../../../core/services/http.service";
 import {environment} from "../../../../../environments/environment";
 
 @Component({
@@ -54,13 +54,26 @@ export class ItemEditModalComponent implements OnInit {
     this.formData.append('slideShowImgs', this.addNewItemsForm.get('slideShowImgs')?.value);
     this.formData.append('specsDoc', this.addNewItemsForm.get('specsDoc')?.value);
 
-    this.httpService.post(this.baseUtilServerUrl + 'Item/saveItem', this.formData)
+    if (this.data.buttonName === 'Save') {
+      this.vendorDashboardService.saveProduct(this.formData)
+        .subscribe(res => {
 
-      .subscribe(res => {
+          console.log(res?.message);
+
+        })
+
+    } else if (this.data.buttonName === 'Update') {
+      this.vendorDashboardService.updateProduct(
+        this.addNewItemsForm.get('vEmail')?.value,
+        this.data.data[this.data.index]?.itemCode,
+        'deleteUpdate', this.formData
+      ).subscribe(res => {
 
         console.log(res?.message);
 
       })
+    }
+
 
   }
 
