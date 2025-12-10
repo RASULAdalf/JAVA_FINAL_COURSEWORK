@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {VendorDashboardServiceService} from "./services/vendor-dashboard-service.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpService} from "../../core/services/http.service";
-import {environment} from "../../../environments/environment";
 import {SnackBarService} from "../customer-dashboard/services/snack-bar.service";
 import {ModalService} from "../customer-dashboard/services/modal.service";
 import {LocalDataService} from "../../core/services/local-data.service";
@@ -18,7 +17,6 @@ import {LoadingService} from "../../core/services/loading.service";
   styleUrls: ['./vendor-dashboard.component.scss']
 })
 export class VendorDashboardComponent implements OnInit {
-  vendorEmail: string | undefined | null;
   searchForm = new FormGroup({
     searchText: new FormControl('', Validators.required)
   })
@@ -26,27 +24,22 @@ export class VendorDashboardComponent implements OnInit {
   chooseMenuItem: any;
 
   slideShowImgs: any[] = [];
-  baseDatabaseServerUrl = environment.DatabaseServerUrl;
-  baseUtilServerUrl = environment.UtilServerUrl;
-
   type: any = "Bar";
   totalEarnings: string = '$0.00';
   year: number = 0;
   vendorImage: string | null | undefined;
-  dataList: any[] | undefined;
   buttonName: any;
   page: number = 0;
   pageSize: number = 5;
-  dataCount: number = 0;
   pageSizeOptions = [10, 20, 30, 40];//The number of data which can be loaded inside one page
   pageEvent: PageEvent | undefined;
 // }
   chooseMenuItemValue: any;
   private searchText: any;
 
-  constructor(public route: ActivatedRoute, public localStorageService: LocalDataService, private modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, private dashboardService: VendorDashboardServiceService) {
-    this.dashboardService.loginService.afAuth.currentUser.then(result => {
-      this.vendorEmail = result?.email;
+  constructor(public route: ActivatedRoute, public localStorageService: LocalDataService, private modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, public vendorDashboardService: VendorDashboardServiceService) {
+    this.vendorDashboardService.loginService.afAuth.currentUser.then(result => {
+      this.vendorDashboardService.vendorEmail = result?.email;
     })
     this.searchForm.valueChanges.pipe(debounceTime(1080)).subscribe(data => {
       //This 1080 is a debounceTime, means that to make a request to the server only if the user has stopped typing for a second rather than making requests to the server whenever the user types something
@@ -58,15 +51,15 @@ export class VendorDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     //this.modalService.openLetSirKnowModal("Vendor Dashboard");
-    this.vendorEmail = this.route.snapshot.queryParamMap.get('vendorEmail');
+    this.vendorDashboardService.vendorEmail = this.route.snapshot.queryParamMap.get('vendorEmail');
     this.vendorImage = this.route.snapshot.queryParamMap.get('vendorImage');
     this.year = new Date().getFullYear();
-    this.loadData('ORDERS');
+    this.vendorDashboardService.loadData('ORDERS', 0, 10);
 
   }
 
   logout() {
-    this.dashboardService.logOut();
+    this.vendorDashboardService.logOut();
   }
 
 
@@ -86,7 +79,7 @@ export class VendorDashboardComponent implements OnInit {
   loadServerData(event: PageEvent, value: any): any {
     this.page = event?.pageIndex;
     this.pageSize = event?.pageSize;
-    this.loadData(value);
+    this.vendorDashboardService.loadData(value, this.page, this.pageSize);
 
 
   }
@@ -109,42 +102,12 @@ export class VendorDashboardComponent implements OnInit {
 // }
 //
 
-  loadData(value: any) {
-
-    if (value == 'ORDERS' || value == undefined) {
-      this.dashboardService.loadOrdersDataAll(this.page, this.pageSize, this.vendorEmail).subscribe(data => {
-        this.dataList = data?.data?.items;
-        this.dataCount = data?.data?.dataCount;
-      }, error => console.log(error));
-    } else if (value == 'PRODUCTS') {
-      this.dashboardService.loadProductsDataAll(this.page, this.pageSize, this.vendorEmail).subscribe(data => {
-        this.dataList = data?.data?.items;
-        this.dataCount = data?.data?.dataCount;
-      }, error => console.log(error));
-    } else if (value == 'CLIENTS') {
-      this.dashboardService.loadClientsDataAll(this.page, this.pageSize).subscribe(data => {
-        this.dataList = data?.data?.items;
-        this.dataCount = data?.data?.dataCount;
-      }, error => console.log(error));
-    } else if (value == 'EARNINGS') {
-      this.dashboardService.loadEarningsDataAll(this.page, this.pageSize).subscribe(data => {
-        this.dataList = data?.data?.items;
-        this.dataCount = data?.data?.dataCount;
-      }, error => console.log(error));
-    } else if (value == 'ANALYSIS') {
-      this.dashboardService.loadAnalysisDataAll(this.page, this.pageSize).subscribe(data => {
-        this.dataList = data?.data?.items;
-        this.dataCount = data?.data?.dataCount;
-      }, error => console.log(error));
-    }
-
-  }
 
   loadDataSearch() {
     // @ts-ignore
-    this.dashboardService.loadSearchDataAll(this.page, this.pageSize, this.searchText, this.vendorEmail, this.chooseMenuItemValue).subscribe(data => {
-      this.dataList = data?.data?.items;
-      this.dataCount = data?.data?.dataCount;
+    this.vendorDashboardService.loadSearchDataAll(this.page, this.pageSize, this.searchText, this.vendorEmail, this.chooseMenuItemValue).subscribe(data => {
+      this.vendorDashboardService.dataList = data?.data?.items;
+      this.vendorDashboardService.dataCount = data?.data?.dataCount;
     }, error => console.log(error));
   }
 }

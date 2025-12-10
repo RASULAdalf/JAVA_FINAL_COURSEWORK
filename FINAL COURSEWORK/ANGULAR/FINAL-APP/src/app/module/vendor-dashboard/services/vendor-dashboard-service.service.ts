@@ -11,6 +11,8 @@ export class VendorDashboardServiceService {
   baseUrl = environment.DatabaseServerUrl;
   baseUtilUrl = environment.UtilServerUrl;
   vendorEmail: any;
+  dataList: any[] | undefined;
+  dataCount: number = 0;
 
   constructor(public httpService: HttpService, public loginService: LoginService) {
     this.loginService.afAuth.currentUser.then(res => {
@@ -64,5 +66,36 @@ export class VendorDashboardServiceService {
 
   updateProduct(vEmail: any, itemId: any, updateOption: any, body: any) {
     return this.httpService.put(this.baseUtilUrl + "item/updateItem?vEmail=" + vEmail + "&id=" + itemId + "&option=" + updateOption, body);
+  }
+
+  loadData(value: any, page: number, pageSize: number) {
+
+    if (value == 'ORDERS' || value == undefined) {
+      this.loadOrdersDataAll(page, pageSize, this.vendorEmail).subscribe(data => {
+        this.dataList = data?.data?.items;
+        this.dataCount = data?.data?.dataCount;
+      }, error => console.log(error));
+    } else if (value == 'PRODUCTS') {
+      this.loadProductsDataAll(page, pageSize, this.vendorEmail).subscribe(data => {
+        this.dataList = data?.data?.items;
+        this.dataCount = data?.data?.dataCount;
+      }, error => console.log(error));
+    } else if (value == 'CLIENTS') {
+      this.loadClientsDataAll(page, pageSize).subscribe(data => {
+        this.dataList = data?.data?.items;
+        this.dataCount = data?.data?.dataCount;
+      }, error => console.log(error));
+    } else if (value == 'EARNINGS') {
+      this.loadEarningsDataAll(page, pageSize).subscribe(data => {
+        this.dataList = data?.data?.items;
+        this.dataCount = data?.data?.dataCount;
+      }, error => console.log(error));
+    } else if (value == 'ANALYSIS') {
+      this.loadAnalysisDataAll(page, pageSize).subscribe(data => {
+        this.dataList = data?.data?.items;
+        this.dataCount = data?.data?.dataCount;
+      }, error => console.log(error));
+    }
+
   }
 }

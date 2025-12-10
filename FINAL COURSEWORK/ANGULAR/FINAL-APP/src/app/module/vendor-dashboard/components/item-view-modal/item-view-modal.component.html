@@ -16,6 +16,7 @@
     <button (click)="gotoSpecDoc(data.data[data.index]?.specsDocUrl)" class="specBTN" color="primary" mat-raised-button>
       SEE SPECIFICATIONS
     </button>
+    <mat-chip>Remaining Count : {{ data.data[data.index]?.qtyOnHand }}</mat-chip>
     <button (click)="closeDialog()" color="warn" mat-raised-button>CLOSE</button>
   </div>
 </div>

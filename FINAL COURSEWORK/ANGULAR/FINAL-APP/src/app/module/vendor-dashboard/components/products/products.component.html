@@ -14,12 +14,12 @@
         <button (click)="openViewModal(num)" color="primary" mat-raised-button>VIEW</button>
         <button (click)="openEditModal(num)" color="primary" mat-raised-button>UPDATE</button>
         <button (click)="deleteProduct(data?.itemCode)" color="warn" mat-raised-button>DELETE</button>
-      </mat-card-actions>
-      <mat-card-footer class="example-card-footer card-content">
+        <br>
         <mat-chip-list>
           <mat-chip>Rs.{{ data?.unitPrice }}</mat-chip>
         </mat-chip-list>
-      </mat-card-footer>
+      </mat-card-actions>
+
     </mat-card>
   </div>
 </div>

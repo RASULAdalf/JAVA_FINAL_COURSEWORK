@@ -27,6 +27,7 @@ import {ItemViewModalComponent} from './components/item-view-modal/item-view-mod
 import {ItemEditModalComponent} from './components/item-edit-modal/item-edit-modal.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MdbCarouselModule} from "mdb-angular-ui-kit/carousel";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import {MdbCarouselModule} from "mdb-angular-ui-kit/carousel";
     MatCardModule,
     MatChipsModule,
     MatDialogModule,
-    MdbCarouselModule
+    MdbCarouselModule,
+    MatCheckboxModule
   ],
 
 })

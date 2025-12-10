@@ -13,15 +13,15 @@ export class ProductsComponent implements OnInit {
   @Input() pageSize: number = 10;
   @Input() vendorEmail: string | undefined | null;
 
-  constructor(public VendorDashboardService: VendorDashboardServiceService, public modalService: ModalService) {
+  constructor(public vendorDashboardService: VendorDashboardServiceService, public modalService: ModalService) {
   }
 
   ngOnInit(): void {
   }
 
   deleteProduct(itemCode: any) {
-    this.VendorDashboardService.deleteProduct(itemCode, this.vendorEmail).subscribe(response => {
-      this.VendorDashboardService.loadProductsDataAll(this.page, this.pageSize, this.vendorEmail);
+    this.vendorDashboardService.deleteProduct(itemCode, this.vendorEmail).subscribe(response => {
+      this.vendorDashboardService.loadData('PRODUCTS', this.page, this.pageSize)
     }, error => {
       console.log(error);
     })
@@ -33,7 +33,7 @@ export class ProductsComponent implements OnInit {
 
   openEditModal(num: number) {
     if (num === -1) {
-      this.modalService.openItemEditModal(this.data, num, "Save");
+      this.modalService.openItemEditModal([{vendorEmail: this.vendorEmail}], 0, "Save");
     } else
       this.modalService.openItemEditModal(this.data, num, "Update");
   }

@@ -296,27 +296,32 @@ public class OrderServiceImpl implements OrderService {
                     }
 
                     PaginatedOrderResponseDto customerOrderById = findCustomerOrderById(searchText, customer_email, page, pageSize, token);
-                    if (customerOrderById.getDataCount() > 0) {
-                        for (OrderResponseDto dto : customerOrderById.getOrders()) {
-                            ordersList.add(dto);
+                    if (customerOrderById != null) {
+                        if (customerOrderById.getDataCount() > 0) {
+                            for (OrderResponseDto dto : customerOrderById.getOrders()) {
+                                ordersList.add(dto);
+                            }
+                            return new PaginatedOrderResponseDto(ordersList, ordersList.size());
                         }
-                        return new PaginatedOrderResponseDto(ordersList, ordersList.size());
                     }
 
                     PaginatedOrderResponseDto customerOrderByDescription = findCustomerOrderByDescription(searchText, customer_email, page, pageSize, token);
-                    if (customerOrderByDescription.getDataCount() > 0) {
-                        for (OrderResponseDto dto : customerOrderByDescription.getOrders()) {
-                            ordersList.add(dto);
+                    if (customerOrderByDescription != null) {
+                        if (customerOrderByDescription.getDataCount() > 0) {
+                            for (OrderResponseDto dto : customerOrderByDescription.getOrders()) {
+                                ordersList.add(dto);
+                            }
+                            return new PaginatedOrderResponseDto(ordersList, ordersList.size());
                         }
-                        return new PaginatedOrderResponseDto(ordersList, ordersList.size());
                     }
-
                     PaginatedOrderResponseDto customerOrderByDate = findCustomerOrderByDate(searchText + "T18:30:00.000Z", customer_email, page, pageSize, token);
-                    if (customerOrderByDate.getDataCount() > 0) {
-                        for (OrderResponseDto dto : customerOrderByDate.getOrders()) {
-                            ordersList.add(dto);
+                    if (customerOrderByDate != null) {
+                        if (customerOrderByDate.getDataCount() > 0) {
+                            for (OrderResponseDto dto : customerOrderByDate.getOrders()) {
+                                ordersList.add(dto);
+                            }
+                            return new PaginatedOrderResponseDto(ordersList, ordersList.size());
                         }
-                        return new PaginatedOrderResponseDto(ordersList, ordersList.size());
                     }
                 }
 
@@ -400,13 +405,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private List<? extends OrderResponseDto> generateOrdersResponseForVendorDisplay(List<? extends OrderResponseDto> orders, String vendorEmail, String token) {
+
         List<OrderResponseDto> orderResponseVendorDisplayDtoList = new ArrayList<>();
         for (OrderResponseDto order : orders) {
             OrderResponseCustomerDisplayDto order_inside = (OrderResponseCustomerDisplayDto) order;
             for (OrderItem orderItem : order_inside.getOrders()) {
                 Item itemById = itemService.findItemById(orderItem.getItemCode(), token);
-                if (Objects.equals(itemById.getVendorEmail(), vendorEmail)) {
-                    orderResponseVendorDisplayDtoList.add(new OrderResponseVendorDisplayDto(orderItem.getItemCode(), order_inside.getOrderDate(), orderItem.getItemDescription(), itemById.getItemCategory(), itemById.getItemLogoUrl(), orderItem.getQty(), orderItem.getItemFullPrice(), order_inside.getCustomerEmail(), order_inside.getState()));
+                if (itemById != null) {
+                    if (Objects.equals(itemById.getVendorEmail(), vendorEmail)) {
+                        orderResponseVendorDisplayDtoList.add(new OrderResponseVendorDisplayDto(orderItem.getItemCode(), order_inside.getOrderDate(), orderItem.getItemDescription(), itemById.getItemCategory(), itemById.getItemLogoUrl(), orderItem.getQty(), orderItem.getItemFullPrice(), order_inside.getCustomerEmail(), order_inside.getState()));
+                    }
                 }
             }
         }
@@ -419,8 +427,10 @@ public class OrderServiceImpl implements OrderService {
         List<OrderResponseDto> orderResponseVendorDisplayDtoList = new ArrayList<>();
         for (OrderItem orderItem : orderResponseCustomerDisplayDto.getOrders()) {
             Item itemById = itemService.findItemById(orderItem.getItemCode(), token);
-            if (Objects.equals(itemById.getVendorEmail(), vendorEmail)) {
-                orderResponseVendorDisplayDtoList.add(new OrderResponseVendorDisplayDto(orderItem.getItemCode(), orderResponseCustomerDisplayDto.getOrderDate(), orderItem.getItemDescription(), itemById.getItemCategory(), itemById.getItemLogoUrl(), orderItem.getQty(), orderItem.getItemFullPrice(), orderResponseCustomerDisplayDto.getCustomerEmail(), orderResponseCustomerDisplayDto.getState()));
+            if (itemById != null) {
+                if (Objects.equals(itemById.getVendorEmail(), vendorEmail)) {
+                    orderResponseVendorDisplayDtoList.add(new OrderResponseVendorDisplayDto(orderItem.getItemCode(), orderResponseCustomerDisplayDto.getOrderDate(), orderItem.getItemDescription(), itemById.getItemCategory(), itemById.getItemLogoUrl(), orderItem.getQty(), orderItem.getItemFullPrice(), orderResponseCustomerDisplayDto.getCustomerEmail(), orderResponseCustomerDisplayDto.getState()));
+                }
             }
         }
         return orderResponseVendorDisplayDtoList;

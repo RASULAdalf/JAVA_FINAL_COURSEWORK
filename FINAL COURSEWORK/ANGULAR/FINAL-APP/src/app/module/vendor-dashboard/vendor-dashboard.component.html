@@ -11,26 +11,32 @@
   </div>
   <div class="all-content-outer">
     <div class="menu-outer">
-      <div *ngIf="vendorEmail!=undefined && vendorEmail!=null" class="account-outer">
+      <div *ngIf="this.vendorDashboardService.vendorEmail!=undefined && this.vendorDashboardService.vendorEmail!=null"
+           class="account-outer">
         <div class="account-logo">
           <div [ngStyle]="{ background: this.vendorImage| vendorDashboardBackgroundImages,'background-size':'cover'}"
                class="logo-box"></div>
         </div>
-        <div class="account-name">{{ this.vendorEmail }}</div>
+        <div class="account-name">{{ this.vendorDashboardService.vendorEmail }}</div>
       </div>
       <div class="menu-items-outer">
         <mat-button-toggle-group #chooseMenuItem="matButtonToggleGroup" [(ngModel)]="chooseMenuItemValue"
                                  appearance="standard"
                                  aria-label="menu-label">
-          <mat-button-toggle (click)="loadData('ORDERS')" aria-orientation="vertical" value="ORDERS">ORDERS
+          <mat-button-toggle (click)="this.vendorDashboardService.loadData('ORDERS',this.page,this.pageSize)"
+                             aria-orientation="vertical" value="ORDERS">ORDERS
           </mat-button-toggle>
-          <mat-button-toggle (click)="loadData('PRODUCTS')" aria-orientation="vertical" value="PRODUCTS">PRODUCTS
+          <mat-button-toggle (click)="this.vendorDashboardService.loadData('PRODUCTS',this.page,this.pageSize)"
+                             aria-orientation="vertical" value="PRODUCTS">PRODUCTS
           </mat-button-toggle>
-          <mat-button-toggle (click)="loadData('CLIENTS')" aria-orientation="vertical" value="CLIENTS">CLIENTS
+          <mat-button-toggle (click)="this.vendorDashboardService.loadData('CLIENTS',this.page,this.pageSize)"
+                             aria-orientation="vertical" value="CLIENTS">CLIENTS
           </mat-button-toggle>
-          <mat-button-toggle (click)="loadData('EARNINGS')" aria-orientation="vertical" value="EARNINGS">EARNINGS
+          <mat-button-toggle (click)="this.vendorDashboardService.loadData('EARNINGS',this.page,this.pageSize)"
+                             aria-orientation="vertical" value="EARNINGS">EARNINGS
           </mat-button-toggle>
-          <mat-button-toggle (click)="loadData('ANALYSIS')" aria-orientation="vertical" value="ANALYSIS">ANALYSIS
+          <mat-button-toggle (click)="this.vendorDashboardService.loadData('ANALYSIS',this.page,this.pageSize)"
+                             aria-orientation="vertical" value="ANALYSIS">ANALYSIS
           </mat-button-toggle>
         </mat-button-toggle-group>
       </div>
@@ -54,19 +60,25 @@
       </div>
       <div class="content-inner">
         <app-loading *ngIf="loadingService.progressBarLoadingState |async" [data]="type"></app-loading>
-        <app-orders *ngIf="chooseMenuItem.value=='ORDERS' " [data]="dataList" class="inner-components"></app-orders>
-        <app-products *ngIf="chooseMenuItem.value=='PRODUCTS' " [data]="dataList" [pageSize]="pageSize" [page]="page"
-                      [vendorEmail]="vendorEmail" class="inner-components"></app-products>
-        <app-clients *ngIf="chooseMenuItem.value=='CLIENTS' " [buttonName]="buttonName" [data]="dataList"
+        <app-orders *ngIf="chooseMenuItem.value=='ORDERS' " [data]="this.vendorDashboardService.dataList"
+                    class="inner-components"></app-orders>
+        <app-products *ngIf="chooseMenuItem.value=='PRODUCTS' " [data]="this.vendorDashboardService.dataList"
+                      [pageSize]="pageSize" [page]="page"
+                      [vendorEmail]="this.vendorDashboardService.vendorEmail" class="inner-components"></app-products>
+        <app-clients *ngIf="chooseMenuItem.value=='CLIENTS' " [buttonName]="buttonName"
+                     [data]="this.vendorDashboardService.dataList"
                      class="inner-components"></app-clients>
-        <app-earnings *ngIf="chooseMenuItem.value=='EARNINGS'" [buttonName]="buttonName" [data]="dataList"
+        <app-earnings *ngIf="chooseMenuItem.value=='EARNINGS'" [buttonName]="buttonName"
+                      [data]="this.vendorDashboardService.dataList"
                       class="inner-components"></app-earnings>
-        <app-analysis *ngIf="chooseMenuItem.value=='ANALYSIS'" [buttonName]="buttonName" [data]="dataList"
+        <app-analysis *ngIf="chooseMenuItem.value=='ANALYSIS'" [buttonName]="buttonName"
+                      [data]="this.vendorDashboardService.dataList"
                       class="inner-components"></app-analysis>
       </div>
 
       <div class="paginator-outer">
-        <mat-paginator (page)="pageEvent=loadServerData($event,chooseMenuItem.value)" [length]=dataCount
+        <mat-paginator (page)="pageEvent=loadServerData($event,chooseMenuItem.value)"
+                       [length]=this.vendorDashboardService.dataCount
                        [pageIndex]=page [pageSizeOptions]=pageSizeOptions
                        [pageSize]=pageSize aria-label="Select Page">
 

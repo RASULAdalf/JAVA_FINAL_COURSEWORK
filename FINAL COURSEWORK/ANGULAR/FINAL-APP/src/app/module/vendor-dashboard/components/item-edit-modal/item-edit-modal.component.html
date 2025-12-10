@@ -12,7 +12,7 @@
         <mat-form-field [style.margin-left.px]=140 [style.width.px]=500 appearance="outline">
           <mat-label>Item Name</mat-label>
           <input [value]="data.data[data.index]?.itemDescription" formControlName="description" matInput type="text">
-          <mat-error>Maximum of 10 characters are allowed</mat-error>
+          <mat-error>Maximum of 30 characters are allowed</mat-error>
         </mat-form-field>
         <br>
         <mat-form-field [style.margin-left.px]=140 [style.width.px]=500 appearance="outline">
@@ -35,21 +35,24 @@
           <input formControlName="price" matInput type="text">
         </mat-form-field>
         <br>
-        <label [style.margin-left.px]=140 for="img">Item Image : &nbsp;</label>
+        <mat-label [style.margin-left.px]=140 for="img">Item Image : &nbsp;</mat-label>
         <input (change)="onImgChange($event)" accept="image/*" formControlName="img" id="img" required type="file">
 
         <br><br>
-        <label [style.margin-left.px]=140 for="slide">Item SlideShow Images : &nbsp;</label>
+        <mat-label [style.margin-left.px]=140 for="slide">Item SlideShow Images : &nbsp;</mat-label>
         <input (change)="onSlideImgsChange($event)" accept="image/*" formControlName="slideShowImgs" id="slide" multiple
                required type="file">
 
-        <br><br>
-        <label [style.margin-left.px]=140 for="specs">Item Specifications Document : &nbsp;</label>
-        <input (change)="onSpecsDocChange($event)" accept="application/pdf" formControlName="specsDoc" id="specs"
-               required type="file">
 
         <br><br>
-        <button [style.margin-left.px]=40 color="primary" mat-raised-button
+        <mat-label [style.margin-left.px]=140 for="specs">Item Specifications Document : &nbsp;</mat-label>
+        <input (change)="onSpecsDocChange($event)" accept="application/pdf" formControlName="specsDoc" id="specs"
+               required type="file">
+        <mat-checkbox (change)="this.additionalSlideShowImgCheck=$event.checked"
+                      *ngIf="this.data.buttonName==='Update' ">Add As Additional Images
+        </mat-checkbox>
+        <br><br>
+        <button [disabled]="addNewItemsForm.invalid" [style.margin-left.px]=40 color="primary" mat-raised-button
                 type="submit">{{ this.data.buttonName }}
         </button>
         <button (click)="closeDialog()" [style.margin-left.px]=430 color="warn"

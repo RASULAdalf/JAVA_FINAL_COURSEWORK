@@ -16,7 +16,7 @@ export class ItemEditModalComponent implements OnInit {
   category: any = this.data.data[this.data.index]?.itemCategory;
   formData = new FormData();
   addNewItemsForm = new FormGroup({
-    description: new FormControl(this.data.data[this.data.index]?.itemDescription, [Validators.required, Validators.maxLength(10)]),
+    description: new FormControl(this.data.data[this.data.index]?.itemDescription, [Validators.required, Validators.maxLength(30)]),
     qty: new FormControl(this.data.data[this.data.index]?.qtyOnHand, Validators.required),
     price: new FormControl(this.data.data[this.data.index]?.unitPrice, Validators.required),
     img: new FormControl('', Validators.required),
@@ -26,13 +26,12 @@ export class ItemEditModalComponent implements OnInit {
     vEmail: new FormControl(this.data.data[this.data.index]?.vendorEmail, Validators.required)
   })
   baseDatabaseServerUrl = environment.DatabaseServerUrl;
-  onImg: boolean = true;
-  onSlide: boolean = true;
-  onSpec: boolean = true;
-
   categories: any[] = [{value: 'Books'}, {value: 'Clothes'}, {value: 'Electronics'}, {value: 'Electrical'}, {value: 'Cosmetics'}, {value: 'Other'}];
+  additionalSlideShowImgCheck: boolean = false;
+  logoImgUplaod: boolean = false;
+  slideShowImgsUpload: boolean = false;
+  specsDocUpload: boolean = false;
   private baseUtilServerUrl: string = environment.UtilServerUrl;
-
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {
     index: any,
@@ -57,28 +56,44 @@ export class ItemEditModalComponent implements OnInit {
     if (this.data.buttonName === 'Save') {
       this.vendorDashboardService.saveProduct(this.formData)
         .subscribe(res => {
+          this.vendorDashboardService.loadData('PRODUCTS', 0, 10);
 
           console.log(res?.message);
 
         })
 
     } else if (this.data.buttonName === 'Update') {
-      this.vendorDashboardService.updateProduct(
-        this.addNewItemsForm.get('vEmail')?.value,
-        this.data.data[this.data.index]?.itemCode,
-        'deleteUpdate', this.formData
-      ).subscribe(res => {
+      console.log(this.additionalSlideShowImgCheck)
+      if (!this.additionalSlideShowImgCheck) {
+        this.vendorDashboardService.updateProduct(
+          this.addNewItemsForm.get('vEmail')?.value,
+          this.data.data[this.data.index]?.itemCode,
+          'deleteUpdate', this.formData
+        ).subscribe(res => {
+          this.vendorDashboardService.loadData('PRODUCTS', 0, 10);
 
-        console.log(res?.message);
+          console.log(res?.message);
 
-      })
+        })
+      } else if (this.additionalSlideShowImgCheck) {
+        this.vendorDashboardService.updateProduct(
+          this.addNewItemsForm.get('vEmail')?.value,
+          this.data.data[this.data.index]?.itemCode,
+          'addUpdate', this.formData
+        ).subscribe(res => {
+          this.vendorDashboardService.loadData('PRODUCTS', 0, 10);
+
+          console.log(res?.message);
+
+        })
+      }
     }
 
 
   }
 
-  onImgChange($event: Event) {
-    this.onImg = false;
+  onImgChange(event: Event) {
+
     // @ts-ignore
     if (event.target.files.length > 0) {
 
@@ -91,20 +106,22 @@ export class ItemEditModalComponent implements OnInit {
 
       });
 
+      this.logoImgUplaod = true;
+
     }
   }
 
-  onSlideImgsChange($event: Event) {
-    this.onSlide = false;
+  onSlideImgsChange(event: Event) {
     // @ts-ignore
     for (const file of event.target.files) {
       this.formData.append("slideShowImgs", file);
     }
 
+    this.slideShowImgsUpload = true;
+
   }
 
-  onSpecsDocChange($event: Event) {
-    this.onSpec = false;
+  onSpecsDocChange(event: Event) {
     // @ts-ignore
     if (event.target.files.length > 0) {
 
@@ -116,6 +133,7 @@ export class ItemEditModalComponent implements OnInit {
         specsDoc: file
 
       });
+      this.specsDocUpload = true;
 
     }
   }
