@@ -5,6 +5,7 @@ import {Checkout_Page_Data} from "../../../../model/Checkout_Page_Data";
 import {CheckoutPageService} from "../../services/checkout-page.service";
 import {Router} from "@angular/router";
 import {UpdateViewOrderService} from "../../services/update-view-order.service";
+import {CustomerDashboardService} from "../../services/customer-dashboard.service";
 
 @Component({
   selector: 'app-item-modal',
@@ -23,7 +24,7 @@ export class ItemModalComponent implements OnInit {
       index: any,
       data: any[],
       buttonName: any
-    }, private buyingCartService: BuyingCartService
+    }, private buyingCartService: BuyingCartService, public customerDashboardService: CustomerDashboardService
   ) {
   }
 
@@ -35,7 +36,7 @@ export class ItemModalComponent implements OnInit {
   }
 
   closeDialog() {
-    if (this.data.buttonName != 'ADD') {
+    if (this.customerDashboardService.buttonName != 'ADD') {
       this.buyingCartService.setData(this.data.data[this.data.index]);
     } else {
       this.orderUpdateViewService.setData(this.data.data[this.data.index]);

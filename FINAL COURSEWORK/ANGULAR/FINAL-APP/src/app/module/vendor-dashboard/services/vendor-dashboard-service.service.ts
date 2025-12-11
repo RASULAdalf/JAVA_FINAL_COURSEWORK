@@ -11,7 +11,7 @@ export class VendorDashboardServiceService {
   baseUrl = environment.DatabaseServerUrl;
   baseUtilUrl = environment.UtilServerUrl;
   vendorEmail: any;
-  dataList: any[] | undefined;
+  dataList: any[] = [];
   dataCount: number = 0;
 
   constructor(public httpService: HttpService, public loginService: LoginService) {
@@ -48,11 +48,22 @@ export class VendorDashboardServiceService {
 
   }
 
-  loadSearchDataAll(page: number | undefined, pageSize: number | undefined, searchText: string | undefined, email: any, type: any) {
+  loadSearchDataAll(page: number | undefined, pageSize: number | undefined, searchText: string | undefined, type: any) {
     if (type === 'PRODUCTS') {
-      return this.httpService.get(this.baseUrl + "item/find?searchText=" + searchText + "&page=" + page + "&pageSize=" + "&byWhom=vendor" + "&email=" + email)
-    } else
-      return null;
+      this.httpService.get(this.baseUrl + "item/find?searchText=" + searchText + "&page=" + page + "&pageSize=" + pageSize + "&byWhom=vendor" + "&email=" + this.vendorEmail).subscribe(result => {
+        this.dataList = result?.data?.items;
+        this.dataCount = result?.data?.dataCount;
+      }, error => {
+        console.log(error)
+      })
+    } else if (type === 'ORDERS') {
+      this.httpService.get(this.baseUrl + "order/find?searchText=" + searchText + "&page=" + page + "&pageSize=" + pageSize + "&byWhom=vendor" + "&vendor_email=" + this.vendorEmail).subscribe(result => {
+        this.dataList = result?.data?.orders;
+        this.dataCount = result?.data?.dataCount;
+      }, error => {
+        console.log(error)
+      })
+    }
 
   }
 
@@ -72,7 +83,7 @@ export class VendorDashboardServiceService {
 
     if (value == 'ORDERS' || value == undefined) {
       this.loadOrdersDataAll(page, pageSize, this.vendorEmail).subscribe(data => {
-        this.dataList = data?.data?.items;
+        this.dataList = data?.data?.orders;
         this.dataCount = data?.data?.dataCount;
       }, error => console.log(error));
     } else if (value == 'PRODUCTS') {

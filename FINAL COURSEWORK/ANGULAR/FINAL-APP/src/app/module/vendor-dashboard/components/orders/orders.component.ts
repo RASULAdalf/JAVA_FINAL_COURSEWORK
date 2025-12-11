@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {MatSelectChange} from "@angular/material/select";
 
 @Component({
   selector: 'app-orders',
@@ -6,13 +7,25 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit {
-  @Input() data: any[] | undefined;
+  @Input() data: any[] = [];
   @Input() buttonName: any | undefined;
+  displayedColumns: string[] = ['itemCode', 'itemDescription', 'qty', 'itemFullPrice', 'customerEmail', 'orderDate', 'state', 'actions'];
+  category: any = '';
+  categories: any[] = [{value: 'Pending Delivery'}, {value: 'Cancelled'}];
 
   constructor() {
   }
 
   ngOnInit(): void {
+    console.log(this.data)
   }
 
+
+  orderStateChange(event: MatSelectChange, element: any) {
+    console.log(this.category)
+    // @ts-ignore
+    element?.state = this.category;
+    //Notify customer through NodeMailer
+
+  }
 }

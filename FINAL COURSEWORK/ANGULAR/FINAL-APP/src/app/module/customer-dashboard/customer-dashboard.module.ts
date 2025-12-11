@@ -4,14 +4,13 @@ import {CommonModule} from '@angular/common';
 import {CustomerDashboardRoutingModule} from './customer-dashboard-routing.module';
 import {CustomerDashboardComponent} from './customer-dashboard.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import {ClothesComponent} from "./components/clothes/clothes.component";
-import {BooksComponent} from "./components/books/books.component";
-import {ElectronicsComponent} from "./components/electronics/electronics.component";
-import {ElectricalComponent} from "./components/electrical/electrical.component";
-import {CosmeticsComponent} from "./components/cosmetics/cosmetics.component";
-import {OtherComponent} from "./components/other/other.component";
+//import {ClothesComponent} from "./components/clothes/clothes.component";
+//import {BooksComponent} from "./components/books/books.component";
+//import {ElectronicsComponent} from "./modules/sub-customer-dashboard1/components/electronics/electronics.component";
+// import {ElectricalComponent} from "./components/electrical/electrical.component";
+// import {CosmeticsComponent} from "./components/cosmetics/cosmetics.component";
+// import {OtherComponent} from "./components/other/other.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CustomerDashboardBackgroundImagesPipe} from './pipes/customer-dashboard-background-images.pipe';
 import {MatButtonModule} from "@angular/material/button";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {ScrollingModule} from "@angular/cdk/scrolling";
@@ -32,18 +31,20 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {LoadingComponent} from './components/loading/loading.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {SubCustomerDashboard1Module} from "./modules/sub-customer-dashboard1/sub-customer-dashboard1.module";
+import {SubCustomerDashboard2Module} from "./modules/sub-customer-dashboard2/sub-customer-dashboard2.module";
+import {CustomerDashboardSharedModule} from './modules/customer-dashboard-shared/customer-dashboard-shared.module';
 
 
 @NgModule({
   declarations: [
     CustomerDashboardComponent,
-    ClothesComponent,
-    BooksComponent,
-    ElectronicsComponent,
-    ElectricalComponent,
-    CosmeticsComponent,
-    OtherComponent,
-    CustomerDashboardBackgroundImagesPipe,
+    //ClothesComponent,
+    //BooksComponent,
+    //ElectronicsComponent,
+    //ElectricalComponent,
+    //CosmeticsComponent,
+    //OtherComponent,
     CartModalComponent,
     CustmerBuyingCartItemImagesPipe,
     BuyingPageComponent,
@@ -70,10 +71,14 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatSelectModule,
     MatTooltipModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    SubCustomerDashboard1Module,
+    SubCustomerDashboard2Module,
+    CustomerDashboardSharedModule
   ],
   exports: [
-    LoadingComponent
+    LoadingComponent,
+
   ],
 
 

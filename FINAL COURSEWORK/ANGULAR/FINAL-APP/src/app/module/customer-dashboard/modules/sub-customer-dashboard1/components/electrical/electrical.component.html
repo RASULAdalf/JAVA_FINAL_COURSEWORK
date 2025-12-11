@@ -1,4 +1,5 @@
-<div #viewButton *ngFor="let data of data; index as num" [attr.data-index]="num" class="cloth-element">
+<div #viewButton *ngFor="let data of this.customerDashboardService.dataList; index as num" [attr.data-index]="num"
+     class="electrical-element">
   <div class="header"><h2>{{ data?.itemDescription }}</h2></div>
   <div [ngStyle]="{ background: data?.itemLogoUrl | customerDashboardBackgroundImages,'background-size':'cover'}"
        class="image"></div>
@@ -7,5 +8,4 @@
     <button (click)="openModal(viewButton)" color="primary" mat-raised-button>VIEW</button>
   </div>
 </div>
-
 

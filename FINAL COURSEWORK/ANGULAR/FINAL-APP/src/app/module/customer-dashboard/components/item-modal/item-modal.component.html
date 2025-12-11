@@ -22,10 +22,13 @@
   <div class="button-inner">
     <div class="button-buy-related">
       <div class="button-add-to-cart">
-        <button (click)="closeDialog()" color="primary" mat-raised-button>{{ data?.buttonName }}</button>
+        <button (click)="closeDialog()" color="primary"
+                mat-raised-button>{{ this.customerDashboardService.buttonName }}
+        </button>
       </div>
       <div class="button-buy">
-        <button (click)="gotoBuyingPage()" *ngIf="data?.buttonName!='ADD'" color="primary" mat-dialog-close="true"
+        <button (click)="gotoBuyingPage()" *ngIf="this.customerDashboardService.buttonName!='ADD'" color="primary"
+                mat-dialog-close="true"
                 mat-raised-button>BUY ONE
         </button>
       </div>

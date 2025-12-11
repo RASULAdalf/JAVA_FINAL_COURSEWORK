@@ -105,9 +105,6 @@ export class VendorDashboardComponent implements OnInit {
 
   loadDataSearch() {
     // @ts-ignore
-    this.vendorDashboardService.loadSearchDataAll(this.page, this.pageSize, this.searchText, this.vendorEmail, this.chooseMenuItemValue).subscribe(data => {
-      this.vendorDashboardService.dataList = data?.data?.items;
-      this.vendorDashboardService.dataCount = data?.data?.dataCount;
-    }, error => console.log(error));
+    this.vendorDashboardService.loadSearchDataAll(this.page, this.pageSize, this.searchText, this.chooseMenuItemValue);
   }
 }

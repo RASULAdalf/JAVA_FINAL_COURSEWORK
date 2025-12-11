@@ -27,16 +27,12 @@ export class CustomerDashboardComponent implements OnInit {
   pageSize: number | undefined = 6;
   pageSizeOptions = [10, 20, 30, 40];//The number of data which can be loaded inside one page
   pageEvent: PageEvent | undefined;
-  dataCount = 0;
-  dataList: any[] | undefined;
-  cartItemsListNumber: any = 0;
   orderButtonClicked: boolean = false;
-  buttonName: any = 'Add To Cart';
   type: any = "Bar";
   private searchText: any;
 
-  constructor(public loadingService: LoadingService, public localStorageService: LocalDataService, public auth: AuthService, public buyingCartService: BuyingCartService, private modalService: ModalService, private dashboardService: CustomerDashboardService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private router: Router) {
-
+  constructor(public loadingService: LoadingService, public localStorageService: LocalDataService, public auth: AuthService, public buyingCartService: BuyingCartService, private modalService: ModalService, public dashboardService: CustomerDashboardService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private router: Router) {
+    this.dashboardService.buttonName = 'ADD TO CART'
   }
 
   back(): void {
@@ -83,50 +79,24 @@ export class CustomerDashboardComponent implements OnInit {
 
 
   loadDataSearch() {
-    this.dashboardService.loadSearchDataAll(this.page, this.pageSize, this.searchText, this.orderButtonClicked, this.localStorageService.getCookie('userEmail')).subscribe(data => {
-      if (!this.orderButtonClicked) {
-        this.dataList = data?.data?.items;
-      } else {
-        this.dataList = data?.data?.orders;
-      }
-      this.dataCount = data?.data?.dataCount;
-
-    }, error => console.log(error));
+    this.dashboardService.loadSearchDataAll(this.page, this.pageSize, this.searchText, this.orderButtonClicked, this.localStorageService.getCookie('userEmail'))
 
   }
 
   loadData(value: any) {
     this.orderButtonClicked = false;
     if (value == 'CLOTHES' || value == undefined) {
-      this.dashboardService.loadClothesDataAll(this.page, this.pageSize).subscribe(data => {
-        this.dataList = data?.data?.items;
-        this.dataCount = data?.data?.dataCount;
-      }, error => console.log(error));
+      this.dashboardService.loadClothesDataAll(this.page, this.pageSize)
     } else if (value == 'BOOKS') {
-      this.dashboardService.loadBooksDataAll(this.page, this.pageSize).subscribe(data => {
-        this.dataList = data?.data?.items;
-        this.dataCount = data?.data?.dataCount;
-      }, error => console.log(error));
+      this.dashboardService.loadBooksDataAll(this.page, this.pageSize)
     } else if (value == 'ELECTRONICS') {
-      this.dashboardService.loadElectronicsDataAll(this.page, this.pageSize).subscribe(data => {
-        this.dataList = data?.data?.items;
-        this.dataCount = data?.data?.dataCount;
-      }, error => console.log(error));
+      this.dashboardService.loadElectronicsDataAll(this.page, this.pageSize)
     } else if (value == 'ELECTRICAL') {
-      this.dashboardService.loadElectricalsDataAll(this.page, this.pageSize).subscribe(data => {
-        this.dataList = data?.data?.items;
-        this.dataCount = data?.data?.dataCount;
-      }, error => console.log(error));
+      this.dashboardService.loadElectricalsDataAll(this.page, this.pageSize)
     } else if (value == 'COSMETICS') {
-      this.dashboardService.loadCosmeticsDataAll(this.page, this.pageSize).subscribe(data => {
-        this.dataList = data?.data?.items;
-        this.dataCount = data?.data?.dataCount;
-      }, error => console.log(error));
+      this.dashboardService.loadCosmeticsDataAll(this.page, this.pageSize)
     } else if (value == 'OTHER') {
-      this.dashboardService.loadOtherDataAll(this.page, this.pageSize).subscribe(data => {
-        this.dataList = data?.data?.items;
-        this.dataCount = data?.data?.dataCount;
-      }, error => console.log(error));
+      this.dashboardService.loadOtherDataAll(this.page, this.pageSize)
     }
 
   }
@@ -139,12 +109,7 @@ export class CustomerDashboardComponent implements OnInit {
 
   loadOrdersData() {
     this.orderButtonClicked = true;
-    this.dashboardService.loadOrderDataAll(this.page, this.pageSize, this.localStorageService.getCookie('userEmail')).subscribe(data => {
-      this.dataList = data?.data?.orders;
-      console.log(this.dataList)
-      this.dataCount = data?.data?.dataCount;
-      this.dashboardService.setDataList(this.dataList);
-    }, error => console.log(error));
+    this.dashboardService.loadOrderDataAll(this.page, this.pageSize, this.localStorageService.getCookie('userEmail'))
 
   }
 }

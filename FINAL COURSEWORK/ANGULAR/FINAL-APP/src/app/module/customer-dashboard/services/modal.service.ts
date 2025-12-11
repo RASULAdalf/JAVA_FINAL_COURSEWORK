@@ -67,7 +67,7 @@ export class ModalService {
 
   openAddItemModal() {
     this.addItemDialogRef = this.modalService.open(AddItemModalComponent, {
-      height: '620px',
+      height: '900px',
       width: '1600px'
     });
   }

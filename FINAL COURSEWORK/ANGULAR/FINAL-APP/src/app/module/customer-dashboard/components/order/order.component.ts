@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalService} from "../../services/modal.service";
 import {UpdateViewOrderService} from "../../services/update-view-order.service";
+import {CustomerDashboardService} from "../../services/customer-dashboard.service";
 
 @Component({
   selector: 'app-order',
@@ -10,7 +11,7 @@ import {UpdateViewOrderService} from "../../services/update-view-order.service";
 export class OrderComponent implements OnInit {
   @Input() data: any[] | undefined;
 
-  constructor(private modalService: ModalService, private updateViewOrderService: UpdateViewOrderService) {
+  constructor(private modalService: ModalService, private updateViewOrderService: UpdateViewOrderService, public customerDashboardService: CustomerDashboardService) {
   }
 
   ngOnInit(): void {

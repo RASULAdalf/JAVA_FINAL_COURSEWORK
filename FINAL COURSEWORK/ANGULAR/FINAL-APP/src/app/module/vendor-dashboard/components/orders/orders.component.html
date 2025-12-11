@@ -1,15 +1,68 @@
-<!--<div #viewButton *ngFor="let data of data; index as num" [attr.data-index]="num" class="book-element">-->
-<!--  <div class="header"><h2>{{ data?.itemDescription }}</h2></div>-->
-<!--  <div [ngStyle]="{ background: data?.itemLogoUrl | customerDashboardBackgroundImages,'background-size':'cover'}"-->
-<!--       class="image"></div>-->
-<!--  <div class="price">Rs.{{ data?.unitPrice }}.00</div>-->
-<!--  <div class="view-details">-->
-<!--    <button (click)="openModal(viewButton)" color="primary" mat-raised-button>VIEW</button>-->
-<!--  </div>-->
-<!--</div>-->
+<table [dataSource]="this.data" class="mat-elevation-z8" mat-table>
 
-<mat-grid-list cols="1" rowHeight="2:1">
-  <mat-grid-tile *ngFor="let data of data; index as num">{{ num }}</mat-grid-tile>
-</mat-grid-list>
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
 
+  <!-- Position Column -->
+  <ng-container matColumnDef="itemCode">
+    <th *matHeaderCellDef mat-header-cell> ItemCode</th>
+    <td *matCellDef="let element" mat-cell> {{ element.itemCode }}</td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="itemDescription">
+    <th *matHeaderCellDef mat-header-cell> Name</th>
+    <td *matCellDef="let element" mat-cell> {{ element.itemDescription }}</td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="qty">
+    <th *matHeaderCellDef mat-header-cell> Qty</th>
+    <td *matCellDef="let element" mat-cell> {{ element.qty }}</td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="itemFullPrice">
+    <th *matHeaderCellDef mat-header-cell> Full Price</th>
+    <td *matCellDef="let element" mat-cell> {{ element.itemFullPrice }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="customerEmail">
+    <th *matHeaderCellDef mat-header-cell> Customer</th>
+    <td *matCellDef="let element" mat-cell> {{ element.customerEmail }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="orderDate">
+    <th *matHeaderCellDef mat-header-cell> Date</th>
+    <td *matCellDef="let element" mat-cell> {{ element.orderDate }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="state">
+    <th *matHeaderCellDef mat-header-cell> Order Status</th>
+    <td *matCellDef="let element" mat-cell>
+      <mat-chip-list>
+        <mat-chip *ngIf="element?.state === 'Pending Delivery' " color="accent" selected> {{ element.state }}</mat-chip>
+        <mat-chip *ngIf="element?.state === 'Cancelled' " color="warn" selected> {{ element.state }}</mat-chip>
+        <mat-chip *ngIf="element?.state === 'Delivered' " selected
+                  style="background-color: #3fb583;!important; "> {{ element.state }}
+        </mat-chip>
+      </mat-chip-list>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th *matHeaderCellDef mat-header-cell> Actions</th>
+    <td *matCellDef="let element" mat-cell>
+      <mat-select (selectionChange)="orderStateChange($event,element)" [(value)]="category" [value]="element?.state">
+
+        <mat-option *ngFor="let category of categories" [value]="category.value">
+          {{ category.value }}
+        </mat-option>
+      </mat-select>
+    </td>
+  </ng-container>
+
+  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+</table>
 

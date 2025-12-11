@@ -35,22 +35,23 @@
       </div>
       <div class="content-inner">
         <app-clothes *ngIf="(chooseMenuItem.value=='CLOTHES'|| chooseMenuItem.value==undefined)"
-                     [buttonName]="buttonName" [data]="dataList"
+
                      class="inner-components"></app-clothes>
-        <app-books *ngIf="chooseMenuItem.value=='BOOKS' " [buttonName]="buttonName" [data]="dataList"
+        <app-books *ngIf="chooseMenuItem.value=='BOOKS' "
                    class="inner-components"></app-books>
-        <app-electronics *ngIf="chooseMenuItem.value=='ELECTRONICS' " [buttonName]="buttonName" [data]="dataList"
+        <app-electronics *ngIf="chooseMenuItem.value=='ELECTRONICS' "
                          class="inner-components"></app-electronics>
-        <app-electrical *ngIf="chooseMenuItem.value=='ELECTRICAL'" [buttonName]="buttonName" [data]="dataList"
+        <app-electrical *ngIf="chooseMenuItem.value=='ELECTRICAL'"
                         class="inner-components"></app-electrical>
-        <app-cosmetics *ngIf="chooseMenuItem.value=='COSMETICS'" [buttonName]="buttonName" [data]="dataList"
+        <app-cosmetics *ngIf="chooseMenuItem.value=='COSMETICS'"
                        class="inner-components"></app-cosmetics>
-        <app-other *ngIf="chooseMenuItem.value=='OTHER'" [buttonName]="buttonName" [data]="dataList"
+        <app-other *ngIf="chooseMenuItem.value=='OTHER'"
                    class="inner-components"></app-other>
       </div>
 
       <div class="paginator-outer">
-        <mat-paginator (page)="pageEvent=loadServerData($event,chooseMenuItem.value,false)" [length]=dataCount
+        <mat-paginator (page)="pageEvent=loadServerData($event,chooseMenuItem.value,false)"
+                       [length]=this.customerDashboardService.dataCount
                        [pageIndex]=page [pageSizeOptions]=pageSizeOptions
                        [pageSize]=pageSize aria-label="Select Page">
 
