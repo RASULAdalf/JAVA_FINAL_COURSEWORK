@@ -10,6 +10,7 @@ import {PageEvent} from "@angular/material/paginator";
 
 import {debounceTime} from "rxjs";
 import {LoadingService} from "../../core/services/loading.service";
+import {PresenceService} from "./services/vendor-presence.service";
 
 @Component({
   selector: 'app-vendor-dashboard',
@@ -37,7 +38,7 @@ export class VendorDashboardComponent implements OnInit {
   chooseMenuItemValue: any;
   private searchText: any;
 
-  constructor(public route: ActivatedRoute, public localStorageService: LocalDataService, private modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, public vendorDashboardService: VendorDashboardServiceService) {
+  constructor(private presence:PresenceService,public route: ActivatedRoute, public localStorageService: LocalDataService, private modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, public vendorDashboardService: VendorDashboardServiceService) {
     this.vendorDashboardService.loginService.afAuth.currentUser.then(result => {
       this.vendorDashboardService.vendorEmail = result?.email;
     })

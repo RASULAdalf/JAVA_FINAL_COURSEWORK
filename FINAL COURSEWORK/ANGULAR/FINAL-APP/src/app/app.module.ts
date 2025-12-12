@@ -27,23 +27,27 @@ import {RequestInterceptor} from "./core/interceptors/request-interceptor";
 import {LetSirKnowComponent} from './core/components/let-sir-know/let-sir-know.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatSelectModule} from "@angular/material/select";
+import {getDatabase, provideDatabase } from "@angular/fire/database";
+import {getAuth, provideAuth} from "@angular/fire/auth";
+import {initializeApp, provideFirebaseApp} from "@angular/fire/app";
 
 
 export const firebaseConfig = {
 
-  apiKey: "AIzaSyBQ-JuMJVuEOOyB-BCVb0yDoJoRGsJXRdU",
+  apiKey: "AIzaSyDSaQjW2KRCFe3yVjTF5oOgfEi6dJnfLIY",
 
-  authDomain: "final-app-cmjd95.firebaseapp.com",
+  authDomain: "angshop-cb664.firebaseapp.com",
 
-  projectId: "final-app-cmjd95",
+  projectId: "angshop-cb664",
 
-  storageBucket: "final-app-cmjd95.appspot.com",
+  storageBucket: "angshop-cb664.firebasestorage.app",
 
-  messagingSenderId: "691752234025",
+  messagingSenderId: "574130955540",
 
-  appId: "1:691752234025:web:b45e1e02f23333b9e08038",
+  appId: "1:574130955540:web:c090423cda7e23540c4e01",
 
-  measurementId: "G-WMZM99B42S"
+  measurementId: "G-KKGW735HK3"
+
 
 };
 
@@ -62,10 +66,13 @@ export const firebaseConfig = {
     BrowserAnimationsModule,
     MatSnackBarModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-    AngularFireStorageModule,
-    AngularFireDatabaseModule,
+    //AngularFireAuthModule,
+    //AngularFirestoreModule,
+    //AngularFireStorageModule,
+    //AngularFireDatabaseModule,
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()),
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
     MdbModalModule,
     MatDialogModule,
     MdbCarouselModule,

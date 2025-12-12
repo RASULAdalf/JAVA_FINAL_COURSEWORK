@@ -3,6 +3,8 @@ import {LoginService} from "../../../core/services/login.service";
 import {Observable} from "rxjs";
 import {HttpService} from "../../../core/services/http.service";
 import {environment} from "../../../../environments/environment";
+import {Auth} from "@angular/fire/auth";
+import {Database, ref, set} from "@angular/fire/database";
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +16,24 @@ export class VendorDashboardServiceService {
   dataList: any[] = [];
   dataCount: number = 0;
 
-  constructor(public httpService: HttpService, public loginService: LoginService) {
+  constructor(public httpService: HttpService, public loginService: LoginService,private auth:Auth,private db:Database) {
     this.loginService.afAuth.currentUser.then(res => {
       this.vendorEmail = res?.email;
     })
   }
 
-  public logOut() {
+  public async logOut() {
+    const uid = this.auth.currentUser?.uid;
+
+    if (uid) {
+      const userStatusRef = ref(this.db, `vendor_login/status/${uid}`);
+
+      // Mark user offline BEFORE signOut
+      await set(userStatusRef, {
+        state: "offline",
+        last_changed: Date.now()
+      });
+    }
     this.loginService.SignOut();
   }
 
@@ -29,7 +42,7 @@ export class VendorDashboardServiceService {
   }
 
   loadClientsDataAll(page: number | undefined, pageSize: number | undefined): Observable<any> {
-    return this.httpService.get(this.baseUrl + "item/list/category?category=Books&page=" + page + "&pageSize=" + pageSize)
+    return this.httpService.get(this.baseUtilUrl + "vendor/getVendor" + page + "&pageSize=" + pageSize)
 
   }
 

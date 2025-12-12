@@ -3,6 +3,8 @@ import {LoginService} from "../../../core/services/login.service";
 import {DOCUMENT} from "@angular/common";
 import {HttpService} from "../../../core/services/http.service";
 import {environment} from "../../../../environments/environment";
+import {Database, ref, set} from "@angular/fire/database";
+import {LocalDataService} from "../../../core/services/local-data.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +15,21 @@ export class CustomerDashboardService {
   dataCount: any = 0;
   buttonName: any = 'ADD';
 
-  constructor(private httpService: HttpService, private loginService: LoginService, @Inject(DOCUMENT) private doc: Document) {
+  constructor(private db:Database,private localStorageService:LocalDataService,private httpService: HttpService, private loginService: LoginService, @Inject(DOCUMENT) private doc: Document) {
   }
 
-  logout() {
+  async logout() {
+    const uid = this.localStorageService.getCookie('userEmail').replace('.com','');
+
+    if (uid) {
+      const userStatusRef = ref(this.db, `customer_login/status/${uid}`);
+
+      // Mark user offline BEFORE signOut
+      await set(userStatusRef, {
+        state: "offline",
+        last_changed: Date.now()
+      });
+    }
     this.loginService.logoutFromAuth0({returnTo: this.doc.location.origin});
   }
 

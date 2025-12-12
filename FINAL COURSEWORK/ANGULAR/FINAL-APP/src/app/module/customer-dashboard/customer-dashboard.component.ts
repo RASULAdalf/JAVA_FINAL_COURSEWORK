@@ -11,6 +11,7 @@ import {BuyingCartService} from "./services/buying-cart.service";
 import {AuthService} from "@auth0/auth0-angular";
 import {LocalDataService} from "../../core/services/local-data.service";
 import {LoadingService} from "../../core/services/loading.service";
+import {CustomerPresenceService} from "./services/customer-presence.service";
 
 @Component({
   selector: 'app-customer-dashboard',
@@ -31,7 +32,7 @@ export class CustomerDashboardComponent implements OnInit {
   type: any = "Bar";
   private searchText: any;
 
-  constructor(public loadingService: LoadingService, public localStorageService: LocalDataService, public auth: AuthService, public buyingCartService: BuyingCartService, private modalService: ModalService, public dashboardService: CustomerDashboardService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(public loadingService: LoadingService, public localStorageService: LocalDataService, public auth: AuthService, public buyingCartService: BuyingCartService, private modalService: ModalService, public dashboardService: CustomerDashboardService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private router: Router,private presenceService:CustomerPresenceService) {
     this.dashboardService.buttonName = 'ADD TO CART'
   }
 
