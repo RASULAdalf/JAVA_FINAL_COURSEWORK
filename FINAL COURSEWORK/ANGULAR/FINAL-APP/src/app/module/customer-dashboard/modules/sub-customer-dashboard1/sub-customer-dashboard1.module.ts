@@ -9,6 +9,8 @@ import {ElectricalComponent} from "./components/electrical/electrical.component"
 import {ClothesComponent} from "./components/clothes/clothes.component";
 import {BooksComponent} from "./components/books/books.component";
 import {CustomerDashboardSharedModule} from "../customer-dashboard-shared/customer-dashboard-shared.module";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import {CustomerDashboardSharedModule} from "../customer-dashboard-shared/custom
     CommonModule,
     SubCustomerDashboard1RoutingModule,
     MatButtonModule,
-    CustomerDashboardSharedModule
+    CustomerDashboardSharedModule,
+    MatIconModule,
+    MatTooltipModule
   ]
 })
 export class SubCustomerDashboard1Module {

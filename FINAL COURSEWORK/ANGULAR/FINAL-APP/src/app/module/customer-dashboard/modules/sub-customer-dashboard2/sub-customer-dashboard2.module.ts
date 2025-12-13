@@ -7,6 +7,8 @@ import {CosmeticsComponent} from "./components/cosmetics/cosmetics.component";
 import {OtherComponent} from "./components/other/other.component";
 import {MatButtonModule} from "@angular/material/button";
 import {CustomerDashboardSharedModule} from "../customer-dashboard-shared/customer-dashboard-shared.module";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -20,12 +22,14 @@ import {CustomerDashboardSharedModule} from "../customer-dashboard-shared/custom
     CosmeticsComponent,
     OtherComponent
   ],
-  imports: [
-    CommonModule,
-    SubCustomerDashboard2RoutingModule,
-    MatButtonModule,
-    CustomerDashboardSharedModule
-  ]
+    imports: [
+        CommonModule,
+        SubCustomerDashboard2RoutingModule,
+        MatButtonModule,
+        CustomerDashboardSharedModule,
+        MatIconModule,
+        MatTooltipModule
+    ]
 })
 export class SubCustomerDashboard2Module {
 }
