@@ -1,1 +1,16 @@
-<p>earnings works!</p>
+<div class="content-outer">
+  <div class="sold-products-outer">
+    <app-products [displayType]="'earning'" [data]="this.vendorDashboardService.dataList" [page]="page" [pageSize]="pageSize"></app-products>
+  </div>
+  <div class="earning-outer">
+    <div class="text-outer">
+      <div class="earnings-wrapper">
+        <span>Your Earnings : Rs {{this.vendorDashboardService.totalEarnings}}</span>
+      </div>
+
+    </div>
+    <div class="payment-inner">
+      <button mat-raised-button color="primary">GET PAYMENT</button>
+    </div>
+  </div>
+</div>

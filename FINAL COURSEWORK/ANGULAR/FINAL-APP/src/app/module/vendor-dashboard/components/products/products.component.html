@@ -1,5 +1,5 @@
 <div class="content-outer">
-  <div class="header-outer">
+  <div class="header-outer" *ngIf="this.displayType=='product'">
     <button (click)="openEditModal(-1)" color="accent" mat-raised-button>+ ADD NEW ITEM</button>
   </div>
   <div class="data-inner">
@@ -10,13 +10,14 @@
       </mat-card-header>
       <img [src]="data?.itemLogoUrl" alt="Picture" class="card-content" mat-card-image
            style="background-size: contain!important; ">
-      <mat-card-actions class="card-content">
-        <button (click)="openViewModal(num)" color="primary" mat-raised-button>VIEW</button>
-        <button (click)="openEditModal(num)" color="primary" mat-raised-button>UPDATE</button>
-        <button (click)="deleteProduct(data?.itemCode)" color="warn" mat-raised-button>DELETE</button>
+      <mat-card-actions class="card-content" >
+        <button *ngIf="this.displayType=='product'" (click)="openViewModal(num)" color="primary" mat-raised-button>VIEW</button>
+        <button *ngIf="this.displayType=='product'" (click)="openEditModal(num)" color="primary" mat-raised-button>UPDATE</button>
+        <button *ngIf="this.displayType=='product'" (click)="deleteProduct(data?.itemCode)" color="warn" mat-raised-button>DELETE</button>
         <br>
         <mat-chip-list>
-          <mat-chip>Rs.{{ data?.unitPrice }}</mat-chip>
+          <mat-chip *ngIf="this.displayType=='earning'">Items Sold : {{ data?.qty }}</mat-chip>
+          <mat-chip *ngIf="this.displayType=='product'">Rs {{ data?.unitPrice }}</mat-chip>
         </mat-chip-list>
       </mat-card-actions>
 

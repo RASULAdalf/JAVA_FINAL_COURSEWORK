@@ -3,7 +3,7 @@
     <div class="header-text">
       <h2 class="header-text">Vendor Dashboard</h2>
       <mat-chip-list>
-        <mat-chip class="orders-button" color="primary">Total Earnings:
+        <mat-chip class="orders-button" color="primary" #totalEarnings (click)="this.vendorDashboardService.loadData('EARNINGS',this.page,this.pageSize)">Total Earnings:
           Rs {{ this.vendorDashboardService.totalEarnings }}
         </mat-chip>
       </mat-chip-list>
@@ -89,7 +89,7 @@
                      [data]="this.vendorDashboardService.dataList"
                      class="inner-components"></app-clients>
         <app-earnings *ngIf="chooseMenuItem.value=='EARNINGS'" [buttonName]="buttonName"
-                      [data]="this.vendorDashboardService.dataList"
+                      [data]="this.vendorDashboardService.dataList" [page]="page" [pageSize]="pageSize"
                       class="inner-components"></app-earnings>
         <app-analysis *ngIf="chooseMenuItem.value=='ANALYSIS'" [buttonName]="buttonName"
                       [data]="this.vendorDashboardService.dataList"

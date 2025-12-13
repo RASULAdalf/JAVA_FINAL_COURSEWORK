@@ -39,30 +39,36 @@ export class VendorDashboardServiceService {
   }
 
   loadProductsDataAll(page: any, pageSize: any, vendor_email: any): Observable<any> {
+    this.dataList = [];
     return this.httpService.get(this.baseUrl + "item/find?searchText=" + vendor_email + "&page=" + page + "&pageSize=" + pageSize);
   }
 
   loadClientsDataAll(page: number | undefined, pageSize: number | undefined, email_list: any): Observable<any> {
+    this.dataList = [];
     return this.httpService.get(this.baseUtilUrl + "vendor/getClients?email_list=" + email_list);
 
   }
 
   loadEarningsDataAll(page: number | undefined, pageSize: number | undefined): Observable<any> {
-    return this.httpService.get(this.baseUrl + "item/list/category?category=Electronics&page=" + page + "&pageSize=" + pageSize)
+    this.dataList = [];
+    return this.httpService.get(this.baseUrl + "order/listByVendorEmail?email=" + this.vendorEmail + "&page=" + page + "&pageSize=" + pageSize)
 
   }
 
   loadAnalysisDataAll(page: number | undefined, pageSize: number | undefined): Observable<any> {
+    this.dataList = [];
     return this.httpService.get(this.baseUrl + "item/list/category?category=Electrical&page=" + page + "&pageSize=" + pageSize)
 
   }
 
   loadOrdersDataAll(page: number | undefined, pageSize: number | undefined, email: string | undefined | null): Observable<any> {
+    this.dataList = [];
     return this.httpService.get(this.baseUrl + "order/listByVendorEmail?email=" + email + "&page=" + page + "&pageSize=" + pageSize)
 
   }
 
   loadSearchDataAll(page: number | undefined, pageSize: number | undefined, searchText: string | undefined, type: any) {
+    this.dataList = [];
     if (type === 'PRODUCTS') {
       this.httpService.get(this.baseUrl + "item/find?searchText=" + searchText + "&page=" + page + "&pageSize=" + pageSize + "&byWhom=vendor" + "&email=" + this.vendorEmail).subscribe(result => {
         this.dataList = result?.data?.items;
@@ -138,7 +144,7 @@ export class VendorDashboardServiceService {
 
     } else if (value == 'EARNINGS') {
       this.loadEarningsDataAll(page, pageSize).subscribe(data => {
-        this.dataList = data?.data?.items;
+        this.dataList = data?.data?.orders;
         this.dataCount = data?.data?.dataCount;
       }, error => console.log(error));
     } else if (value == 'ANALYSIS') {

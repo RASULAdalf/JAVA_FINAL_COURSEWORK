@@ -9,6 +9,7 @@ import {ModalService} from "../../services/modal.service";
 })
 export class ProductsComponent implements OnInit {
   @Input() data: any[] | undefined;
+  @Input() displayType: any = 'product'
   @Input() page: number = 1;
   @Input() pageSize: number = 10;
   @Input() vendorEmail: string | undefined | null;
@@ -17,6 +18,7 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.data)
   }
 
   deleteProduct(itemCode: any) {

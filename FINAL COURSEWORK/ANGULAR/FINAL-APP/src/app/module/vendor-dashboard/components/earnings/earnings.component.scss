@@ -1,0 +1,50 @@
+.content-outer{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.sold-products-outer{
+  height: 90%;
+  border: 1px solid red;
+
+}
+.earning-outer{
+  flex: 1;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+}
+.text-outer{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.earnings-wrapper span {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #111827;
+  position: relative;
+  padding-left: 12px;
+}
+
+.earnings-wrapper span::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10%;
+  height: 80%;
+  width: 4px;
+  background: #22c55e; /* green accent */
+  border-radius: 4px;
+}
+
+.payment-inner{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
