@@ -1,26 +1,29 @@
 const admin = require('firebase-admin');
-const VendorModel = require('../model/VendorModel')
+const ClientModel = require('../model/ClientModel')
 
-fetchLoginData = async (email_list)=>{
-    let vendor = new VendorModel('','','','');
-    let vendor_list = email_list ? email_list.split(',') : []
-    for (const email of vendor_list){
-        console.log(email.replace('.com',''))
-        let user = await admin.database().ref(`customer_login/status/${email.replace('.com','')}`);
+fetchLoginData = async (email_list) => {
+    let client = new ClientModel('', '', '', '');
+    let client_list = email_list ? email_list.split(',') : []
+    console.log(client_list);
+    let data_list = [];
+    for (const email of client_list) {
+        console.log(email.replace('.com', ''))
+        let user = await admin.database().ref(`customer_login/status/${email.replace('.com', '')}`);
         const snapshot = await user.get();
         if (!snapshot.exists()) {
-            return { exists: false, online: false };
+            return data_list.push({exists: false, online: false});
         }
 
         const data = snapshot.val();
-        vendor.vendorEmail = data.email;
-        vendor.lastSeen = data.last_changed,
-            vendor.vendorAvatarUrl = data.picture;
-        vendor.vendorStatus = data.state;
+        client.clientEmail = data.email;
+        client.lastSeen = data.last_changed,
+            client.clientAvatarUrl = data.picture;
+        client.clientStatus = data.state;
 
-        return vendor;
+        data_list.push(client);
     }
 
+    return data_list;
 
 
 }

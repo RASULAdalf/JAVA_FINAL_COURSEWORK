@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Auth, onAuthStateChanged } from '@angular/fire/auth';
-import { Database, ref, onDisconnect, set, onValue } from '@angular/fire/database';
-import {VendorDashboardServiceService} from "./vendor-dashboard-service.service";
+import {Injectable} from '@angular/core';
+import {Auth, onAuthStateChanged} from '@angular/fire/auth';
+import {Database, onDisconnect, onValue, ref, set} from '@angular/fire/database';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class PresenceService {
 
   constructor(private auth: Auth, private db: Database) {
@@ -22,7 +21,6 @@ export class PresenceService {
           state: 'offline',
           last_changed: Date.now(),
         });
-
 
 
         // Mark online

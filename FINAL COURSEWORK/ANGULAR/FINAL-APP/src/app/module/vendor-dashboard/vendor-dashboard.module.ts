@@ -29,8 +29,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MdbCarouselModule} from "mdb-angular-ui-kit/carousel";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatTableModule} from "@angular/material/table";
-import {getAuth, provideAuth} from "@angular/fire/auth";
-import {getDatabase, provideDatabase} from "@angular/fire/database";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatBadgeModule} from "@angular/material/badge";
 
 
 @NgModule({
@@ -67,6 +67,8 @@ import {getDatabase, provideDatabase} from "@angular/fire/database";
     MdbCarouselModule,
     MatCheckboxModule,
     MatTableModule,
+    MatTooltipModule,
+    MatBadgeModule,
 
   ],
 

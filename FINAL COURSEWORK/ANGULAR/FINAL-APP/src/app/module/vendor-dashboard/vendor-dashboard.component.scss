@@ -28,6 +28,7 @@
   border: 1px solid black;
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .header-buttons {
@@ -145,16 +146,21 @@ mat-button-toggle:hover {
   margin-bottom: 7px;
 }
 
+.mail-button {
+  margin-right: 15%;
+  margin-bottom: 2%;
+}
+
+.add-button {
+  margin-bottom: 5%;
+}
+
 .orders-button {
   position: absolute;
-  top: 3px;
-  left: 1000px;
-  margin-bottom: 8px;
-  height: 25px !important;
-  border-radius: 32px;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  left: 70%;
+  margin-top: 3.8% !important;
+  height: 100% !important;
+  border-radius: 4px;
 
 }
 

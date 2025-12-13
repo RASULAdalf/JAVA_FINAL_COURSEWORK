@@ -3,7 +3,7 @@ import {VendorDashboardServiceService} from "./services/vendor-dashboard-service
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpService} from "../../core/services/http.service";
 import {SnackBarService} from "../customer-dashboard/services/snack-bar.service";
-import {ModalService} from "../customer-dashboard/services/modal.service";
+import {ModalService} from "./services/modal.service";
 import {LocalDataService} from "../../core/services/local-data.service";
 import {ActivatedRoute} from "@angular/router";
 import {PageEvent} from "@angular/material/paginator";
@@ -26,7 +26,6 @@ export class VendorDashboardComponent implements OnInit {
 
   slideShowImgs: any[] = [];
   type: any = "Bar";
-  totalEarnings: string = '$0.00';
   year: number = 0;
   vendorImage: string | null | undefined;
   buttonName: any;
@@ -38,7 +37,7 @@ export class VendorDashboardComponent implements OnInit {
   chooseMenuItemValue: any;
   private searchText: any;
 
-  constructor(private presence:PresenceService,public route: ActivatedRoute, public localStorageService: LocalDataService, private modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, public vendorDashboardService: VendorDashboardServiceService) {
+  constructor(private presence: PresenceService, public route: ActivatedRoute, public localStorageService: LocalDataService, public modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, public vendorDashboardService: VendorDashboardServiceService) {
     this.vendorDashboardService.loginService.afAuth.currentUser.then(result => {
       this.vendorDashboardService.vendorEmail = result?.email;
     })
@@ -107,5 +106,9 @@ export class VendorDashboardComponent implements OnInit {
   loadDataSearch() {
     // @ts-ignore
     this.vendorDashboardService.loadSearchDataAll(this.page, this.pageSize, this.searchText, this.chooseMenuItemValue);
+  }
+
+  openMail() {
+
   }
 }

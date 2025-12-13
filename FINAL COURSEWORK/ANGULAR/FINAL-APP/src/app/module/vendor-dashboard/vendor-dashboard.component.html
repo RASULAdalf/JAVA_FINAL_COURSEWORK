@@ -1,11 +1,30 @@
 <div class="row col-sm-12">
   <div class="header-outer">
-    <h2 class="header-text">Vendor Dashboard</h2>
+    <div class="header-text">
+      <h2 class="header-text">Vendor Dashboard</h2>
+      <mat-chip-list>
+        <mat-chip class="orders-button" color="primary">Total Earnings:
+          Rs {{ this.vendorDashboardService.totalEarnings }}
+        </mat-chip>
+      </mat-chip-list>
+
+    </div>
     <div class="header-buttons">
       <button (click)="this.logout()" aria-label="Example icon button with a logout icon" mat-button>
         <mat-icon class="logout-button">logout</mat-icon>
       </button>
-      <button #orderBtn class="orders-button" color="accent" mat-button="outlined">{{ totalEarnings }}</button>
+
+      <button (click)="this.openMail()" aria-label="Example icon button with a mail icon" class="mail-button" mat-button
+              matTooltip="Messaging will be available soon">
+        <mat-icon [matBadge]="0">mail</mat-icon>
+      </button>
+      <button (click)="this.modalService.openItemEditModal([{vendorEmail: this.vendorDashboardService.vendorEmail}], 0, 'Save')"
+              aria-label="Example icon button with a add icon"
+              class="add-button" mat-button matTooltip="Add new Product">
+        <mat-icon class="add-button">add_2</mat-icon>
+      </button>
+
+
     </div>
 
   </div>
@@ -60,7 +79,8 @@
       </div>
       <div class="content-inner">
         <app-loading *ngIf="loadingService.progressBarLoadingState |async" [data]="type"></app-loading>
-        <app-orders *ngIf="chooseMenuItem.value=='ORDERS' " [data]="this.vendorDashboardService.dataList"
+        <app-orders *ngIf="chooseMenuItem.value=='ORDERS' || chooseMenuItem.value==undefined "
+                    [data]="this.vendorDashboardService.dataList"
                     class="inner-components"></app-orders>
         <app-products *ngIf="chooseMenuItem.value=='PRODUCTS' " [data]="this.vendorDashboardService.dataList"
                       [pageSize]="pageSize" [page]="page"

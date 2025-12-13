@@ -15,8 +15,9 @@ export class VendorDashboardServiceService {
   vendorEmail: any;
   dataList: any[] = [];
   dataCount: number = 0;
+  totalEarnings: any = 0.00;
 
-  constructor(public httpService: HttpService, public loginService: LoginService,private auth:Auth,private db:Database) {
+  constructor(public httpService: HttpService, public loginService: LoginService, private auth: Auth, private db: Database) {
     this.loginService.afAuth.currentUser.then(res => {
       this.vendorEmail = res?.email;
     })
@@ -41,8 +42,8 @@ export class VendorDashboardServiceService {
     return this.httpService.get(this.baseUrl + "item/find?searchText=" + vendor_email + "&page=" + page + "&pageSize=" + pageSize);
   }
 
-  loadClientsDataAll(page: number | undefined, pageSize: number | undefined): Observable<any> {
-    return this.httpService.get(this.baseUtilUrl + "vendor/getVendor" + page + "&pageSize=" + pageSize)
+  loadClientsDataAll(page: number | undefined, pageSize: number | undefined, email_list: any): Observable<any> {
+    return this.httpService.get(this.baseUtilUrl + "vendor/getClients?email_list=" + email_list);
 
   }
 
@@ -98,17 +99,43 @@ export class VendorDashboardServiceService {
       this.loadOrdersDataAll(page, pageSize, this.vendorEmail).subscribe(data => {
         this.dataList = data?.data?.orders;
         this.dataCount = data?.data?.dataCount;
+        this.calculateTotalEarnings()
       }, error => console.log(error));
     } else if (value == 'PRODUCTS') {
       this.loadProductsDataAll(page, pageSize, this.vendorEmail).subscribe(data => {
         this.dataList = data?.data?.items;
         this.dataCount = data?.data?.dataCount;
+
       }, error => console.log(error));
     } else if (value == 'CLIENTS') {
-      this.loadClientsDataAll(page, pageSize).subscribe(data => {
-        this.dataList = data?.data?.items;
+      this.loadOrdersDataAll(page, pageSize, this.vendorEmail).subscribe(data => {
+        this.dataList = data?.data?.orders;
         this.dataCount = data?.data?.dataCount;
+        this.calculateTotalEarnings()
+        let list: any;
+        for (let data of this.dataList) {
+          if (list == undefined) {
+            list = data?.customerEmail
+          }
+          if (list != undefined) {
+            if (!list.includes(data?.customerEmail))
+              list += data?.customerEmail + ','
+          }
+        }
+        if (list != undefined) {
+          let modifiedFinalList = list.replace(/,$/, '');
+          console.log(modifiedFinalList)
+          this.loadClientsDataAll(page, pageSize, modifiedFinalList).subscribe(data => {
+            this.dataList = data?.data;
+            this.dataCount = data?.dataCount;
+            console.log(this.dataList)
+
+          }, error => console.log(error));
+        }
+
       }, error => console.log(error));
+
+
     } else if (value == 'EARNINGS') {
       this.loadEarningsDataAll(page, pageSize).subscribe(data => {
         this.dataList = data?.data?.items;
@@ -122,4 +149,12 @@ export class VendorDashboardServiceService {
     }
 
   }
+
+  private calculateTotalEarnings() {
+    this.totalEarnings = 0.00;
+    for (let data of this.dataList) {
+      this.totalEarnings += data?.itemFullPrice;
+    }
+  }
+
 }

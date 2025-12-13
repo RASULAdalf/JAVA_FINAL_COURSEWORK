@@ -2,10 +2,10 @@ const admin = require('firebase-admin');
 const AuthFetchUtil = require('../util/AuthFetchUtil');
 
 
-const getVendor = async (req,resp)=>{
+const getClients = async (req, resp) => {
     try {
         const userRecord = await AuthFetchUtil.fetchLoginData(req.query.email_list);
-        return resp.json({message:'data fetched!',data:userRecord})
+        return resp.json({message: 'data fetched!', data: userRecord, dataCount: userRecord.length})
     } catch (error) {
         console.error("Error fetching user:", error);
         if (error.code === "auth/user-not-found") {
@@ -16,4 +16,4 @@ const getVendor = async (req,resp)=>{
 
 }
 
-module.exports= {getVendor}
+module.exports = {getClients}

@@ -1,8 +1,11 @@
 <div class="content-outer">
+  <div class="header-outer">
+    <button (click)="openEditModal(-1)" color="accent" mat-raised-button>+ ADD NEW ITEM</button>
+  </div>
   <div class="data-inner">
     <mat-card *ngFor="let data of data; index as num" appearance="outlined" class="example-card">
       <mat-card-header>
-        <mat-card-title>{{ data?.vendorEmail }}</mat-card-title>
+        <mat-card-title>{{ data?.itemDescription }}</mat-card-title>
         <mat-card-subtitle>{{ data?.itemCategory }}</mat-card-subtitle>
       </mat-card-header>
       <img [src]="data?.itemLogoUrl" alt="Picture" class="card-content" mat-card-image

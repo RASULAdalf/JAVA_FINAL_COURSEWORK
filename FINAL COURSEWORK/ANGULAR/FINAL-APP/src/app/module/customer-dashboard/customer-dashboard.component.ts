@@ -32,7 +32,7 @@ export class CustomerDashboardComponent implements OnInit {
   type: any = "Bar";
   private searchText: any;
 
-  constructor(public loadingService: LoadingService, public localStorageService: LocalDataService, public auth: AuthService, public buyingCartService: BuyingCartService, private modalService: ModalService, public dashboardService: CustomerDashboardService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private router: Router,private presenceService:CustomerPresenceService) {
+  constructor(public loadingService: LoadingService, public localStorageService: LocalDataService, public auth: AuthService, public buyingCartService: BuyingCartService, private modalService: ModalService, public dashboardService: CustomerDashboardService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private router: Router, private presenceService: CustomerPresenceService) {
     this.dashboardService.buttonName = 'ADD TO CART'
   }
 

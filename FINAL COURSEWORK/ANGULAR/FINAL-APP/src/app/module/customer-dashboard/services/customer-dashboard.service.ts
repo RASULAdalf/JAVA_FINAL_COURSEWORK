@@ -15,11 +15,11 @@ export class CustomerDashboardService {
   dataCount: any = 0;
   buttonName: any = 'ADD';
 
-  constructor(private db:Database,private localStorageService:LocalDataService,private httpService: HttpService, private loginService: LoginService, @Inject(DOCUMENT) private doc: Document) {
+  constructor(private db: Database, private localStorageService: LocalDataService, private httpService: HttpService, private loginService: LoginService, @Inject(DOCUMENT) private doc: Document) {
   }
 
   async logout() {
-    const uid = this.localStorageService.getCookie('userEmail').replace('.com','');
+    const uid = this.localStorageService.getCookie('userEmail').replace('.com', '');
 
     if (uid) {
       const userStatusRef = ref(this.db, `customer_login/status/${uid}`);
