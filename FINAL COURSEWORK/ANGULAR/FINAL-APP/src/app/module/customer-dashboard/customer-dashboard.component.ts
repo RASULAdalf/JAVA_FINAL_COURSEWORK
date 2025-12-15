@@ -30,6 +30,7 @@ export class CustomerDashboardComponent implements OnInit {
   pageEvent: PageEvent | undefined;
   orderButtonClicked: boolean = false;
   type: any = "Bar";
+  public clickedBtnName: any = '';
   private searchText: any;
 
   constructor(public loadingService: LoadingService, public localStorageService: LocalDataService, public auth: AuthService, public buyingCartService: BuyingCartService, private modalService: ModalService, public dashboardService: CustomerDashboardService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private router: Router, private presenceService: CustomerPresenceService) {
@@ -42,11 +43,15 @@ export class CustomerDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(p => {
+      if (p['err'] != undefined) {
+        this.modalService.openEmailVerificationModal();
+      }
       this.loginService.CustomerDashboardLoginOperations(p);
 
     })
 
     this.loadData('CLOTHES');
+    this.clickedBtnName = 'CLOTHES';
 
     this.year = new Date().getFullYear();
     this.searchForm.valueChanges.pipe(debounceTime(1080)).subscribe(data => {
@@ -86,6 +91,7 @@ export class CustomerDashboardComponent implements OnInit {
 
   loadData(value: any) {
     this.orderButtonClicked = false;
+    this.clickedBtnName = value
     if (value == 'CLOTHES' || value == undefined) {
       this.dashboardService.loadClothesDataAll(this.page, this.pageSize)
     } else if (value == 'BOOKS') {

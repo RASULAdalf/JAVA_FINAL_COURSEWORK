@@ -30,13 +30,13 @@ export class ProductsComponent implements OnInit {
   }
 
   openViewModal(index: number) {
-    this.modalService.openItemViewModal(this.data, index);
+    this.modalService.openItemViewModal(this.vendorDashboardService.dataList, index);
   }
 
   openEditModal(num: number) {
     if (num === -1) {
       this.modalService.openItemEditModal([{vendorEmail: this.vendorEmail}], 0, "Save");
     } else
-      this.modalService.openItemEditModal(this.data, num, "Update");
+      this.modalService.openItemEditModal(this.vendorDashboardService.dataList, num, "Update");
   }
 }

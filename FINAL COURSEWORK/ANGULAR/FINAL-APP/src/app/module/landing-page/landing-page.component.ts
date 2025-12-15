@@ -13,13 +13,12 @@ import {CustomerDashboardService} from "../customer-dashboard/services/customer-
 })
 export class LandingPageComponent implements OnInit {
   year: any;
-
+  protected readonly location = location;
 
   constructor(private dashboardService: CustomerDashboardService, private guard: CustomerDashboardGuard, public loginService: LoginService, @Inject(DOCUMENT) private doc: Document, private router: Router, private activatedRoute: ActivatedRoute, private snackBar: MatSnackBar) {
     this.year = new Date().getFullYear();
 
   }
-
 
   Customerlogin(): void {
     this.loginService.loginWithAuth0();
@@ -30,7 +29,6 @@ export class LandingPageComponent implements OnInit {
     this.router.navigate(['/VendorDashboard']);
   }
 
-
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(p => {
       this.loginService.landingPageLoginOperations(p);
@@ -38,7 +36,6 @@ export class LandingPageComponent implements OnInit {
 
 
   }
-
 
   logoutAdmin() {
 

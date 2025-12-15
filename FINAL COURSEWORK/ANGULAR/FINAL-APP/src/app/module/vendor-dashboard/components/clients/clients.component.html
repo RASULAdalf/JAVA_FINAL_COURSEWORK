@@ -1,6 +1,7 @@
 <div class="content-outer">
   <div class="data-inner">
-    <mat-card *ngFor="let data of data; index as num" appearance="outlined" class="example-card">
+    <mat-card *ngFor="let data of this.vendorDashboardService.dataList; index as num" appearance="outlined"
+              class="example-card">
       <mat-card-header>
         <mat-card-title>{{ data?.clientEmail }}</mat-card-title>
         <mat-card-subtitle>{{ data?.clientStatus }}</mat-card-subtitle>

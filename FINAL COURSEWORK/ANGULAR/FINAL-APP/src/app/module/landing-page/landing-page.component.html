@@ -1,74 +1,175 @@
-<div class="row">
+<!--<div class="row">-->
 
-  <div class="outer">
-    <div class="inner-header">
-      <div class="icon-text">
-        <div class="logo"></div>
-        <h2 class="text"><strong>CMJD FINAL APP</strong></h2>
-      </div>
-      <div class="menus">
-        <a class="menu-item" routerLink="home">Home</a>
-        <a class="menu-item" routerLink="learn">Learn</a>
-        <a class="menu-item" routerLink="about">About</a>
-        <a class="menu-item" routerLink="faq">Faq</a>
-        <a class="menu-item" routerLink="contact">Contact</a>
-      </div>
-    </div>
-    <div class="inner-middle-outer">
-      <div class="inner-middle">
-        <div class="login-form">
-          <div class="header-content">
-            <h2><b>ADMIN</b></h2>
-          </div>
-          <div class="button-content">
-            <div class="button-1">
-              <button (click)="logoutAdmin()" class="btn btn-danger" type="button">CHOOSE DIFFERENT ACCOUNT</button>
-            </div>
-            <div class="button-2">
-              <button (click)="AdminLogin()" class="btn btn-danger" type="button">LOGIN</button>
-            </div>
-          </div>
-        </div>
-        <div class="login-form">
+<!--  <div class="outer">-->
+<!--    <div class="inner-header">-->
+<!--      <div class="icon-text">-->
+<!--        <div class="logo"></div>-->
+<!--        <h2 class="text"><strong>CMJD FINAL APP</strong></h2>-->
+<!--      </div>-->
+<!--      <div class="menus">-->
+<!--        <a class="menu-item" routerLink="home">Home</a>-->
+<!--        <a class="menu-item" routerLink="learn">Learn</a>-->
+<!--        <a class="menu-item" routerLink="about">About</a>-->
+<!--        <a class="menu-item" routerLink="faq">Faq</a>-->
+<!--        <a class="menu-item" routerLink="contact">Contact</a>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="inner-middle-outer">-->
+<!--      <div class="inner-middle">-->
+<!--        <div class="login-form">-->
+<!--          <div class="header-content">-->
+<!--            <h2><b>ADMIN</b></h2>-->
+<!--          </div>-->
+<!--          <div class="button-content">-->
+<!--            <div class="button-1">-->
+<!--              <button (click)="logoutAdmin()" class="btn btn-danger" type="button">CHOOSE DIFFERENT ACCOUNT</button>-->
+<!--            </div>-->
+<!--            <div class="button-2">-->
+<!--              <button (click)="AdminLogin()" class="btn btn-danger" type="button">LOGIN</button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="login-form">-->
 
-          <div class="header-content">
-            <h2><b>CUSTOMER</b></h2>
-          </div>
-          <div class="button-content">
-            <div class="button-1">
-              <button (click)="logoutCustomer()" class="btn btn-danger" type="button">CHOOSE DIFFERENT ACCOUNT</button>
-            </div>
-            <div class="button-2">
-              <button (click)="Customerlogin()" class="btn btn-danger Customer" type="button">LOGIN</button>
-            </div>
-          </div>
-        </div>
-        <div class="login-form">
-          <div class="header-content">
-            <h2><b>VENDOR</b></h2>
-          </div>
-          <div class="button-content">
-            <div class="button-1">
-              <button (click)="logoutVendor()" class="btn btn-danger" type="button">CHOOSE DIFFERENT ACCOUNT</button>
-            </div>
-            <div class="button-2">
-              <button (click)="VendorLogin()" class="btn btn-danger" type="button">LOGIN</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="footer">
-      <small class="copyright">&copy;{{ year }} all rights reserved</small>
+<!--          <div class="header-content">-->
+<!--            <h2><b>CUSTOMER</b></h2>-->
+<!--          </div>-->
+<!--          <div class="button-content">-->
+<!--            <div class="button-1">-->
+<!--              <button (click)="logoutCustomer()" class="btn btn-danger" type="button">CHOOSE DIFFERENT ACCOUNT</button>-->
+<!--            </div>-->
+<!--            <div class="button-2">-->
+<!--              <button (click)="Customerlogin()" class="btn btn-danger Customer" type="button">LOGIN</button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="login-form">-->
+<!--          <div class="header-content">-->
+<!--            <h2><b>VENDOR</b></h2>-->
+<!--          </div>-->
+<!--          <div class="button-content">-->
+<!--            <div class="button-1">-->
+<!--              <button (click)="logoutVendor()" class="btn btn-danger" type="button">CHOOSE DIFFERENT ACCOUNT</button>-->
+<!--            </div>-->
+<!--            <div class="button-2">-->
+<!--              <button (click)="VendorLogin()" class="btn btn-danger" type="button">LOGIN</button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="footer">-->
+<!--      <small class="copyright">&copy;{{ year }} all rights reserved</small>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="beautifying-elements">-->
+<!--    <div class="first-cloud"></div>-->
+<!--    <div class="second-cloud"></div>-->
+
+<!--  </div>-->
+<!--</div>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>AngShop | Smart E-Commerce</title>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+  <div class="brand">
+    <img alt="AngShop Logo" src="./assets/angshop_logo.png"/>
+  </div>
+
+  <nav>
+    <a routerLink="home" routerLinkActive="btn-outline">Home</a>
+    <a routerLink="about">About</a>
+    <a routerLink="faq">FAQ</a>
+    <a class="btn-outline" routerLink="contact">Contact Us</a>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Smart E-Commerce Marketplace</h1>
+    <p>
+      One powerful platform for <strong>Admins</strong>, <strong>Vendors</strong>,
+      and <strong>Customers</strong> to buy, sell, and manage seamlessly.
+    </p>
+
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="location.href='#loginSection'">Login</button>
+      <button class="btn-secondary">Learn More</button>
     </div>
   </div>
 
-  <div class="beautifying-elements">
-    <div class="first-cloud"></div>
-    <div class="second-cloud"></div>
+  <div class="hero-illustration">
+    <div class="dashboard-mock">
+      <img alt="" src="./assets/home_illustration.png">
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACCOUNT SELECTION ================= -->
+<section class="accounts" id="#loginSection">
+  <h2>Choose Your Account</h2>
+
+  <div class="card-grid">
+
+    <!-- ADMIN -->
+    <div class="card">
+      <div class="icon admin">👑</div>
+      <h3>Admin</h3>
+      <p>Manage users, vendors, analytics & platform settings.</p>
+
+      <button (click)="logoutAdmin()" class="btn-ghost">Choose Different Account</button>
+      <button (click)="AdminLogin()" class="btn-login admin-btn">Login</button>
+    </div>
+
+    <!-- CUSTOMER -->
+    <div class="card featured">
+      <div class="icon customer">🛒</div>
+      <h3>Customer</h3>
+      <p>Browse products, order items & track purchases.</p>
+
+      <button (click)="logoutCustomer()" class="btn-ghost">Choose Different Account</button>
+      <button (click)="Customerlogin()" class="btn-login customer-btn">Login</button>
+    </div>
+
+    <!-- VENDOR -->
+    <div class="card">
+      <div class="icon vendor">🏪</div>
+      <h3>Vendor</h3>
+      <p>List products, manage inventory & track sales.</p>
+
+      <button (click)="logoutVendor()" class="btn-ghost">Choose Different Account</button>
+      <button (click)="VendorLogin()" class="btn-login vendor-btn">Login</button>
+    </div>
 
   </div>
-</div>
+</section>
+
+<!-- ================= CONTACT CTA ================= -->
+<section class="cta">
+  <h2>Need help or have questions?</h2>
+  <p>Our team is here to support admins, vendors, and customers.</p>
+  <button class="btn-primary">Contact Us</button>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  © {{ year }} AngShop. All rights reserved.
+</footer>
+
+</body>
+</html>
+
 
 
 

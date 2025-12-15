@@ -1,11 +1,12 @@
-<div #viewButton *ngFor="let data of this.customerDashboardService.dataList; index as num" [attr.data-index]="num"
-     class="order-element">
-  <div class="header"><h2>{{ data?.orderDescription }}</h2></div>
-  <div *ngIf="data?.state=='Delivered'" class="image-delivered"></div>
-  <div *ngIf="data?.state=='Pending Delivery'" class="image-pending"></div>
-  <div class="price">Rs.{{ data?.totalPrice }}.00</div>
-  <div class="view-details">
-    <button (click)="openModal(viewButton,num)" color="primary" mat-raised-button>SELECT</button>
+<div class="grid">
+  <div #viewButton *ngFor="let data of this.customerDashboardService.dataList; index as num" [attr.data-index]="num"
+       class="order-element">
+    <div class="header"><h2>{{ data?.orderDescription }}</h2></div>
+    <div *ngIf="data?.state=='Delivered'" class="image-delivered"></div>
+    <div *ngIf="data?.state=='Pending Delivery'" class="image-pending"></div>
+    <div class="price">Rs.{{ data?.totalPrice }}.00</div>
+    <div class="view-details">
+      <button (click)="openModal(viewButton,num)" color="primary" mat-raised-button>SELECT</button>
+    </div>
   </div>
 </div>
-

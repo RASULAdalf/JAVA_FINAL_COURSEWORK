@@ -52,7 +52,7 @@ import {CustomerDashboardSharedModule} from './modules/customer-dashboard-shared
     OrderModalComponent,
     UpdateOrderComponent,
     AddItemModalComponent,
-    LoadingComponent
+    LoadingComponent,
   ],
   imports: [
     CommonModule,

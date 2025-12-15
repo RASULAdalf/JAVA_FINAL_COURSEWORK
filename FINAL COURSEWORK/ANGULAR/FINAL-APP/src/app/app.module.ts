@@ -20,12 +20,12 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {RequestInterceptor} from "./core/interceptors/request-interceptor";
-import {LetSirKnowComponent} from './core/components/let-sir-know/let-sir-know.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatSelectModule} from "@angular/material/select";
 import {getDatabase, provideDatabase} from "@angular/fire/database";
 import {getAuth, provideAuth} from "@angular/fire/auth";
 import {initializeApp, provideFirebaseApp} from "@angular/fire/app";
+import {EmailVerificationComponent} from './core/components/email-verification/email-verification.component';
 
 
 export const firebaseConfig = {
@@ -53,7 +53,7 @@ export const firebaseConfig = {
     AppComponent,
     NotFoundPageComponent,
     ItemModalComponent,
-    LetSirKnowComponent,
+    EmailVerificationComponent,
   ],
   imports: [
     BrowserModule,

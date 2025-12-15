@@ -22,14 +22,14 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     CosmeticsComponent,
     OtherComponent
   ],
-    imports: [
-        CommonModule,
-        SubCustomerDashboard2RoutingModule,
-        MatButtonModule,
-        CustomerDashboardSharedModule,
-        MatIconModule,
-        MatTooltipModule
-    ]
+  imports: [
+    CommonModule,
+    SubCustomerDashboard2RoutingModule,
+    MatButtonModule,
+    CustomerDashboardSharedModule,
+    MatIconModule,
+    MatTooltipModule
+  ]
 })
 export class SubCustomerDashboard2Module {
 }

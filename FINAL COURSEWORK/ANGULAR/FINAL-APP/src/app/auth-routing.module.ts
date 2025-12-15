@@ -6,8 +6,8 @@ import {AuthHttpInterceptor, AuthModule} from '@auth0/auth0-angular';
 import {LandingPageComponent} from "./module/landing-page/landing-page.component";
 
 const config = {
-  domain: 'dev-1b212clo.us.auth0.com',
-  clientId: 'QXJHgOuSHAtRI6kh8vcucynqYHOHUyRQ',
+  domain: 'dev-0odb4kuyeixm7ffb.us.auth0.com',
+  clientId: 'Yz71jDRUxQX2H1LgRHXfQe7LJZTOheib',
   redirectUri: window.location.origin + '/CustomerDashboard',
   httpInterceptor: {
     allowedList: ['/api/*']

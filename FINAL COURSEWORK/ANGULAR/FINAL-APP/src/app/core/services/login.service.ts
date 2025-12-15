@@ -67,10 +67,14 @@ export class LoginService {
       this.localDataService.setCookie('userToken', data['code']).then(result => {
 
         this.auth.user$.subscribe(res => {
+
           console.log(res?.picture + " " + res?.email);
           this.localDataService.setCookie('userPic', res?.picture).then(r => {
             this.localDataService.setCookie('userEmail', res?.email).then(rr => {
-              window.location.replace("http://localhost:4200/CustomerDashboard");
+              if (res && !res.email_verified) {
+                window.location.replace("http://localhost:4200/CustomerDashboard?err=verify_email");
+              } else
+                window.location.replace("http://localhost:4200/CustomerDashboard");
             })
           });
         })
@@ -84,6 +88,7 @@ export class LoginService {
     }
 
     if (data['err_description'] != undefined) {
+      console.log("Returning with fault..")
       this.localDataService.deleteCookie('login_init', '/');
       this.router.navigate(['/landing'],
         {queryParams: {err: data['err_description']}}

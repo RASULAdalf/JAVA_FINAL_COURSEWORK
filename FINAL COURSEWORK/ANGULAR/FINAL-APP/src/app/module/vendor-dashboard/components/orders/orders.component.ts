@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatSelectChange} from "@angular/material/select";
+import {VendorDashboardServiceService} from "../../services/vendor-dashboard-service.service";
 
 @Component({
   selector: 'app-orders',
@@ -13,7 +14,7 @@ export class OrdersComponent implements OnInit {
   category: any = '';
   categories: any[] = [{value: 'Pending Delivery'}, {value: 'Cancelled'}];
 
-  constructor() {
+  constructor(public vendorDashboardService: VendorDashboardServiceService) {
   }
 
   ngOnInit(): void {

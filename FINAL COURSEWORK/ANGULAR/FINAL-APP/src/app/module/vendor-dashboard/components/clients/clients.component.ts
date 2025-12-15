@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {VendorDashboardServiceService} from "../../services/vendor-dashboard-service.service";
 
 @Component({
   selector: 'app-clients',
@@ -9,7 +10,7 @@ export class ClientsComponent implements OnInit {
   @Input() data: any[] | undefined;
   @Input() buttonName: any | undefined;
 
-  constructor() {
+  constructor(public vendorDashboardService: VendorDashboardServiceService) {
   }
 
   ngOnInit(): void {

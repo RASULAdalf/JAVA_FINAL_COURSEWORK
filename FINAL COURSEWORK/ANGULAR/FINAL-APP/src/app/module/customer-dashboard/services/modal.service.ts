@@ -4,7 +4,7 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {CartModalComponent} from "../components/cart-modal/cart-modal.component";
 import {OrderModalComponent} from "../components/order-modal/order-modal.component";
 import {AddItemModalComponent} from "../components/add-item-modal/add-item-modal.component";
-import {LetSirKnowComponent} from "../../../core/components/let-sir-know/let-sir-know.component";
+import {EmailVerificationComponent} from "../../../core/components/email-verification/email-verification.component";
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +14,8 @@ export class ModalService {
   public itemdialogRef: MatDialogRef<ItemModalComponent, any> | undefined;
   public cartdialogRef: MatDialogRef<CartModalComponent, any> | undefined;
   public addItemDialogRef: MatDialogRef<AddItemModalComponent, any> | undefined;
+  public emailVerificationDialogRef: MatDialogRef<EmailVerificationComponent, any> | undefined;
   private orderDialogRef: MatDialogRef<OrderModalComponent, any> | undefined;
-  private letSirKnowDialogRef: MatDialogRef<LetSirKnowComponent, any> | undefined;
-
 
   constructor(private modalService: MatDialog) {
   }
@@ -55,13 +54,10 @@ export class ModalService {
     });
   }
 
-  public openLetSirKnowModal(data: any) {
-    this.letSirKnowDialogRef = this.modalService.open(LetSirKnowComponent, {
+  public openEmailVerificationModal() {
+    this.emailVerificationDialogRef = this.modalService.open(EmailVerificationComponent, {
       height: '620px',
       width: '1200px',
-      data: {
-        data: data
-      }
     });
   }
 
@@ -71,4 +67,6 @@ export class ModalService {
       width: '1600px'
     });
   }
+
+
 }

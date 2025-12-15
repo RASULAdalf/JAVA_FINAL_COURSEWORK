@@ -10,19 +10,19 @@ import {VendorDashboardServiceService} from "../../services/vendor-dashboard-ser
 export class EarningsComponent implements OnInit {
   @Input() data: any[] | undefined;
   @Input() buttonName: any | undefined;
-  @Input() page:any = 0;
-  @Input() pageSize:any = 10;
+  @Input() page: any = 0;
+  @Input() pageSize: any = 10;
 
-  earningItemList:EarningItem[] = [];
+  earningItemList: EarningItem[] = [];
 
-  constructor(public vendorDashboardService:VendorDashboardServiceService) {
+  constructor(public vendorDashboardService: VendorDashboardServiceService) {
 
   }
 
   ngOnInit(): void {
 
 
-     // @ts-ignore
+    // @ts-ignore
     for (let dataItem of this.vendorDashboardService.dataList) {
       const index = this.earningItemList.findIndex(element => element.itemCode == dataItem?.itemCode);
       console.log(index)

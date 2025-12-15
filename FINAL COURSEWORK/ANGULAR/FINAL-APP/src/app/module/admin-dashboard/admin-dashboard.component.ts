@@ -13,7 +13,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.modalService.openLetSirKnowModal('Admin Dashboard');
+    // this.modalService.openLetSirKnowModal('Admin Dashboard');
   }
 
   AdminLogout() {

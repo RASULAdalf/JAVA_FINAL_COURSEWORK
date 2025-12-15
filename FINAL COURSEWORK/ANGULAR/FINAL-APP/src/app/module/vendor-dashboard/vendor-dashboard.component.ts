@@ -35,6 +35,8 @@ export class VendorDashboardComponent implements OnInit {
   pageEvent: PageEvent | undefined;
 // }
   chooseMenuItemValue: any;
+//
+  clickedBtnName: any;
   private searchText: any;
 
   constructor(private presence: PresenceService, public route: ActivatedRoute, public localStorageService: LocalDataService, public modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, public vendorDashboardService: VendorDashboardServiceService) {
@@ -54,12 +56,9 @@ export class VendorDashboardComponent implements OnInit {
     this.vendorDashboardService.vendorEmail = this.route.snapshot.queryParamMap.get('vendorEmail');
     this.vendorImage = this.route.snapshot.queryParamMap.get('vendorImage');
     this.year = new Date().getFullYear();
-    this.vendorDashboardService.loadData('ORDERS', 0, 10);
+    //this.vendorDashboardService.loadData('ORDERS', 0, 10);
 
-  }
 
-  logout() {
-    this.vendorDashboardService.logOut();
   }
 
 
@@ -76,12 +75,8 @@ export class VendorDashboardComponent implements OnInit {
 //
 // }
 
-  loadServerData(event: PageEvent, value: any): any {
-    this.page = event?.pageIndex;
-    this.pageSize = event?.pageSize;
-    this.vendorDashboardService.loadData(value, this.page, this.pageSize);
-
-
+  logout() {
+    this.vendorDashboardService.logOut();
   }
 
 // openModal() {
@@ -100,15 +95,26 @@ export class VendorDashboardComponent implements OnInit {
 //
 // }
 // }
-//
 
+  loadServerData(event: PageEvent, value: any): any {
+    this.page = event?.pageIndex;
+    this.pageSize = event?.pageSize;
+    this.vendorDashboardService.loadData(value, this.page, this.pageSize);
+
+
+  }
 
   loadDataSearch() {
     // @ts-ignore
-    this.vendorDashboardService.loadSearchDataAll(this.page, this.pageSize, this.searchText, this.chooseMenuItemValue);
+    this.vendorDashboardService.loadSearchDataAll(this.page, this.pageSize, this.searchText, this.clickedBtnName);
   }
 
   openMail() {
 
+  }
+
+  loadData(value: any, page: number, pageSize: number) {
+    this.clickedBtnName = value;
+    this.vendorDashboardService.loadData(value, page, pageSize);
   }
 }

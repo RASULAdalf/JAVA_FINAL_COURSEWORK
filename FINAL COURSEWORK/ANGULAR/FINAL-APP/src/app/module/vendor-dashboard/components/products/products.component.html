@@ -1,19 +1,30 @@
 <div class="content-outer">
-  <div class="header-outer" *ngIf="this.displayType=='product'">
+  <div *ngIf="this.displayType=='product'" class="header-outer">
     <button (click)="openEditModal(-1)" color="accent" mat-raised-button>+ ADD NEW ITEM</button>
   </div>
   <div class="data-inner">
-    <mat-card *ngFor="let data of data; index as num" appearance="outlined" class="example-card">
+    <mat-card *ngFor="let data of this.vendorDashboardService.dataList; index as num" [ngStyle]="{
+  height: displayType === 'earning' ? '76%' : '50%'
+}"
+              appearance="outlined"
+              class="example-card"
+    >
       <mat-card-header>
         <mat-card-title>{{ data?.itemDescription }}</mat-card-title>
         <mat-card-subtitle>{{ data?.itemCategory }}</mat-card-subtitle>
       </mat-card-header>
       <img [src]="data?.itemLogoUrl" alt="Picture" class="card-content" mat-card-image
            style="background-size: contain!important; ">
-      <mat-card-actions class="card-content" >
-        <button *ngIf="this.displayType=='product'" (click)="openViewModal(num)" color="primary" mat-raised-button>VIEW</button>
-        <button *ngIf="this.displayType=='product'" (click)="openEditModal(num)" color="primary" mat-raised-button>UPDATE</button>
-        <button *ngIf="this.displayType=='product'" (click)="deleteProduct(data?.itemCode)" color="warn" mat-raised-button>DELETE</button>
+      <mat-card-actions class="card-content">
+        <button (click)="openViewModal(num)" *ngIf="this.displayType=='product'" color="primary" mat-raised-button>
+          VIEW
+        </button>
+        <button (click)="openEditModal(num)" *ngIf="this.displayType=='product'" color="primary" mat-raised-button>
+          UPDATE
+        </button>
+        <button (click)="deleteProduct(data?.itemCode)" *ngIf="this.displayType=='product'" color="warn"
+                mat-raised-button>DELETE
+        </button>
         <br>
         <mat-chip-list>
           <mat-chip *ngIf="this.displayType=='earning'">Items Sold : {{ data?.qty }}</mat-chip>
