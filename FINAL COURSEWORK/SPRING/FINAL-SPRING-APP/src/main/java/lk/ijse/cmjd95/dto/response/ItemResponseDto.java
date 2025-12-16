@@ -1,5 +1,6 @@
 package lk.ijse.cmjd95.dto.response;
 
+import lk.ijse.cmjd95.entity.ItemReview;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,4 +20,5 @@ public class ItemResponseDto {
     private int qtyOnHand;
     private String vendorEmail;
     private String specsDocUrl;
+    private ArrayList<ItemReview> reviews;
 }

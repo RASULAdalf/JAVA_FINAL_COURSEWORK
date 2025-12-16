@@ -1,5 +1,7 @@
 package lk.ijse.cmjd95.dto.query_interface;
 
+import lk.ijse.cmjd95.entity.ItemReview;
+
 import java.util.ArrayList;
 
 public interface ItemDataInterface {
@@ -22,4 +24,6 @@ public interface ItemDataInterface {
     String getSpecsDocUrl();
 
     String getSpecsDocContent();
+
+    ArrayList<ItemReview> getReviews();
 }

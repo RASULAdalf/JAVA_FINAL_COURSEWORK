@@ -297,7 +297,7 @@ console.log("Item Controller")
 // }
 
 const saveItem = (req, resp) => {
-    const itemModel = new ItemModel('', '', '', [], 0, 0, '', '', '');
+    const itemModel = new ItemModel('', '', '', [], 0, 0, '', '', '', []);
     let vEmail = "";
     let itemId = "";
     let bufferedEvents = [];
@@ -406,7 +406,7 @@ const updateItem = async (req, resp) => {
     const itemId = req.query.id;
     const updateOption = req.query.option;
 
-    const itemModel = new ItemModel('', '', '', [], 0, 0, '', '', '');
+    const itemModel = new ItemModel('', '', '', [], 0, 0, '', '', '', []);
     const bufferedEvents = [];
 
     const form = formidable({multiples: true});
@@ -486,6 +486,14 @@ const updateItem = async (req, resp) => {
                 }
             }
 
+            const searchResponse = await axios.get(
+                "http://localhost:8080/api/v1/item/find",
+                {
+                    headers: {token: "snfjg85YY39475fhestdgff"},
+                    params: {searchText: itemId}
+                }
+            );
+
             //
             // ──────────────────────────────────────────────
             //   3. ADDITIONAL LOGIC FOR addUpdate
@@ -493,13 +501,7 @@ const updateItem = async (req, resp) => {
             //
             if (updateOption === "addUpdate") {
                 // Load existing data and append to slideShow list
-                const searchResponse = await axios.get(
-                    "http://localhost:8080/api/v1/item/find",
-                    {
-                        headers: {token: "snfjg85YY39475fhestdgff"},
-                        params: {searchText: itemId}
-                    }
-                );
+
 
                 const existing = searchResponse.data.data.items[0];
 
@@ -508,10 +510,16 @@ const updateItem = async (req, resp) => {
                     itemModel.slideShowImageUrls.push(...existing.slideShowImageUrls);
                 }
             }
+            // ──────────────────────────────────────────────
+            //   4. Adding Existed Reviews
+            // ──────────────────────────────────────────────
+            //
+            itemModel.reviews.push(...searchResponse.data.data.items[0].reviews)
+
 
             //
             // ──────────────────────────────────────────────
-            //   4. UPDATE BACK-END DATABASE
+            //   5. UPDATE BACK-END DATABASE
             // ──────────────────────────────────────────────
             //
             await axios.put(

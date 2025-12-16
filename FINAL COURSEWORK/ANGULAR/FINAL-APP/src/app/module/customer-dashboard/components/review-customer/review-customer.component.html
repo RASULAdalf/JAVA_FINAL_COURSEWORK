@@ -1,0 +1,46 @@
+<div class="review-box">
+  <app-loading *ngIf="loadingService.progressBarLoadingState |async" [data]="type"></app-loading>
+  <div class="header-inner">
+    <mat-icon mat-dialog-close>close</mat-icon>
+  </div>
+  <div class="review-inner" mat-dialog-content>
+    <div *ngFor="let data of this.data?.data; index as num" class="review-card">
+      <div class="review-text">
+        {{ data?.review }}&nbsp;{{ data?.starCount }}
+      </div>
+      <div class="customer-email">
+        <small>{{ data?.customerEmail }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="own-review">
+    <div class="own-review-text">
+      <form (ngSubmit)="submit()" [formGroup]="reviewsForm" enctype="multipart/form-data">
+
+        <mat-form-field [style.margin-left.px]=140 [style.margin-top.px]=5 [style.width.px]=500 appearance="outline">
+          <mat-label>Review Text</mat-label>
+          <textarea formControlName="reviewText" matInput placeholder="enter your review..."></textarea>
+          <mat-error>Review required with your rating</mat-error>
+        </mat-form-field>&nbsp;
+        <button [disabled]="!reviewsForm.invalid || !(rating==0)" mat-icon-button type="submit">
+          <mat-icon>send</mat-icon>
+        </button>
+      </form>
+
+    </div>
+    <div class="own-review-rating">
+      <span>Your Rating : {{ rating }}  </span>
+      <ngx-star-rating [(ngModel)]="rating"></ngx-star-rating>
+    </div>
+  </div>
+  <!--  <ngx-star-rating [(ngModel)]="rating"></ngx-star-rating>-->
+
+  <!--  <textarea-->
+  <!--    placeholder="Write your review..."-->
+  <!--    [(ngModel)]="comment">-->
+  <!--  </textarea>-->
+
+  <!--  <button (click)="submitReview()">-->
+  <!--    Submit Review-->
+  <!--  </button>-->
+</div>

@@ -117,7 +117,6 @@ export class VendorDashboardServiceService {
       this.loadOrdersDataAll(page, pageSize, this.vendorEmail).subscribe(data => {
         this.dataList = data?.data?.orders;
         this.dataCount = data?.data?.dataCount;
-        this.calculateTotalEarnings()
         let list: any;
         for (let data of this.dataList) {
           if (list == undefined) {
@@ -146,6 +145,7 @@ export class VendorDashboardServiceService {
       this.loadEarningsDataAll(page, pageSize).subscribe(data => {
         this.dataList = data?.data?.orders;
         this.dataCount = data?.data?.dataCount;
+        this.calculateTotalEarnings()
       }, error => console.log(error));
     } else if (value == 'ANALYSIS') {
       this.loadAnalysisDataAll(page, pageSize).subscribe(data => {

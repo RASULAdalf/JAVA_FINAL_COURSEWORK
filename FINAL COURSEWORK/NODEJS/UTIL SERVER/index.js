@@ -29,9 +29,11 @@ app.get('/', (req, res) => {
 })
 const itemRoute = require('./routes/ItemRouter');
 const vendorRoute = require('./routes/VendorRouter');
+const reviewRoute = require('./routes/ReviewRouter');
 
 app.use('/api/v1/item', itemRoute);
 app.use('/api/v1/vendor', vendorRoute);
+app.use('/api/v1/review', reviewRoute);
 
 app.listen(port, () => {
     console.log(`Server is up on the port ${port}`);

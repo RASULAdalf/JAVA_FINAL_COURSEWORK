@@ -10,8 +10,6 @@ import {VendorDashboardServiceService} from "../../services/vendor-dashboard-ser
 export class EarningsComponent implements OnInit {
   @Input() data: any[] | undefined;
   @Input() buttonName: any | undefined;
-  @Input() page: any = 0;
-  @Input() pageSize: any = 10;
 
   earningItemList: EarningItem[] = [];
 

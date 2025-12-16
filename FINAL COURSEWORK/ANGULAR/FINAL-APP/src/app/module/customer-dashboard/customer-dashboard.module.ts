@@ -34,6 +34,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {SubCustomerDashboard1Module} from "./modules/sub-customer-dashboard1/sub-customer-dashboard1.module";
 import {SubCustomerDashboard2Module} from "./modules/sub-customer-dashboard2/sub-customer-dashboard2.module";
 import {CustomerDashboardSharedModule} from './modules/customer-dashboard-shared/customer-dashboard-shared.module';
+import {ReviewCustomerComponent} from './components/review-customer/review-customer.component';
+import {NgxStarRatingModule} from "ngx-star-rating";
 
 
 @NgModule({
@@ -53,6 +55,7 @@ import {CustomerDashboardSharedModule} from './modules/customer-dashboard-shared
     UpdateOrderComponent,
     AddItemModalComponent,
     LoadingComponent,
+    ReviewCustomerComponent,
   ],
   imports: [
     CommonModule,
@@ -74,7 +77,8 @@ import {CustomerDashboardSharedModule} from './modules/customer-dashboard-shared
     MatProgressSpinnerModule,
     SubCustomerDashboard1Module,
     SubCustomerDashboard2Module,
-    CustomerDashboardSharedModule
+    CustomerDashboardSharedModule,
+    NgxStarRatingModule
   ],
   exports: [
     LoadingComponent,

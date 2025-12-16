@@ -10,9 +10,6 @@ import {ModalService} from "../../services/modal.service";
 export class ProductsComponent implements OnInit {
   @Input() data: any[] | undefined;
   @Input() displayType: any = 'product'
-  @Input() page: number = 1;
-  @Input() pageSize: number = 10;
-  @Input() vendorEmail: string | undefined | null;
 
   constructor(public vendorDashboardService: VendorDashboardServiceService, public modalService: ModalService) {
   }
@@ -22,8 +19,8 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(itemCode: any) {
-    this.vendorDashboardService.deleteProduct(itemCode, this.vendorEmail).subscribe(response => {
-      this.vendorDashboardService.loadData('PRODUCTS', this.page, this.pageSize)
+    this.vendorDashboardService.deleteProduct(itemCode, this.vendorDashboardService.vendorEmail).subscribe(response => {
+      this.vendorDashboardService.loadData('PRODUCTS', 0, 10)
     }, error => {
       console.log(error);
     })
@@ -35,7 +32,7 @@ export class ProductsComponent implements OnInit {
 
   openEditModal(num: number) {
     if (num === -1) {
-      this.modalService.openItemEditModal([{vendorEmail: this.vendorEmail}], 0, "Save");
+      this.modalService.openItemEditModal([{vendorEmail: this.vendorDashboardService.vendorEmail}], 0, "Save");
     } else
       this.modalService.openItemEditModal(this.vendorDashboardService.dataList, num, "Update");
   }

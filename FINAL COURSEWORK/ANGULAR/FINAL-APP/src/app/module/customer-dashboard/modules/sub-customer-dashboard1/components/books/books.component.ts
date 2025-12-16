@@ -15,6 +15,10 @@ export class BooksComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  openReviewsModal(data: any, itemId: any) {
+    this.modalService.openReviewModal(data, itemId);
+  }
+
   openModal(element: { getAttribute: (arg0: string) => any; }) {
 
     // @ts-ignore

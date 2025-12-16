@@ -18,4 +18,8 @@ export class ElectronicsComponent implements OnInit {
     // @ts-ignore
     this.modalService.openItemModal(element.getAttribute("data-index"), this.customerDashboardService.dataList, this.customerDashboardService.buttonName);
   }
+
+  openReviewsModal(reviews: any, itemId: any) {
+    this.modalService.openReviewModal(reviews, itemId);
+  }
 }

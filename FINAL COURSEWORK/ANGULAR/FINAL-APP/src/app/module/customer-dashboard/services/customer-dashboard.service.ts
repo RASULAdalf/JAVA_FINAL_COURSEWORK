@@ -11,6 +11,7 @@ import {LocalDataService} from "../../../core/services/local-data.service";
 })
 export class CustomerDashboardService {
   baseUrl = environment.DatabaseServerUrl;
+  baseUtilUrl = environment.UtilServerUrl;
   dataList: any[] = [];
   dataCount: any = 0;
   buttonName: any = 'ADD';
@@ -106,4 +107,11 @@ export class CustomerDashboardService {
   // setDataList(dataList: any[] | undefined) {
   //   this.dataList = dataList;
   // }
+
+  addReview(formData: FormData, itemId: any) {
+    this.httpService.post(this.baseUtilUrl + 'review/add?itemId=' + itemId, formData).subscribe(result => {
+
+    })
+
+  }
 }

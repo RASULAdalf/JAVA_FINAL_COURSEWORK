@@ -1,0 +1,70 @@
+.review-box {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-inner {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.review-inner {
+  height: 80%;
+  overflow: scroll;
+
+}
+
+.review-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.review-text {
+  height: 90%;
+}
+
+.customer-email {
+  flex: 1;
+}
+
+.own-review {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  mat-form-field {
+    width: 90% !important;
+    margin-left: 0 !important;
+  }
+}
+
+.own-review-text {
+  height: 90%;
+
+  mat-icon {
+    font-size: 40px !important;
+  }
+}
+
+.own-review-rating {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  ngx-star-rating {
+    font-size: 12px; /* try 12px, 14px, 18px */
+  }
+
+  span {
+    font-family: "Google Sans Code", monospace;
+    font-size: 30px;
+    font-weight: 13;
+    font-style: normal;
+  }
+
+}

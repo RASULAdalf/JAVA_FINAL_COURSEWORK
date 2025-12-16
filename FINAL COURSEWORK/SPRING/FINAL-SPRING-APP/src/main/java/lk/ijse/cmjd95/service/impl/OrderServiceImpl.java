@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
             } else if (byId.get().getQtyOnHand() < orderItem.getQty()) {
                 return "No enough stock !";
             }
-            Item item = new Item(byId.get().getItemCode(), byId.get().getItemDescription(), byId.get().getItemCategory(), byId.get().getItemLogoUrl(), byId.get().getSlideShowImageUrls(), byId.get().getUnitPrice(), (byId.get().getQtyOnHand() - orderItem.getQty()), byId.get().getVendorEmail(), byId.get().getSpecsDocUrl(), byId.get().getSpecsDocContent());
+            Item item = new Item(byId.get().getItemCode(), byId.get().getItemDescription(), byId.get().getItemCategory(), byId.get().getItemLogoUrl(), byId.get().getSlideShowImageUrls(), byId.get().getUnitPrice(), (byId.get().getQtyOnHand() - orderItem.getQty()), byId.get().getVendorEmail(), byId.get().getSpecsDocUrl(), byId.get().getSpecsDocContent(), byId.get().getReviews());
             itemRepo.save(item);
         }
 
@@ -177,7 +177,7 @@ public class OrderServiceImpl implements OrderService {
                 } else if (byId1.get().getQtyOnHand() < orderItem.getQty()) {
                     return "No enough stock !";
                 }
-                Item item = new Item(byId1.get().getItemCode(), byId1.get().getItemDescription(), byId1.get().getItemCategory(), byId1.get().getItemLogoUrl(), byId1.get().getSlideShowImageUrls(), byId1.get().getUnitPrice(), (byId1.get().getQtyOnHand() - orderItem.getQty()), byId1.get().getVendorEmail(), byId1.get().getSpecsDocUrl(), byId1.get().getSpecsDocContent());
+                Item item = new Item(byId1.get().getItemCode(), byId1.get().getItemDescription(), byId1.get().getItemCategory(), byId1.get().getItemLogoUrl(), byId1.get().getSlideShowImageUrls(), byId1.get().getUnitPrice(), (byId1.get().getQtyOnHand() - orderItem.getQty()), byId1.get().getVendorEmail(), byId1.get().getSpecsDocUrl(), byId1.get().getSpecsDocContent(), byId1.get().getReviews());
                 itemRepo.save(item);
             }
 

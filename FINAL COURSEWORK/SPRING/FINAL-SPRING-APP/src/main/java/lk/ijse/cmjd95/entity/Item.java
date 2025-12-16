@@ -26,5 +26,6 @@ public class Item {
     private String vendorEmail;
     private String specsDocUrl;
     private String specsDocContent;
+    private ArrayList<ItemReview> reviews;
 
 }

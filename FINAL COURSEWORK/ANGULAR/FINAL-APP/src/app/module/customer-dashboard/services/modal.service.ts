@@ -5,6 +5,7 @@ import {CartModalComponent} from "../components/cart-modal/cart-modal.component"
 import {OrderModalComponent} from "../components/order-modal/order-modal.component";
 import {AddItemModalComponent} from "../components/add-item-modal/add-item-modal.component";
 import {EmailVerificationComponent} from "../../../core/components/email-verification/email-verification.component";
+import {ReviewCustomerComponent} from "../components/review-customer/review-customer.component";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class ModalService {
   public cartdialogRef: MatDialogRef<CartModalComponent, any> | undefined;
   public addItemDialogRef: MatDialogRef<AddItemModalComponent, any> | undefined;
   public emailVerificationDialogRef: MatDialogRef<EmailVerificationComponent, any> | undefined;
+  public reviewCustomerDialogRef: MatDialogRef<ReviewCustomerComponent, any> | undefined;
   private orderDialogRef: MatDialogRef<OrderModalComponent, any> | undefined;
 
   constructor(private modalService: MatDialog) {
@@ -65,6 +67,17 @@ export class ModalService {
     this.addItemDialogRef = this.modalService.open(AddItemModalComponent, {
       height: '900px',
       width: '1600px'
+    });
+  }
+
+  public openReviewModal(data: any, itemId: any) {
+    this.reviewCustomerDialogRef = this.modalService.open(ReviewCustomerComponent, {
+      height: '620px',
+      width: '750px',
+      data: {
+        data: data,
+        itemId: itemId
+      }
     });
   }
 

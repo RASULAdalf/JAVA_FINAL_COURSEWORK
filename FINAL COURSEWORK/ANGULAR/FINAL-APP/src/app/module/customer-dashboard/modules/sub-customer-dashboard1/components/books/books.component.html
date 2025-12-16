@@ -7,7 +7,7 @@
     <div class="price">Rs.{{ data?.unitPrice }}.00</div>
     <div class="view-details">
       <button (click)="openModal(viewButton)" color="primary" mat-raised-button>VIEW</button>
-      <button mat-button matTooltip="Reviews">
+      <button (click)="openReviewsModal(data?.reviews,data?.itemCode)" mat-button matTooltip="Reviews">
         <mat-icon>reviews</mat-icon>
       </button>
     </div>
