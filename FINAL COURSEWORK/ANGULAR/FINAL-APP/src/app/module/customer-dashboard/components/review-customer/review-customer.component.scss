@@ -18,13 +18,14 @@
 }
 
 .review-card {
-  height: 100%;
+  height: 40%;
   display: flex;
   flex-direction: column;
 }
 
 .review-text {
   height: 90%;
+  overflow: scroll;
 }
 
 .customer-email {

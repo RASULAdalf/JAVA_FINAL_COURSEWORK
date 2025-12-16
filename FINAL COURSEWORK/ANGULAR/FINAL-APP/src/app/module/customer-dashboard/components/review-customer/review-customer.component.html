@@ -1,16 +1,17 @@
 <div class="review-box">
-  <app-loading *ngIf="loadingService.progressBarLoadingState |async" [data]="type"></app-loading>
+  <app-loading *ngIf="loadingService.progressBarLoadingState |async" [data]="'Bar'"></app-loading>
   <div class="header-inner">
     <mat-icon mat-dialog-close>close</mat-icon>
   </div>
   <div class="review-inner" mat-dialog-content>
     <div *ngFor="let data of this.data?.data; index as num" class="review-card">
       <div class="review-text">
-        {{ data?.review }}&nbsp;{{ data?.starCount }}
+        {{ data?.review }}
       </div>
       <div class="customer-email">
-        <small>{{ data?.customerEmail }}</small>
+        <small> by : {{ data?.customerEmail }}</small> &nbsp;&nbsp;&nbsp;{{ data?.starCount }} ⭐ rating
       </div>
+      <hr>
     </div>
   </div>
   <div class="own-review">
@@ -22,7 +23,7 @@
           <textarea formControlName="reviewText" matInput placeholder="enter your review..."></textarea>
           <mat-error>Review required with your rating</mat-error>
         </mat-form-field>&nbsp;
-        <button [disabled]="!reviewsForm.invalid || !(rating==0)" mat-icon-button type="submit">
+        <button [disabled]="reviewsForm.invalid" mat-icon-button type="submit">
           <mat-icon>send</mat-icon>
         </button>
       </form>
