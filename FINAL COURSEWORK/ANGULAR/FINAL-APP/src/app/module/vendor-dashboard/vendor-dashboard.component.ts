@@ -39,7 +39,7 @@ export class VendorDashboardComponent implements OnInit {
   clickedBtnName: any;
   private searchText: any;
 
-  constructor(private presence: PresenceService, public route: ActivatedRoute, public localStorageService: LocalDataService, public modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, public vendorDashboardService: VendorDashboardServiceService) {
+  constructor(private presence: PresenceService, public route: ActivatedRoute, public localStorageService: LocalDataService, public modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, public vendorDashboardService: VendorDashboardServiceService,private activatedRoute:ActivatedRoute) {
     this.vendorDashboardService.loginService.afAuth.currentUser.then(result => {
       this.vendorDashboardService.vendorEmail = result?.email;
     })
@@ -52,6 +52,11 @@ export class VendorDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(p => {
+      if (p['err'] != undefined) {
+        this.modalService.openEmailVerificationModal();
+      }
+    })
     //this.modalService.openLetSirKnowModal("Vendor Dashboard");
     this.vendorDashboardService.vendorEmail = this.route.snapshot.queryParamMap.get('vendorEmail');
     this.vendorImage = this.route.snapshot.queryParamMap.get('vendorImage');

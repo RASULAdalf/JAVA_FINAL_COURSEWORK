@@ -8,7 +8,19 @@
 .sold-products-outer {
   height: 100%;
   overflow: scroll;
-
+  display: flex;
+  flex-direction: row;
+}
+.sold-products{
+  width: 60%;
+  app-products{
+    height: 100%;
+    width: 100%;
+  }
+}
+.due-payment-outer{
+  flex: 1;
+  border: 1px solid red;
 }
 
 .earning-outer {

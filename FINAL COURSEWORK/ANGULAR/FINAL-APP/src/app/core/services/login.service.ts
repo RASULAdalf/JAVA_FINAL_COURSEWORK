@@ -125,7 +125,7 @@ export class LoginService {
       } else {
         const user = JSON.parse(localStorage.getItem('user')!);
         if (user.emailVerified == false) {
-          this.router.navigate(['/landing'], {queryParams: {err: 'Please verify your email'}});
+          this.router.navigate(['/VendorDashboard'], {queryParams: {err: 'verify_email'}});
         } else {
           reject(false);
         }
