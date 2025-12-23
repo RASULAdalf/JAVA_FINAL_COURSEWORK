@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EarningItem} from "../../../../model/EarningItem";
 import {VendorDashboardServiceService} from "../../services/vendor-dashboard-service.service";
+import {PayoutModel} from "../../model/PayoutModel";
+import {PayOutItemModel} from "../../model/PayOutItemModel";
 
 @Component({
   selector: 'app-earnings',
@@ -14,41 +16,43 @@ export class EarningsComponent implements OnInit {
   earningItemList: EarningItem[] = [];
 
   constructor(public vendorDashboardService: VendorDashboardServiceService) {
-
+    console.log(this.vendorDashboardService.dataList)
   }
 
   ngOnInit(): void {
 
-
     // @ts-ignore
-    for (let dataItem of this.vendorDashboardService.dataList) {
-      const index = this.earningItemList.findIndex(element => element.itemCode == dataItem?.itemCode);
-      console.log(index)
-      if (index != -1) {
-        console.log('in')
-        const earningItem = this.earningItemList.find(element => element.itemCode = dataItem?.itemCode);
-        // @ts-ignore
-        earningItem?.qty = earningItem?.qty + dataItem?.qty
-        if (earningItem) {
-          this.earningItemList.splice(index, 1, earningItem);
-        }
-      } else {
 
-        let earningItem: EarningItem = {
-          itemCode: dataItem?.itemCode,
-          itemDescription: dataItem?.itemDescription,
-          itemCategory: dataItem?.itemCategory,
-          itemLogoUrl: dataItem?.itemLogoUrl,
-          qty: dataItem?.qty,
-          isVendorPaid: false
-        }
-        this.earningItemList.push(earningItem);
+  }
+
+  createPayment() {
+    let payoutItems = [];
+    for (let item of this.vendorDashboardService.dataList) {
+      let payoutItem: PayOutItemModel = {
+        itemCode: item?.itemCode,
+        itemDescription: item?.itemDescription,
+        itemLogoUrl: item?.itemLogoUrl,
+        unitPrice: item?.unitPrice,
+        soldCount: item?.qty,
+        itemFullEarning: (item?.qty * item?.unitPrice) * 0.9
       }
+      payoutItems.push(payoutItem);
+    }
+    let payout: PayoutModel = {
+      vendorEmail: this.vendorDashboardService.vendorEmail,
+      paymentDetails: {
+        accountName: '',
+        accountNumber: 0,
+        Bank: '',
+        Branch: ''
+      },
+      amount: this.vendorDashboardService.totalEarnings,
+      payoutDate: new Date(),
+      paymentStatus: 'Payment Pending',
+      payoutItems: payoutItems
     }
 
-    this.vendorDashboardService.dataList = this.earningItemList;
-    this.vendorDashboardService.dataCount = this.earningItemList.length
-
+    this.vendorDashboardService.createPayment(payout);
   }
 
 }

@@ -2,13 +2,19 @@ import {Injectable, NgZone} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LocalDataService} from "./local-data.service";
-import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
-//import auth = firebase.auth;
-import {Vendor} from "../../model/Vendor";
-import firebase from "firebase/compat/app";
+import {
+  Auth,
+  authState,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut
+} from '@angular/fire/auth';
+import {AngularFirestore} from "@angular/fire/compat/firestore";
+
 import {SnackBarService} from "../../module/customer-dashboard/services/snack-bar.service";
-import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
+import {Observable} from "rxjs";
 
 //import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
@@ -16,16 +22,40 @@ import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
   providedIn: 'root'
 })
 export class LoginService {
+  user$: Observable<any>;
   private userData: any
 
-  constructor(private localDataService: LocalDataService, public auth: AuthService, private activatedRoute: ActivatedRoute, private snackBarService: SnackBarService, private router: Router, public afs: AngularFirestore, public afAuth: AngularFireAuth, public ngZone: NgZone) {
-    this.setLoggingStateFirebase();
+  constructor(private localDataService: LocalDataService, public auth: AuthService, private activatedRoute: ActivatedRoute, private snackBarService: SnackBarService, private router: Router, public afs: AngularFirestore, public afAuth: Auth, public ngZone: NgZone) {
+    //this.setLoggingStateFirebase();
+    this.user$ = authState(this.afAuth);
+
   }
 
   get isLogged(): boolean {
     const user = JSON.parse(localStorage.getItem('user')!);
-    return user !== null && user.emailVerified !== false ? true : false;
+    return user !== null && user.emailVerified !== false;
   }
+
+  public getCookie(key: string): any {
+    return this.localDataService.getCookie(key);
+  }
+
+  public deleteCookie(userToken: string, s: any) {
+    this.localDataService.deleteCookie(userToken, s);
+  }
+
+
+  isLoggedIn(): Observable<boolean> {
+    return new Observable(observer => {
+      this.user$.subscribe(user => {
+        observer.next(!!user);
+        observer.complete();
+      });
+    });
+  }
+
+
+  //Customer Login
 
   public loginWithAuth0(): void {
     this.isLoggedAuth0().then(res => {
@@ -110,187 +140,183 @@ export class LoginService {
     });
   }
 
-  public getCookie(key: string): any {
-    return this.localDataService.getCookie(key);
-  }
 
-  public deleteCookie(userToken: string, s: any) {
-    this.localDataService.deleteCookie(userToken, s);
-  }
+  // public async isLoggedFirebase(): Promise<any> {
+  //   return new Promise((resolve, reject) => {
+  //     if (this.isLogged) {
+  //       resolve(true);
+  //     } else {
+  //       const user = JSON.parse(localStorage.getItem('user')!);
+  //       if (user.emailVerified == false) {
+  //         this.router.navigate(['/VendorDashboard'], {queryParams: {err: 'verify_email'}});
+  //       } else {
+  //         reject(false);
+  //       }
+  //     }
+  //   });
+  // }
+  //
+  // SignIn(email: string, password: string) {
+  //   this.afAuth.signInWithEmailAndPassword(email, password).then(res => {
+  //     this.router.navigate(['VendorDashboard']);
+  //   }, error => {
+  //     this.router.navigate(['/landing'], {queryParams: {err: error}});
+  //   })
+  // }
+  //
+  // SetUserData(user: any) {
+  //   const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+  //     `users/${user.uid}`
+  //   );
+  //   const userData: Vendor = {
+  //     uid: user.uid,
+  //     email: user.email,
+  //     displayName: user.displayName,
+  //     photoURL: user.photoURL,
+  //     emailVerified: user.emailVerified,
+  //   };
+  //   return userRef.set(userData, {
+  //     merge: true,
+  //   });
+  // }
+  //
+  // public SignUp(email: string, password: string): Promise<any> {
+  //   return new Promise((resolve, reject) => {
+  //     this.afAuth
+  //       .createUserWithEmailAndPassword(email, password)
+  //       .then((result) => {
+  //         /* Call the SendVerificaitonMail() function when new user sign
+  //         up and returns promise */
+  //         this.SendVerificationMail();
+  //         this.SetUserData(result.user);
+  //         resolve(true);
+  //       })
+  //       .catch((error) => {
+  //         window.alert(error.message);
+  //         reject(false);
+  //       });
+  //   })
+  // }
+  //
+  // SendVerificationMail() {
+  //   return this.afAuth.currentUser
+  //     .then((u: any) => u.sendEmailVerification())
+  //     .then(() => {
+  //       this.router.navigate(['/VendorDashboard'], {queryParams: {err: 'verify_email'}});
+  //     });
+  // }
+  //
+  // ForgotPassword(passwordResetEmail: string) {
+  //   return this.afAuth
+  //     .sendPasswordResetEmail(passwordResetEmail)
+  //     .then(() => {
+  //       window.alert('Password reset email sent, check your inbox.');
+  //     })
+  //     .catch((error) => {
+  //       window.alert(error);
+  //     });
+  // }
+  //
+  // GoogleAuth() {
+  //   return this.AuthLogin(new GoogleAuthProvider()).then((res: any) => {
+  //     if (res) {
+  //       //this.router.navigate(['/landing']);
+  //       //this.router.navigate(['/VendorDashboard']);
+  //     }
+  //   });
+  // }
+  //
+  // AuthLogin(provider: any) {
+  //   return this.afAuth
+  //     .signInWithPopup(provider)
+  //     .then((result) => {
+  //       this.ngZone.run(() => {
+  //         this.afAuth.authState.subscribe((user) => {
+  //           if (user) {
+  //             this.userData = user;
+  //             localStorage.setItem('user', JSON.stringify(this.userData));
+  //             JSON.parse(localStorage.getItem('user')!);
+  //             console.log(this.userData)
+  //             this.router.navigate(['VendorDashboard'], {
+  //               queryParams: {
+  //                 vendorEmail: this.userData.email,
+  //                 vendorImage: this.userData.photoURL
+  //               }
+  //             });
+  //           } else {
+  //             localStorage.setItem('user', 'null');
+  //             JSON.parse(localStorage.getItem('user')!);
+  //           }
+  //         });
+  //       });
+  //       this.SetUserData(result.user);
+  //     })
+  //     .catch((error) => {
+  //       window.alert(error);
+  //     });
+  // }
+  //
+  // SignOut() {
+  //   return this.afAuth.signOut().then(() => {
+  //     localStorage.removeItem('user');
+  //     this.router.navigate(['/landing']);
+  //   });
+  // }
+  //
+  // setLoggingStateFirebase() {
+  //   this.afAuth.authState.subscribe((user) => {
+  //     if (user) {
+  //       this.userData = user;
+  //       localStorage.setItem('user', JSON.stringify(this.userData));
+  //       JSON.parse(localStorage.getItem('user')!);
+  //     } else {
+  //       localStorage.setItem('user', 'null');
+  //       JSON.parse(localStorage.getItem('user')!);
+  //     }
+  //   });
+  // }
+  //
+  // forgotPassword(email: any) {
+  //   this.ForgotPassword(email).then(res => {
+  //     this.router.navigate(['/landing'], {queryParams: {err: `Reset link sent to ${email}`}});
+  //   }, err => {
+  //     this.router.navigate(['/landing'], {queryParams: {err: err}});
+  //   })
+  // }
+  //
+  // VendorLogin(email: any, password: any) {
+  //   console.log(email + " "+ password)
+  //   this.SignIn(email, password);
+  //
+  // }
+  //
+  // VendorRegister() {
+  //   this.router.navigate(['VendorDashboard/register']);
+  // }
+  //
+  // loginWithGoogle() {
+  //   this.GoogleAuth();
+  // }
+  //
+  // registerWithGoogle() {
+  //   this.GoogleAuth();
+  // }
+  //
+  // register(email: any, password: any) {
+  //   this.SignUp(email, password).then(res => {
+  //     this.router.navigate(['VendorDashboard/login']);
+  //   }, err => {
+  //     this.router.navigate(['/landing'], {queryParams: {err: err}});
+  //   })
+  // }
+  //
+  // login() {
+  //   this.router.navigate(['/VendorDashboard/login']);
+  //   //this.afAuth.signInWithEmailLink('')
+  // }
 
-  public async isLoggedFirebase(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (this.isLogged) {
-        resolve(true);
-      } else {
-        const user = JSON.parse(localStorage.getItem('user')!);
-        if (user.emailVerified == false) {
-          this.router.navigate(['/VendorDashboard'], {queryParams: {err: 'verify_email'}});
-        } else {
-          reject(false);
-        }
-      }
-    });
-  }
 
-  SignIn(email: string, password: string) {
-    this.afAuth.signInWithEmailAndPassword(email, password).then(res => {
-      this.router.navigate(['VendorDashboard'], {queryParams: {vendorEmail: email}});
-    }, error => {
-      this.router.navigate(['/landing'], {queryParams: {err: error}});
-    })
-  }
-
-  SetUserData(user: any) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}`
-    );
-    const userData: Vendor = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-    };
-    return userRef.set(userData, {
-      merge: true,
-    });
-  }
-
-  public SignUp(email: string, password: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.afAuth
-        .createUserWithEmailAndPassword(email, password)
-        .then((result) => {
-          /* Call the SendVerificaitonMail() function when new user sign
-          up and returns promise */
-          this.SendVerificationMail();
-          this.SetUserData(result.user);
-          resolve(true);
-        })
-        .catch((error) => {
-          window.alert(error.message);
-          reject(false);
-        });
-    })
-  }
-
-  SendVerificationMail() {
-    return this.afAuth.currentUser
-      .then((u: any) => u.sendEmailVerification())
-      .then(() => {
-        this.router.navigate(['verify-email-address']);
-      });
-  }
-
-  ForgotPassword(passwordResetEmail: string) {
-    return this.afAuth
-      .sendPasswordResetEmail(passwordResetEmail)
-      .then(() => {
-        window.alert('Password reset email sent, check your inbox.');
-      })
-      .catch((error) => {
-        window.alert(error);
-      });
-  }
-
-  GoogleAuth() {
-    return this.AuthLogin(new GoogleAuthProvider()).then((res: any) => {
-      if (res) {
-        //this.router.navigate(['/landing']);
-        //this.router.navigate(['/VendorDashboard']);
-      }
-    });
-  }
-
-  AuthLogin(provider: any) {
-    return this.afAuth
-      .signInWithPopup(provider)
-      .then((result) => {
-        this.ngZone.run(() => {
-          this.afAuth.authState.subscribe((user) => {
-            if (user) {
-              this.userData = user;
-              localStorage.setItem('user', JSON.stringify(this.userData));
-              JSON.parse(localStorage.getItem('user')!);
-              console.log(this.userData)
-              this.router.navigate(['VendorDashboard'], {
-                queryParams: {
-                  vendorEmail: this.userData.email,
-                  vendorImage: this.userData.photoURL
-                }
-              });
-            } else {
-              localStorage.setItem('user', 'null');
-              JSON.parse(localStorage.getItem('user')!);
-            }
-          });
-        });
-        this.SetUserData(result.user);
-      })
-      .catch((error) => {
-        window.alert(error);
-      });
-  }
-
-  SignOut() {
-    return this.afAuth.signOut().then(() => {
-      localStorage.removeItem('user');
-      this.router.navigate(['/landing']);
-    });
-  }
-
-  setLoggingStateFirebase() {
-    this.afAuth.authState.subscribe((user) => {
-      if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user')!);
-      } else {
-        localStorage.setItem('user', 'null');
-        JSON.parse(localStorage.getItem('user')!);
-      }
-    });
-  }
-
-  forgotPassword(email: any) {
-    this.ForgotPassword(email).then(res => {
-      this.router.navigate(['/landing'], {queryParams: {err: `Reset link sent to ${email}`}});
-    }, err => {
-      this.router.navigate(['/landing'], {queryParams: {err: err}});
-    })
-  }
-
-  VendorLogin(email: any, password: any) {
-    this.SignIn(email, password);
-
-  }
-
-  VendorRegister() {
-    this.router.navigate(['VendorDashboard/register']);
-  }
-
-  loginWithGoogle() {
-    this.GoogleAuth();
-  }
-
-  registerWithGoogle() {
-    this.GoogleAuth();
-  }
-
-  register(email: any, password: any) {
-    this.SignUp(email, password).then(res => {
-      this.router.navigate(['VendorDashboard/login']);
-    }, err => {
-      this.router.navigate(['/landing'], {queryParams: {err: err}});
-    })
-  }
-
-  login() {
-    this.router.navigate(['VendorDashboard/login']);
-    this.afAuth.signInWithEmailLink('')
-  }
-
+  //Admin Login
   public async isLoggedAdmin(): Promise<any> {
     return new Promise((resolve, reject) => {
       if (this.localDataService.getCookie('token')) {
@@ -307,6 +333,28 @@ export class LoginService {
       this.router.navigate(['/landing']);
     })
   }
+
+  register(email: string, password: string) {
+    return createUserWithEmailAndPassword(this.afAuth, email, password);
+
+  }
+
+  googleLogin() {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(this.afAuth, provider);
+
+  }
+
+  login(email: string, password: string) {
+    return signInWithEmailAndPassword(this.afAuth, email, password);
+
+  }
+
+  SignOut() {
+    return signOut(this.afAuth);
+
+  }
+
 }
 
 

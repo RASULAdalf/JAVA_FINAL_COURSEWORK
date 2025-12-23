@@ -5,7 +5,7 @@ import {HttpService} from "../../core/services/http.service";
 import {SnackBarService} from "../customer-dashboard/services/snack-bar.service";
 import {ModalService} from "./services/modal.service";
 import {LocalDataService} from "../../core/services/local-data.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PageEvent} from "@angular/material/paginator";
 
 import {debounceTime} from "rxjs";
@@ -23,11 +23,9 @@ export class VendorDashboardComponent implements OnInit {
   })
 
   chooseMenuItem: any;
-
   slideShowImgs: any[] = [];
   type: any = "Bar";
   year: number = 0;
-  vendorImage: string | null | undefined;
   buttonName: any;
   page: number = 0;
   pageSize: number = 5;
@@ -39,10 +37,9 @@ export class VendorDashboardComponent implements OnInit {
   clickedBtnName: any;
   private searchText: any;
 
-  constructor(private presence: PresenceService, public route: ActivatedRoute, public localStorageService: LocalDataService, public modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, public vendorDashboardService: VendorDashboardServiceService,private activatedRoute:ActivatedRoute) {
-    this.vendorDashboardService.loginService.afAuth.currentUser.then(result => {
-      this.vendorDashboardService.vendorEmail = result?.email;
-    })
+  constructor(private router: Router, private presence: PresenceService, public route: ActivatedRoute, public localStorageService: LocalDataService, public modalService: ModalService, public snackBarService: SnackBarService, public loadingService: LoadingService, private httpService: HttpService, public vendorDashboardService: VendorDashboardServiceService, private activatedRoute: ActivatedRoute) {
+    //this.vendorDashboardService.vendorEmail = this.vendorDashboardService.loginService.afAuth.currentUser?.email;
+
     this.searchForm.valueChanges.pipe(debounceTime(1080)).subscribe(data => {
       //This 1080 is a debounceTime, means that to make a request to the server only if the user has stopped typing for a second rather than making requests to the server whenever the user types something
       this.searchText = data.searchText;
@@ -58,8 +55,8 @@ export class VendorDashboardComponent implements OnInit {
       }
     })
     //this.modalService.openLetSirKnowModal("Vendor Dashboard");
-    this.vendorDashboardService.vendorEmail = this.route.snapshot.queryParamMap.get('vendorEmail');
-    this.vendorImage = this.route.snapshot.queryParamMap.get('vendorImage');
+    //this.vendorDashboardService.vendorEmail = this.route.snapshot.queryParamMap.get('vendorEmail');
+    // this.vendorImage = this.route.snapshot.queryParamMap.get('vendorImage');
     this.year = new Date().getFullYear();
     //this.vendorDashboardService.loadData('ORDERS', 0, 10);
 
@@ -81,7 +78,9 @@ export class VendorDashboardComponent implements OnInit {
 // }
 
   logout() {
-    this.vendorDashboardService.logOut();
+    this.vendorDashboardService.logOut().then(r =>
+      this.router.navigate(['/landing'])
+    );
   }
 
 // openModal() {

@@ -2,7 +2,7 @@
   <div class="content-inner">
     <div class="form-inner">
       <app-loading *ngIf="loadingService.progressBarLoadingState | async" [data]="'Bar'"></app-loading>
-      <form (ngSubmit)="submit()" [formGroup]="addNewItemsForm" enctype="multipart/form-data">
+      <form [formGroup]="addNewItemsForm" enctype="multipart/form-data">
 
         <mat-form-field [style.margin-left.px]=140 [style.margin-top.px]=5 [style.width.px]=500 appearance="outline">
           <mat-label>Vendor Email</mat-label>
@@ -52,13 +52,16 @@
                       *ngIf="this.data.buttonName==='Update' ">Add As Additional Images
         </mat-checkbox>
         <br><br>
-        <button [disabled]="addNewItemsForm.invalid" [style.margin-left.px]=40 color="primary" mat-raised-button
+        <button (click)="submit()" [disabled]="addNewItemsForm.invalid" [style.margin-left.px]=40 color="primary"
+                mat-raised-button
                 type="submit">{{ this.data.buttonName }}
         </button>
         <button (click)="closeDialog()" [style.margin-left.px]=430 color="warn"
                 mat-raised-button>Close
         </button>
+
       </form>
+
     </div>
   </div>
 </div>

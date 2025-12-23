@@ -11,21 +11,24 @@
   display: flex;
   flex-direction: row;
 }
-.sold-products{
+
+.sold-products {
   width: 60%;
-  app-products{
+
+  app-products {
     height: 100%;
     width: 100%;
   }
 }
-.due-payment-outer{
+
+.due-payment-outer {
   flex: 1;
   border: 1px solid red;
 }
 
 .earning-outer {
   flex: 1;
-  isplay: flex;
+  display: flex;
   flex-direction: row;
 }
 

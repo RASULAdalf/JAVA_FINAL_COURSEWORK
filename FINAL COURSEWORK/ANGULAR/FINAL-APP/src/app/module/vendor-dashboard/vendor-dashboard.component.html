@@ -127,7 +127,7 @@
 
       <!-- Orders -->
       <button (click)="this.vendorDashboardService.loadData('ORDERS',this.page,this.pageSize)" class="orders-btn"
-              routerLink="/CustomerDashboard">Orders
+              routerLink="orders">Orders
       </button>
 
       <!-- Cart -->
@@ -150,7 +150,7 @@
     <aside class="sidebar">
       <div class="sidebar-top">
         <div class="profile">
-          <img [src]="this.vendorImage" alt="User"/>
+          <img [src]="this.vendorDashboardService.vendorImage" alt="User"/>
           <h3>{{ this.vendorDashboardService.vendorEmail }}</h3>
           <span>Vendor</span>
         </div>

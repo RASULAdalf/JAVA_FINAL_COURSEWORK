@@ -5,6 +5,7 @@ import {VendorDashboardServiceService} from "../../services/vendor-dashboard-ser
 import {LoadingService} from "../../../../core/services/loading.service";
 import {HttpService} from "../../../../core/services/http.service";
 import {environment} from "../../../../../environments/environment";
+import {SnackBarService} from "../../services/snack-bar.service";
 
 @Component({
   selector: 'app-item-edit-modal',
@@ -37,7 +38,7 @@ export class ItemEditModalComponent implements OnInit {
     index: any,
     data: any[],
     buttonName: any,
-  }, private httpService: HttpService, private dialogRef: MatDialogRef<ItemEditModalComponent>, public loadingService: LoadingService, public vendorDashboardService: VendorDashboardServiceService) {
+  }, private httpService: HttpService, private dialogRef: MatDialogRef<ItemEditModalComponent>, public loadingService: LoadingService, public vendorDashboardService: VendorDashboardServiceService, private snackBarService: SnackBarService) {
   }
 
   ngOnInit(): void {
@@ -56,6 +57,8 @@ export class ItemEditModalComponent implements OnInit {
     if (this.data.buttonName === 'Save') {
       this.vendorDashboardService.saveProduct(this.formData)
         .subscribe(res => {
+          this.snackBarService.openSnackBar('Product Saved Successfully!');
+
           this.vendorDashboardService.loadData('PRODUCTS', 0, 10);
 
           console.log(res?.message);
@@ -70,6 +73,7 @@ export class ItemEditModalComponent implements OnInit {
           this.data.data[this.data.index]?.itemCode,
           'deleteUpdate', this.formData
         ).subscribe(res => {
+          this.snackBarService.openSnackBar('Product Deleted Successfully!');
           this.vendorDashboardService.loadData('PRODUCTS', 0, 10);
 
           console.log(res?.message);
@@ -81,6 +85,7 @@ export class ItemEditModalComponent implements OnInit {
           this.data.data[this.data.index]?.itemCode,
           'addUpdate', this.formData
         ).subscribe(res => {
+          this.snackBarService.openSnackBar('Product Updated Successfully!');
           this.vendorDashboardService.loadData('PRODUCTS', 0, 10);
 
           console.log(res?.message);

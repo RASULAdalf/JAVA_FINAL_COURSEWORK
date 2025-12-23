@@ -1,40 +1,43 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 import {LoginService} from "../../../../core/services/login.service";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
-  registerForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)])
-  })
-  confirmPassword: any;
-  confirmedPassword = this.registerForm.get('password')?.value?.toString();
+export class RegisterComponent {
 
+  email = '';
+  password = '';
+  confirmPassword = '';
+  loading = false;
 
-  constructor(private loginService: LoginService, private router: Router) {
-    console.log(this.confirmedPassword);
-    console.log(this.confirmPassword);
-  }
-
-  ngOnInit(): void {
-  }
-
-  registerWithGoogle() {
-    this.loginService.registerWithGoogle();
+  constructor(
+    private auth: LoginService,
+    private router: Router
+  ) {
   }
 
   register() {
-    this.loginService.register(this.registerForm.get('email')?.value?.toString(), this.registerForm.get('password')?.value?.toString());
+    if (this.password !== this.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    this.loading = true;
+
+    this.auth.register(this.email, this.password).then(() => {
+      this.router.navigate(['/VendorDashboard/login']);
+    })
+      .catch((err: { message: any; }) => alert(err.message))
+      .finally(() => this.loading = false);
   }
 
-  login() {
-    this.loginService.login();
+  googleSignup() {
+    this.auth.googleLogin()
+      .then(() => this.router.navigate(['VendorDashboard']))
+      .catch((err: { message: any; }) => alert(err.message));
   }
 }

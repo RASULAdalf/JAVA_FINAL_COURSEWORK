@@ -7,11 +7,17 @@ import java.util.Date;
 
 public interface PayoutDataInterface {
     String getPayoutId();
+
     String getVendorEmail();
+
     PaymentDetails getPaymentDetails();
+
     double getAmount();
+
     Date getPayoutDate();
+
     String getPayoutStatus();
+
     PayoutItem[] getPayoutItems();
 
 

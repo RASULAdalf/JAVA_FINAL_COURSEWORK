@@ -5,6 +5,8 @@ import {HttpService} from "../../../core/services/http.service";
 import {environment} from "../../../../environments/environment";
 import {Auth} from "@angular/fire/auth";
 import {Database, ref, set} from "@angular/fire/database";
+import {EarningItem} from "../../../model/EarningItem";
+import {PayoutModel} from "../model/PayoutModel";
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +15,17 @@ export class VendorDashboardServiceService {
   baseUrl = environment.DatabaseServerUrl;
   baseUtilUrl = environment.UtilServerUrl;
   vendorEmail: any;
+  vendorImage: any;
   dataList: any[] = [];
   dataCount: number = 0;
   totalEarnings: any = 0.00;
 
   constructor(public httpService: HttpService, public loginService: LoginService, private auth: Auth, private db: Database) {
-    this.loginService.afAuth.currentUser.then(res => {
-      this.vendorEmail = res?.email;
-    })
+    // @ts-ignore
+
+    this.vendorEmail = this.loginService.afAuth.currentUser?.email;
+    this.vendorImage = this.loginService.afAuth.currentUser?.photoURL;
+
   }
 
   public async logOut() {
@@ -35,7 +40,8 @@ export class VendorDashboardServiceService {
         last_changed: Date.now()
       });
     }
-    this.loginService.SignOut();
+    await this.loginService.SignOut();
+
   }
 
   loadProductsDataAll(page: any, pageSize: any, vendor_email: any): Observable<any> {
@@ -99,13 +105,20 @@ export class VendorDashboardServiceService {
     return this.httpService.put(this.baseUtilUrl + "item/updateItem?vEmail=" + vEmail + "&id=" + itemId + "&option=" + updateOption, body);
   }
 
+  createPayment(payout: PayoutModel) {
+    this.httpService.post(this.baseUrl + 'payout/', payout).subscribe(data => {
+      console.log(data)
+    })
+
+
+  }
+
   loadData(value: any, page: number, pageSize: number) {
 
     if (value == 'ORDERS' || value == undefined) {
       this.loadOrdersDataAll(page, pageSize, this.vendorEmail).subscribe(data => {
         this.dataList = data?.data?.orders;
         this.dataCount = data?.data?.dataCount;
-        this.calculateTotalEarnings()
       }, error => console.log(error));
     } else if (value == 'PRODUCTS') {
       this.loadProductsDataAll(page, pageSize, this.vendorEmail).subscribe(data => {
@@ -159,8 +172,40 @@ export class VendorDashboardServiceService {
   private calculateTotalEarnings() {
     this.totalEarnings = 0.00;
     for (let data of this.dataList) {
-      this.totalEarnings += data?.itemFullPrice;
+      this.totalEarnings += data?.itemFullPrice * 0.9;
     }
+    let earningItemList: EarningItem[] = [];
+
+
+    for (let dataItem of this.dataList) {
+      const index = earningItemList.findIndex(element => element.itemCode == dataItem?.itemCode);
+      console.log(index)
+      if (index != -1) {
+        console.log('in')
+        const earningItem = earningItemList.find(element => element.itemCode == dataItem?.itemCode);
+        // @ts-ignore
+        earningItem?.qty = earningItem?.qty + dataItem?.qty
+        if (earningItem) {
+          earningItemList.splice(index, 1, earningItem);
+        }
+      } else {
+
+        let earningItem: EarningItem = {
+          itemCode: dataItem?.itemCode,
+          itemDescription: dataItem?.itemDescription,
+          itemCategory: dataItem?.itemCategory,
+          itemLogoUrl: dataItem?.itemLogoUrl,
+          qty: dataItem?.qty,
+          isVendorPaid: false
+        }
+        earningItemList.push(earningItem);
+      }
+    }
+
+    this.dataList = earningItemList;
+    this.dataCount = earningItemList.length
+
+
   }
 
 }

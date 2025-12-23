@@ -12,6 +12,7 @@ import lk.ijse.cmjd95.dto.response.PayoutResponseDto;
 import lk.ijse.cmjd95.entity.Item;
 import lk.ijse.cmjd95.entity.Order;
 import lk.ijse.cmjd95.entity.Payout;
+import lk.ijse.cmjd95.entity.PayoutItem;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -34,6 +35,8 @@ public interface Mapper {
 
     PayoutResponseDto toPayoutResponseDto(Payout payout);
 
-    List<PayoutResponseDto> toPayoutResponseDto (Page<PayoutDataInterface> data);
+    List<PayoutResponseDto> toPayoutResponseDto(Page<PayoutDataInterface> data);
+
+    PayoutItem[] toPayoutItems(List<PayoutItem> payoutItemList);
 
 }
