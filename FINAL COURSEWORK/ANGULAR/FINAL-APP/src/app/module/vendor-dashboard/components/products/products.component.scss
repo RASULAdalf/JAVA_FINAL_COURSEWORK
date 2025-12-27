@@ -34,6 +34,14 @@
   padding-left: 20px;
 
 }
+.earning{
+  height: 100% !important;
+  grid-template-columns: repeat(3,1fr) !important;
+}
+.product{
+  height: 100%;
+  grid-template-columns: repeat(4, 1fr) !important;
+}
 
 .example-card {
   height: 50%;

@@ -2,10 +2,9 @@
   <div *ngIf="this.displayType=='product'" class="header-outer">
     <button (click)="openEditModal(-1)" color="accent" mat-raised-button>+ ADD NEW ITEM</button>
   </div>
-  <div class="data-inner">
-    <mat-card *ngFor="let data of this.vendorDashboardService.dataList; index as num" [ngStyle]="{
-  height: displayType === 'earning' ? '76%' : '50%'
-}"
+  <div class="data-inner" [ngClass]="displayType">
+    <mat-card *ngFor="let data of this.vendorDashboardService.dataList; index as num"
+
               appearance="outlined"
               class="example-card"
     >
